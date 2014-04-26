@@ -1,0 +1,7 @@
+parameters:
+#    item.example.class: Ecommerce\ItemBundle\Example
+
+services:
+#    item.example:
+#        class: %item.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
