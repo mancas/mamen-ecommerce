@@ -2300,6 +2300,8 @@
           <call method="setEntityNamespaces">
             <argument type="collection">
               <argument key="UserBundle">Ecommerce\UserBundle\Entity</argument>
+              <argument key="CategoryBundle">Ecommerce\CategoryBundle\Entity</argument>
+              <argument key="ItemBundle">Ecommerce\ItemBundle\Entity</argument>
             </argument>
           </call>
           <call method="setMetadataCacheImpl">
@@ -2338,10 +2340,38 @@
                       <argument type="service" id="annotation_reader"/>
                       <argument type="collection">
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
                   <argument>Ecommerce\UserBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\CategoryBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\ItemBundle\Entity</argument>
                 </call>
               </service>
             </argument>

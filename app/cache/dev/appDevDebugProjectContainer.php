@@ -587,8 +587,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getDoctrine_Orm_DefaultEntityManagerService()
     {
-        $a = new \Doctrine\Common\Cache\ArrayCache();
-        $a->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
+        $a = $this->get('annotation_reader');
 
         $b = new \Doctrine\Common\Cache\ArrayCache();
         $b->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
@@ -596,23 +595,30 @@ class appDevDebugProjectContainer extends Container
         $c = new \Doctrine\Common\Cache\ArrayCache();
         $c->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
 
-        $d = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $d->addDriver(new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity')), 'Ecommerce\\UserBundle\\Entity');
+        $d = new \Doctrine\Common\Cache\ArrayCache();
+        $d->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
 
-        $e = new \Doctrine\ORM\Configuration();
-        $e->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity'));
-        $e->setMetadataCacheImpl($a);
-        $e->setQueryCacheImpl($b);
-        $e->setResultCacheImpl($c);
-        $e->setMetadataDriverImpl($d);
-        $e->setProxyDir('/home/manu/projects/mamen-ecommerce/app/cache/dev/doctrine/orm/Proxies');
-        $e->setProxyNamespace('Proxies');
-        $e->setAutoGenerateProxyClasses(true);
-        $e->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
-        $e->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
-        $e->setNamingStrategy(new \Doctrine\ORM\Mapping\DefaultNamingStrategy());
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity'));
 
-        $this->services['doctrine.orm.default_entity_manager'] = $instance = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.default_connection'), $e);
+        $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $f->addDriver($e, 'Ecommerce\\UserBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\CategoryBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\ItemBundle\\Entity');
+
+        $g = new \Doctrine\ORM\Configuration();
+        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity'));
+        $g->setMetadataCacheImpl($b);
+        $g->setQueryCacheImpl($c);
+        $g->setResultCacheImpl($d);
+        $g->setMetadataDriverImpl($f);
+        $g->setProxyDir('/home/manu/projects/mamen-ecommerce/app/cache/dev/doctrine/orm/Proxies');
+        $g->setProxyNamespace('Proxies');
+        $g->setAutoGenerateProxyClasses(true);
+        $g->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
+        $g->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
+        $g->setNamingStrategy(new \Doctrine\ORM\Mapping\DefaultNamingStrategy());
+
+        $this->services['doctrine.orm.default_entity_manager'] = $instance = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.default_connection'), $g);
 
         $this->get('doctrine.orm.default_manager_configurator')->configure($instance);
 
