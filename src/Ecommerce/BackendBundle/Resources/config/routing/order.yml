@@ -1,0 +1,11 @@
+admin_order_index:
+    pattern: /
+    defaults: { _controller: BackendBundle:Item:list }
+
+admin_order_view:
+    pattern: /{id}
+    defaults: { _controller: BackendBundle:Item:view }
+
+admin_order_delete_item:
+    pattern: /delete-item/{itemId}/{orderId}
+    defaults: { _controller: BackendBundle:Item:deleteItem }

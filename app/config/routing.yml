@@ -1,3 +1,15 @@
+frontend:
+    resource: "@FrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+
+backend:
+    resource: "@BackendBundle/Resources/config/routing.yml"
+    prefix:   /
+
+order:
+    resource: "@OrderBundle/Resources/config/routing.yml"
+    prefix:   /
+
 item:
     resource: "@ItemBundle/Resources/config/routing.yml"
     prefix:   /

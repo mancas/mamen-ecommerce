@@ -32,6 +32,12 @@ class Category
     protected $category;
 
     /**
+     * @Gedmo\Slug(fields={"category"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    protected $slug;
+
+    /**
      * @ORM\OneToMany(targetEntity="Ecommerce\ItemBundle\Entity\Item", mappedBy="category")
      */
     protected $items;
@@ -167,5 +173,21 @@ class Category
         if ($this->items->contains($item)) {
             $this->items->remove($item);
         }
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

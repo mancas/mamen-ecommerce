@@ -1,7 +1,7 @@
 parameters:
-#    item.example.class: Ecommerce\ItemBundle\Example
+    item.item_form_handler.class: Ecommerce\ItemBundle\Form\Handler\ItemFormHandler
 
 services:
-#    item.example:
-#        class: %item.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    item.item_form_handler:
+        class: %item.item_form_handler.class%
+        arguments: [@doctrine.orm.entity_manager]

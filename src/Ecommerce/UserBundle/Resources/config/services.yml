@@ -1,7 +1,11 @@
 parameters:
-#    user.example.class: Ecommerce\UserBundle\Example
+    user.user_manager.class: Ecommerce\UserBundle\Form\Handler\UserManager
+    user.user_form_handler.class: Ecommerce\UserBundle\Form\Handler\UserHandler
 
 services:
-#    user.example:
-#        class: %user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    user.manager:
+        class: %user.user_manager.class%
+        arguments: [@doctrine.orm.entity_manager]
+    user.user_form_handler:
+        class: %user.user_form_handler.class%
+        arguments: [@user.manager]

@@ -1,0 +1,15 @@
+backend_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: BackendBundle:Default:index }
+
+admin_categories:
+    resource: "@BackendBundle/Resources/config/routing/category.yml"
+    prefix: /category/
+
+admin_users:
+    resource: "@BackendBundle/Resources/config/routing/user.yml"
+    prefix: /user/
+
+admin_items:
+    resource: "@BackendBundle/Resources/config/routing/item.yml"
+    prefix: /product/

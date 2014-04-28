@@ -1,0 +1,15 @@
+admin_user_index:
+    pattern: /
+    defaults: { _controller: BackendBundle:User:list }
+
+admin_user_view:
+    pattern: /{id}
+    defaults: { _controller: BackendBundle:User:view }
+
+admin_user_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: BackendBundle:User:edit }
+
+admin_user_delete:
+    pattern: /delete/{id}
+    defaults: { _controller: BackendBundle:User:delete }

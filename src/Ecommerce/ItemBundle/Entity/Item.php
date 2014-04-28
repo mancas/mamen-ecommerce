@@ -47,6 +47,12 @@ class Item
     protected $category;
 
     /**
+     * @Gedmo\Slug(fields={"category"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    protected $slug;
+
+    /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated", type="datetime", nullable=true)
      */
@@ -190,5 +196,21 @@ class Item
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

@@ -19,6 +19,9 @@
       <parameter key="UserBundle">Ecommerce\UserBundle\UserBundle</parameter>
       <parameter key="CategoryBundle">Ecommerce\CategoryBundle\CategoryBundle</parameter>
       <parameter key="ItemBundle">Ecommerce\ItemBundle\ItemBundle</parameter>
+      <parameter key="OrderBundle">Ecommerce\OrderBundle\OrderBundle</parameter>
+      <parameter key="BackendBundle">Ecommerce\BackendBundle\BackendBundle</parameter>
+      <parameter key="FrontendBundle">Ecommerce\FrontendBundle\FrontendBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -510,6 +513,10 @@
     <parameter key="sensio_framework_extra.converter.doctrine.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter</parameter>
     <parameter key="sensio_framework_extra.converter.datetime.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DateTimeParamConverter</parameter>
     <parameter key="sensio_framework_extra.view.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener</parameter>
+    <parameter key="user.user_manager.class">Ecommerce\UserBundle\Form\Handler\UserManager</parameter>
+    <parameter key="user.user_form_handler.class">Ecommerce\UserBundle\Form\Handler\UserHandler</parameter>
+    <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
+    <parameter key="category.categoryformhandler.class">Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler</parameter>
     <parameter key="web_profiler.controller.profiler.class">Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController</parameter>
     <parameter key="web_profiler.controller.router.class">Symfony\Bundle\WebProfilerBundle\Controller\RouterController</parameter>
     <parameter key="web_profiler.controller.exception.class">Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController</parameter>
@@ -2302,6 +2309,7 @@
               <argument key="UserBundle">Ecommerce\UserBundle\Entity</argument>
               <argument key="CategoryBundle">Ecommerce\CategoryBundle\Entity</argument>
               <argument key="ItemBundle">Ecommerce\ItemBundle\Entity</argument>
+              <argument key="OrderBundle">Ecommerce\OrderBundle\Entity</argument>
             </argument>
           </call>
           <call method="setMetadataCacheImpl">
@@ -2342,6 +2350,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2355,6 +2364,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2368,10 +2378,25 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
                   <argument>Ecommerce\ItemBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\OrderBundle\Entity</argument>
                 </call>
               </service>
             </argument>
@@ -2445,6 +2470,18 @@
       </argument>
       <argument type="service" id="security.authentication.trust_resolver" on-invalid="null"/>
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
+    </service>
+    <service id="user.manager" class="Ecommerce\UserBundle\Form\Handler\UserManager">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="user.user_form_handler" class="Ecommerce\UserBundle\Form\Handler\UserHandler">
+      <argument type="service" id="user.manager"/>
+    </service>
+    <service id="item.item_form_handler" class="Ecommerce\ItemBundle\Form\Handler\ItemFormHandler">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="category.category_form_handler" class="Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
     </service>
     <service id="web_profiler.controller.profiler" class="Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController">
       <argument type="service" id="router" on-invalid="null"/>
@@ -2752,6 +2789,18 @@
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Resources/views</argument>
         <argument>Item</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Resources/views</argument>
+        <argument>Order</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/BackendBundle/Resources/views</argument>
+        <argument>Backend</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views</argument>
+        <argument>Frontend</argument>
       </call>
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>

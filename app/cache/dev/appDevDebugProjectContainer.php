@@ -43,6 +43,7 @@ class appDevDebugProjectContainer extends Container
             'assetic.value_supplier.default' => 'getAssetic_ValueSupplier_DefaultService',
             'cache_clearer' => 'getCacheClearerService',
             'cache_warmer' => 'getCacheWarmerService',
+            'category.category_form_handler' => 'getCategory_CategoryFormHandlerService',
             'controller_name_converter' => 'getControllerNameConverterService',
             'data_collector.form' => 'getDataCollector_FormService',
             'data_collector.form.extractor' => 'getDataCollector_Form_ExtractorService',
@@ -113,6 +114,7 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.hinclude' => 'getFragment_Renderer_HincludeService',
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'http_kernel' => 'getHttpKernelService',
+            'item.item_form_handler' => 'getItem_ItemFormHandlerService',
             'kernel' => 'getKernelService',
             'locale_listener' => 'getLocaleListenerService',
             'logger' => 'getLoggerService',
@@ -231,6 +233,8 @@ class appDevDebugProjectContainer extends Container
             'twig.loader' => 'getTwig_LoaderService',
             'twig.translation.extractor' => 'getTwig_Translation_ExtractorService',
             'uri_signer' => 'getUriSignerService',
+            'user.manager' => 'getUser_ManagerService',
+            'user.user_form_handler' => 'getUser_UserFormHandlerService',
             'validator' => 'getValidatorService',
             'validator.expression' => 'getValidator_ExpressionService',
             'validator.mapping.class_metadata_factory' => 'getValidator_Mapping_ClassMetadataFactoryService',
@@ -369,6 +373,19 @@ class appDevDebugProjectContainer extends Container
         $c = new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder($a, $b, '/home/manu/projects/mamen-ecommerce/app/Resources');
 
         return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, $this->get('templating.locator')), 1 => new \Symfony\Bundle\AsseticBundle\CacheWarmer\AssetManagerCacheWarmer($this), 2 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 3 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c), 4 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine'))));
+    }
+
+    /**
+     * Gets the 'category.category_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler A Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler instance.
+     */
+    protected function getCategory_CategoryFormHandlerService()
+    {
+        return $this->services['category.category_form_handler'] = new \Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -598,15 +615,16 @@ class appDevDebugProjectContainer extends Container
         $d = new \Doctrine\Common\Cache\ArrayCache();
         $d->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
 
-        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity'));
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity'));
 
         $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $f->addDriver($e, 'Ecommerce\\UserBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\CategoryBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\ItemBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\OrderBundle\\Entity');
 
         $g = new \Doctrine\ORM\Configuration();
-        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity'));
+        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity'));
         $g->setMetadataCacheImpl($b);
         $g->setQueryCacheImpl($c);
         $g->setResultCacheImpl($d);
@@ -1343,6 +1361,19 @@ class appDevDebugProjectContainer extends Container
     protected function getHttpKernelService()
     {
         return $this->services['http_kernel'] = new \Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel($this->get('debug.event_dispatcher'), $this, $this->get('debug.controller_resolver'), $this->get('request_stack'));
+    }
+
+    /**
+     * Gets the 'item.item_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\ItemBundle\Form\Handler\ItemFormHandler A Ecommerce\ItemBundle\Form\Handler\ItemFormHandler instance.
+     */
+    protected function getItem_ItemFormHandlerService()
+    {
+        return $this->services['item.item_form_handler'] = new \Ecommerce\ItemBundle\Form\Handler\ItemFormHandler($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -2942,6 +2973,9 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Resources/views', 'User');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Resources/views', 'Category');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Resources/views', 'Item');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Resources/views', 'Order');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/BackendBundle/Resources/views', 'Backend');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views', 'Frontend');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', 'WebProfiler');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', 'SensioDistribution');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/app/Resources/views');
@@ -2974,6 +3008,32 @@ class appDevDebugProjectContainer extends Container
     protected function getUriSignerService()
     {
         return $this->services['uri_signer'] = new \Symfony\Component\HttpKernel\UriSigner('7a6d5e633cddaead7bd4b4e075c2818c');
+    }
+
+    /**
+     * Gets the 'user.manager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\UserBundle\Form\Handler\UserManager A Ecommerce\UserBundle\Form\Handler\UserManager instance.
+     */
+    protected function getUser_ManagerService()
+    {
+        return $this->services['user.manager'] = new \Ecommerce\UserBundle\Form\Handler\UserManager($this->get('doctrine.orm.default_entity_manager'));
+    }
+
+    /**
+     * Gets the 'user.user_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\UserBundle\Form\Handler\UserHandler A Ecommerce\UserBundle\Form\Handler\UserHandler instance.
+     */
+    protected function getUser_UserFormHandlerService()
+    {
+        return $this->services['user.user_form_handler'] = new \Ecommerce\UserBundle\Form\Handler\UserHandler($this->get('user.manager'));
     }
 
     /**
@@ -3411,6 +3471,9 @@ class appDevDebugProjectContainer extends Container
                 'UserBundle' => 'Ecommerce\\UserBundle\\UserBundle',
                 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\CategoryBundle',
                 'ItemBundle' => 'Ecommerce\\ItemBundle\\ItemBundle',
+                'OrderBundle' => 'Ecommerce\\OrderBundle\\OrderBundle',
+                'BackendBundle' => 'Ecommerce\\BackendBundle\\BackendBundle',
+                'FrontendBundle' => 'Ecommerce\\FrontendBundle\\FrontendBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
@@ -3924,6 +3987,10 @@ class appDevDebugProjectContainer extends Container
             'sensio_framework_extra.converter.doctrine.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Request\\ParamConverter\\DoctrineParamConverter',
             'sensio_framework_extra.converter.datetime.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Request\\ParamConverter\\DateTimeParamConverter',
             'sensio_framework_extra.view.listener.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\TemplateListener',
+            'user.user_manager.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserManager',
+            'user.user_form_handler.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserHandler',
+            'item.item_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ItemFormHandler',
+            'category.categoryformhandler.class' => 'Ecommerce\\BackendBundle\\Form\\Handler\\CategoryFormHandler',
             'web_profiler.controller.profiler.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController',
             'web_profiler.controller.router.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController',
             'web_profiler.controller.exception.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController',

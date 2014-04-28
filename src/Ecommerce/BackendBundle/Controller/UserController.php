@@ -1,0 +1,57 @@
+<?php
+
+namespace Ecommerce\BackendBundle\Controller;
+
+use Ecommerce\FrontendBundle\Controller\CustomController;
+use Ecommerce\UserBundle\Form\Type\UserType;
+use Symfony\Component\HttpFoundation\Request;
+
+class UserController extends CustomController
+{
+    public function listAction()
+    {
+        $em = $this->getEntityManager();
+        $users = $em->getRepository("UserBundle:User")->findAll();
+
+        $this->render("BackendBundle:User:list.html.twig", array('users' => $users));
+    }
+
+    /**
+     * @ParamConverter("user", class="UserBundle:User")
+     */
+    public function viewAction(User $user)
+    {
+        $this->render("BackendBundle:User:view.html.twig", array('user' => $user));
+    }
+
+    /**
+     * @ParamConverter("user", class="UserBundle:User")
+     */
+    public function editAction(User $user, Request $request)
+    {
+        $form = $this->createForm(new UserType(), $user);
+        $handler = $this->get('user.user_form_handler');
+
+        if ($handler->handle($form, $request)) {
+            $this->setTranslatedFlashMessage('Se ha modificado el usuario');
+
+            $this->redirect($this->generateUrl('admin_user_index'));
+        }
+
+        $this->render("BackendBundle:User:create.html.twig", array('edit' => true, 'form' => $form->createView()));
+    }
+
+    /**
+     * @ParamConverter("user", class="UserBundle:User")
+     */
+    public function deleteAction(User $user)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($user);
+        $em->flush();
+
+        $this->setTranslatedFlashMessage('Se ha eliminado el usuario');
+
+        $this->redirect($this->generateUrl('admin_user_index'));
+    }
+}

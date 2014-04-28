@@ -19,6 +19,9 @@ class AppKernel extends Kernel
             new Ecommerce\UserBundle\UserBundle(),
             new Ecommerce\CategoryBundle\CategoryBundle(),
             new Ecommerce\ItemBundle\ItemBundle(),
+            new Ecommerce\OrderBundle\OrderBundle(),
+            new Ecommerce\BackendBundle\BackendBundle(),
+            new Ecommerce\FrontendBundle\FrontendBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
