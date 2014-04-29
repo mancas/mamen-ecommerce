@@ -42,12 +42,11 @@ class Item
 
     /**
      * @ORM\ManyToOne(targetEntity="Ecommerce\CategoryBundle\Entity\Category", inversedBy="items")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
 
     /**
-     * @Gedmo\Slug(fields={"category"}, updatable=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
     protected $slug;
@@ -65,8 +64,8 @@ class Item
     protected $created;
 
     /**
-     * @Gedmo\Timestampable(on="delete")
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
+     * @ORM\Column(name="deleted", type="date", nullable=true)
+     * @Assert\Date()
      */
     protected $deleted;
 

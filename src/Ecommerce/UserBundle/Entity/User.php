@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ecommerce\UserBundle\Entity\Address;
 
 /**
  * @ORM\Table()
@@ -130,7 +131,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     }
 
     /**
-     * @param \Educacity\UserBundle\Entity\date $registeredDate
+     * @param \Ecommerce\UserBundle\Entity\date $registeredDate
      */
     public function setRegisteredDate($registeredDate)
     {
@@ -138,7 +139,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     }
 
     /**
-     * @return \Educacity\UserBundle\Entity\date
+     * @return \Ecommerce\UserBundle\Entity\date
      */
     public function getRegisteredDate()
     {
@@ -269,5 +270,19 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    public function getMainAddress()
+    {
+        $mainAddress = false;
+
+        foreach ($this->addresses as $address) {
+            if ($address->getMain()) {
+                $mainAddress = $address;
+                break;
+            }
+        }
+
+        return $mainAddress;
     }
 }

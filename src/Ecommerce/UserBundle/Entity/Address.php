@@ -42,14 +42,19 @@ class Address
     protected $user;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default" = 0})
+     */
+    protected $main = false;
+
+    /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated", type="datetime", nullable=true)
      */
     protected $updated;
 
     /**
-     * @Gedmo\Timestampable(on="delete")
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
+     * @ORM\Column(name="deleted", type="date", nullable=true)
+     * @Assert\Date()
      */
     protected $deleted;
 
@@ -173,5 +178,19 @@ class Address
         return $this->user;
     }
 
+    /**
+     * @param mixed $main
+     */
+    public function setMain($main)
+    {
+        $this->main = $main;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getMain()
+    {
+        return $this->main;
+    }
 }

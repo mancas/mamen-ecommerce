@@ -6,6 +6,8 @@ use Ecommerce\BackendBundle\Form\Type\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Ecommerce\FrontendBundle\Controller\CustomController;
+use Symfony\Component\HttpFoundation\Request;
+use Ecommerce\CategoryBundle\Entity\Category;
 
 class CategoryController extends CustomController
 {
@@ -28,7 +30,7 @@ class CategoryController extends CustomController
         if ($handler->handle($form, $request)) {
             $this->setTranslatedFlashMessage('Se ha modificado la categoría');
 
-            $this->redirect($this->generateUrl('admin_category_index'));
+            return $this->redirect($this->generateUrl('admin_category_index'));
         }
 
         return $this->render('BackendBundle:Category:create.html.twig', array('edit' => true, 'form' => $form->createView()));
@@ -45,7 +47,7 @@ class CategoryController extends CustomController
 
         $this->setTranslatedFlashMessage('Se ha eliminado la categoría');
 
-        $this->redirect($this->generateUrl('admin_category_index'));
+        return $this->redirect($this->generateUrl('admin_category_index'));
     }
 
     public function createAction(Request $request)
@@ -56,7 +58,7 @@ class CategoryController extends CustomController
         if ($handler->handle($form, $request)) {
             $this->setTranslatedFlashMessage('Se ha creado la categoría correctamente');
 
-            $this->redirect($this->generateUrl('admin_category_index'));
+            return $this->redirect($this->generateUrl('admin_category_index'));
         }
 
         return $this->render('BackendBundle:Category:create.html.twig', array('edit' => false, 'form' => $form->createView()));

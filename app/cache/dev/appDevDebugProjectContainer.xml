@@ -16,6 +16,7 @@
       <parameter key="AsseticBundle">Symfony\Bundle\AsseticBundle\AsseticBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
+      <parameter key="StofDoctrineExtensionsBundle">Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle</parameter>
       <parameter key="UserBundle">Ecommerce\UserBundle\UserBundle</parameter>
       <parameter key="CategoryBundle">Ecommerce\CategoryBundle\CategoryBundle</parameter>
       <parameter key="ItemBundle">Ecommerce\ItemBundle\ItemBundle</parameter>
@@ -513,6 +514,28 @@
     <parameter key="sensio_framework_extra.converter.doctrine.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter</parameter>
     <parameter key="sensio_framework_extra.converter.datetime.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DateTimeParamConverter</parameter>
     <parameter key="sensio_framework_extra.view.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener</parameter>
+    <parameter key="stof_doctrine_extensions.event_listener.locale.class">Stof\DoctrineExtensionsBundle\EventListener\LocaleListener</parameter>
+    <parameter key="stof_doctrine_extensions.event_listener.logger.class">Stof\DoctrineExtensionsBundle\EventListener\LoggerListener</parameter>
+    <parameter key="stof_doctrine_extensions.event_listener.blame.class">Stof\DoctrineExtensionsBundle\EventListener\BlameListener</parameter>
+    <parameter key="stof_doctrine_extensions.uploadable.manager.class">Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager</parameter>
+    <parameter key="stof_doctrine_extensions.uploadable.mime_type_guesser.class">Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter</parameter>
+    <parameter key="stof_doctrine_extensions.uploadable.default_file_info.class">Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo</parameter>
+    <parameter key="stof_doctrine_extensions.default_locale">es</parameter>
+    <parameter key="stof_doctrine_extensions.default_file_path">null</parameter>
+    <parameter key="stof_doctrine_extensions.translation_fallback">false</parameter>
+    <parameter key="stof_doctrine_extensions.persist_default_translation">false</parameter>
+    <parameter key="stof_doctrine_extensions.skip_translation_on_load">false</parameter>
+    <parameter key="stof_doctrine_extensions.uploadable.validate_writable_directory">true</parameter>
+    <parameter key="stof_doctrine_extensions.listener.translatable.class">Gedmo\Translatable\TranslatableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.timestampable.class">Gedmo\Timestampable\TimestampableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.blameable.class">Gedmo\Blameable\BlameableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.sluggable.class">Gedmo\Sluggable\SluggableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.tree.class">Gedmo\Tree\TreeListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.loggable.class">Gedmo\Loggable\LoggableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.sortable.class">Gedmo\Sortable\SortableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.softdeleteable.class">Gedmo\SoftDeleteable\SoftDeleteableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.uploadable.class">Gedmo\Uploadable\UploadableListener</parameter>
+    <parameter key="stof_doctrine_extensions.listener.reference_integrity.class">Gedmo\ReferenceIntegrity\ReferenceIntegrityListener</parameter>
     <parameter key="user.user_manager.class">Ecommerce\UserBundle\Form\Handler\UserManager</parameter>
     <parameter key="user.user_form_handler.class">Ecommerce\UserBundle\Form\Handler\UserHandler</parameter>
     <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
@@ -2276,6 +2299,26 @@
       <argument type="service">
         <service class="Symfony\Bridge\Doctrine\ContainerAwareEventManager" public="false">
           <argument type="service" id="service_container"/>
+          <call method="addEventSubscriber">
+            <argument type="service">
+              <service class="Gedmo\Timestampable\TimestampableListener" public="false">
+                <tag name="doctrine.event_subscriber" connection="default"/>
+                <call method="setAnnotationReader">
+                  <argument type="service" id="annotation_reader"/>
+                </call>
+              </service>
+            </argument>
+          </call>
+          <call method="addEventSubscriber">
+            <argument type="service">
+              <service class="Gedmo\Sluggable\SluggableListener" public="false">
+                <tag name="doctrine.event_subscriber" connection="default"/>
+                <call method="setAnnotationReader">
+                  <argument type="service" id="annotation_reader"/>
+                </call>
+              </service>
+            </argument>
+          </call>
         </service>
       </argument>
       <argument type="collection"/>
@@ -2470,6 +2513,22 @@
       </argument>
       <argument type="service" id="security.authentication.trust_resolver" on-invalid="null"/>
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
+    </service>
+    <service id="stof_doctrine_extensions.uploadable.manager" class="Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager">
+      <argument type="service">
+        <service class="Gedmo\Uploadable\UploadableListener" public="false">
+          <argument type="service">
+            <service class="Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter" public="false"/>
+          </argument>
+          <call method="setAnnotationReader">
+            <argument type="service" id="annotation_reader"/>
+          </call>
+          <call method="setDefaultFileInfoClass">
+            <argument>Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo</argument>
+          </call>
+        </service>
+      </argument>
+      <argument>Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo</argument>
     </service>
     <service id="user.manager" class="Ecommerce\UserBundle\Form\Handler\UserManager">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>

@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ecommerce\ItemBundle\Entity\Item;
 
 /**
  * @ORM\Table()
@@ -55,8 +56,8 @@ class Category
     protected $created;
 
     /**
-     * @Gedmo\Timestampable(on="delete")
-     * @ORM\Column(name="deleted", type="datetime", nullable=true)
+     * @ORM\Column(name="deleted", type="date", nullable=true)
+     * @Assert\Date()
      */
     protected $deleted;
 
@@ -161,14 +162,14 @@ class Category
         return $this->items;
     }
 
-    public function addItem(Ecommerce\ItemBundle\Entity\Item $item)
+    public function addItem($item)
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
         }
     }
 
-    public function removeItem(Ecommerce\ItemBundle\Entity\Item $item)
+    public function removeItem($item)
     {
         if ($this->items->contains($item)) {
             $this->items->remove($item);

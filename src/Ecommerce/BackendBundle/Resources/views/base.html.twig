@@ -28,6 +28,10 @@
                         window.location = $(this).attr('href');
                     }
                 });
+
+                $('form').bind('submit', function(event) {
+                    $('.loader').show();
+                })
             });
         </script>
     {% endblock %}

@@ -1,0 +1,54 @@
+{% extends "BackendBundle:Layouts:2columns.html.twig" %}
+
+{% block title_section %}
+    {{ "Listado de categorías" | trans }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ path('admin_category_create') }}" class="btn btn-success">
+            <i class="fa fa-plus"></i> {{ "Crear Categoría" | trans }}
+        </a>
+    </div>
+    {% if categories | length > 0 %}
+        <div class="widget-box">
+            <div class="widget-title">
+            <span class="icon">
+                <i class="fa fa-th"></i>
+            </span>
+                <h5>{{ "Listado de categorías"|trans }}</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ "Nombre"|trans }}</th>
+                        <th>{{ "Nº de productos"|trans }}</th>
+                        <th>{{ "Acciones"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td><a title="Modificar" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}">{{ category.category }}</a></td>
+                            <td>{{ category.items | length }}</td>
+                            <td>
+                                <a title="Borrar" class="delete" href="{{ path('admin_category_delete', { 'slug': category.slug }) }}"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info mt">
+            <strong>{{"Información!" | trans }}</strong>
+            {{"No se ha encontrado ningún registro" | trans }}
+        </div>
+    {% endif %}
+{% endblock %}
