@@ -9,3 +9,7 @@ admin_order_view:
 admin_order_delete_item:
     pattern: /delete-item/{itemId}/{orderId}
     defaults: { _controller: BackendBundle:Item:deleteItem }
+
+admin_order_send:
+    pattern: /send-item/{id}
+    defaults: { _controller: BackendBundle:Item:deleteItem }

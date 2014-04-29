@@ -2,6 +2,7 @@
 
 namespace Ecommerce\BackendBundle\Controller;
 
+use Ecommerce\OrderBundle\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Ecommerce\FrontendBundle\Controller\CustomController;
@@ -38,5 +39,21 @@ class OrderController extends CustomController
         }
 
         return $this->redirect($this->generateUrl('admin_order_view', array('id' => $orderId)));
+    }
+
+    /**
+     * @ParamConverter("order", class="OrderBundle:Order")
+     */
+    public function markAsSentAction(Order $order)
+    {
+        $em = $this->getEntityManager();
+
+        $order->setStatus(Order::STATUS_SEND);
+        $em->persist($order);
+        $em->flush();
+
+        $this->setTranslatedFlashMessage('El pedido ha sido marcado como enviado');
+
+        $this->redirect($this->generateUrl('admin_order_index'));
     }
 }

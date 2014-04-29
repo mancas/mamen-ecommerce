@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * @ORM\Table()
@@ -18,6 +19,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Order
 {
+    const STATUS_READY = "Listo para envío";
+    const STATUS_SEND = "Enviado";
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -42,6 +46,11 @@ class Order
      * @Assert\NotBlank()
      */
     protected $items;
+
+    /**
+     * @ORM\Column(name="status", type="string")
+     */
+    protected $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ecommerce\UserBundle\Entity\Address")
@@ -146,5 +155,36 @@ class Order
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function getStatusChoices()
+    {
+        return array(self::STATUS_READY => self::STATUS_READY, self::STATUS_SEND => self::STATUS_SEND);
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    protected function isStatusValid(ExecutionContextInterface $context)
+    {
+        if (!in_array($this->getStatus(), $this->getStatusChoices())) {
+            $context->addViolationAt('status', 'This order status is not valid', array(), null);
+        }
     }
 }
