@@ -40,6 +40,12 @@ class User implements UserInterface, \Serializable, EquatableInterface
     protected $name;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    protected $lastName;
+
+    /**
      * @ORM\OneToMany(targetEntity="Ecommerce\UserBundle\Entity\Address", mappedBy="user")
      */
     protected $addresses;
@@ -247,5 +253,21 @@ class User implements UserInterface, \Serializable, EquatableInterface
     {
         if ($this->addresses->contains($address))
             $this->addresses->remove($address);
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 }

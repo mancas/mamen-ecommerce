@@ -13,7 +13,7 @@ class UserController extends CustomController
         $em = $this->getEntityManager();
         $users = $em->getRepository("UserBundle:User")->findAll();
 
-        $this->render("BackendBundle:User:list.html.twig", array('users' => $users));
+        return $this->render("BackendBundle:User:list.html.twig", array('users' => $users));
     }
 
     /**
@@ -21,7 +21,7 @@ class UserController extends CustomController
      */
     public function viewAction(User $user)
     {
-        $this->render("BackendBundle:User:view.html.twig", array('user' => $user));
+        return $this->render("BackendBundle:User:view.html.twig", array('user' => $user));
     }
 
     /**
@@ -38,7 +38,7 @@ class UserController extends CustomController
             $this->redirect($this->generateUrl('admin_user_index'));
         }
 
-        $this->render("BackendBundle:User:create.html.twig", array('edit' => true, 'form' => $form->createView()));
+        return $this->render("BackendBundle:User:create.html.twig", array('edit' => true, 'form' => $form->createView()));
     }
 
     /**
@@ -52,6 +52,6 @@ class UserController extends CustomController
 
         $this->setTranslatedFlashMessage('Se ha eliminado el usuario');
 
-        $this->redirect($this->generateUrl('admin_user_index'));
+        return $this->redirect($this->generateUrl('admin_user_index'));
     }
 }

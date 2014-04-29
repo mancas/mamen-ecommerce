@@ -48,7 +48,7 @@ class Order
     protected $items;
 
     /**
-     * @ORM\Column(name="status", type="string")
+     * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
     protected $status;
 

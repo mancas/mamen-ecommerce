@@ -1,6 +1,5 @@
-backend_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: BackendBundle:Default:index }
+admin_logout:
+    pattern: /logout
 
 admin_categories:
     resource: "@BackendBundle/Resources/config/routing/category.yml"
@@ -13,3 +12,7 @@ admin_users:
 admin_items:
     resource: "@BackendBundle/Resources/config/routing/item.yml"
     prefix: /product/
+
+admin_orders:
+    resource: "@BackendBundle/Resources/config/routing/order.yml"
+    prefix: /order/

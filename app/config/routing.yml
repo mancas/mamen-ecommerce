@@ -4,7 +4,7 @@ frontend:
 
 backend:
     resource: "@BackendBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /bo
 
 order:
     resource: "@OrderBundle/Resources/config/routing.yml"
