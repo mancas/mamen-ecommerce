@@ -6,6 +6,10 @@
   margin-top: 16px;
 }
 
+.mt20 {
+    margin-top: 20px;
+}
+
 .image-item{
   display:inline-block;
   background-position:center;

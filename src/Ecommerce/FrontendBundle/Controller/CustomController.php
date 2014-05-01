@@ -28,4 +28,14 @@ class CustomController extends Controller
     {
         return $this->getDoctrine()->getManager();
     }
+
+    protected function getCriteriaFromSearchForm($form)
+    {
+        $criteria = array();
+        if ($form->isValid()) {
+            $criteria = $form->getData();
+        }
+
+        return $criteria;
+    }
 }

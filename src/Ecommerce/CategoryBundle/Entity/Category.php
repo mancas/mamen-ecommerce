@@ -191,4 +191,9 @@ class Category
     {
         return $this->slug;
     }
+
+    public function __toString()
+    {
+        return $this->getCategory();
+    }
 }

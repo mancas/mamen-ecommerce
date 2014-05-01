@@ -3,7 +3,7 @@ admin_item_index:
     defaults: { _controller: BackendBundle:Item:list }
 
 admin_item_view:
-    pattern: /{slug}
+    pattern: /view/{slug}
     defaults: { _controller: BackendBundle:Item:view }
 
 admin_item_edit:
@@ -11,5 +11,9 @@ admin_item_edit:
     defaults: { _controller: BackendBundle:Item:edit }
 
 admin_item_delete:
-    pattern: /delete/{id}
+    pattern: /delete/{slug}
     defaults: { _controller: BackendBundle:Item:delete }
+
+admin_item_create:
+    pattern: /create
+    defaults: { _controller: BackendBundle:Item:create }

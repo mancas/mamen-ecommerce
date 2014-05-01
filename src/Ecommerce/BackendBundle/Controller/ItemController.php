@@ -2,19 +2,27 @@
 
 namespace Ecommerce\BackendBundle\Controller;
 
+use Ecommerce\BackendBundle\Form\Type\ItemSearchType;
+use Ecommerce\ImageBundle\Form\Type\MultipleImageType;
 use Ecommerce\ItemBundle\Form\Type\ItemType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Ecommerce\FrontendBundle\Controller\CustomController;
+use Ecommerce\ItemBundle\Entity\Item;
+use Symfony\Component\HttpFoundation\Request;
 
 class ItemController extends CustomController
 {
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getEntityManager();
-        $items = $em->getRepository('ItemBundle:Item')->findAll();
+        $form = $this->createForm(new ItemSearchType());
+        $form->submit($request);
+        $criteria = $this->getCriteriaFromSearchForm($form);
 
-        return $this->render('BackendBundle:Item:list.html.twig', array('items' => $items));
+        $items = $em->getRepository("ItemBundle:Item")->findBySearchCriteria($criteria)->getResult();
+
+        return $this->render('BackendBundle:Item:list.html.twig', array('items' => $items, 'form' => $form->createView()));
     }
 
     /**
@@ -31,15 +39,18 @@ class ItemController extends CustomController
     public function editAction(Item $item, Request $request)
     {
         $form = $this->createForm(new ItemType(), $item);
+        $imageForm = $this->createForm(new MultipleImageType());
         $handler = $this->get('item.item_form_handler');
+        $imagesHandler = $this->get('image.form_handler');
 
         if ($handler->handle($form, $request)) {
+            $imagesHandler->handleMultiple($imageForm, $request, $item);
             $this->setTranslatedFlashMessage('Se ha modificado el producto');
 
-            $this->redirect($this->generateUrl('admin_item_index'));
+            return $this->redirect($this->generateUrl('admin_item_index'));
         }
 
-        return $this->render('BackendBundle:Item:create.html.twig', array('edit' => true, 'form' => $form->createView()));
+        return $this->render('BackendBundle:Item:create.html.twig', array('edition' => true, 'item' => $item, 'form' => $form->createView(), 'formImage' => $imageForm->createView()));
     }
 
     /**
@@ -53,20 +64,24 @@ class ItemController extends CustomController
 
         $this->setTranslatedFlashMessage('Se ha eliminado el producto');
 
-        $this->redirect($this->generateUrl('admin_item_index'));
+        return $this->redirect($this->generateUrl('admin_item_index'));
     }
 
     public function createAction(Request $request)
     {
-        $form = $this->createForm(new ItemType());
+        $item = new Item();
+        $form = $this->createForm(new ItemType(), $item);
+        $imageForm = $this->createForm(new MultipleImageType());
         $handler = $this->get('item.item_form_handler');
+        $imagesHandler = $this->get('image.form_handler');
 
         if ($handler->handle($form, $request)) {
+            $imagesHandler->handleMultiple($imageForm, $request, $item);
             $this->setTranslatedFlashMessage('Se ha creado el producto correctamente');
 
-            $this->redirect($this->generateUrl('admin_item_index'));
+            return $this->redirect($this->generateUrl('admin_item_index'));
         }
 
-        return $this->render('BackendBundle:Item:create.html.twig', array('edit' => false, 'form' => $form->createView()));
+        return $this->render('BackendBundle:Item:create.html.twig', array('form' => $form->createView(), 'formImage' => $imageForm->createView()));
     }
 }

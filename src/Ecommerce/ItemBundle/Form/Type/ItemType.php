@@ -14,15 +14,15 @@ class ItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text')
-                ->add('description', 'textarea')
-                ->add('price', 'money')
+        $builder->add('name', 'text', array('required' => true))
+                ->add('description', 'textarea', array('required' => true))
+                ->add('price', 'number', array('required' => true))
                 ->add('category', 'entity',
                         array(
                             'class' => 'CategoryBundle:Category',
                             'query_builder' => function (EntityRepository $er) {
                                     return $er->createQueryBuilder('c')->orderBy('c.category', 'ASC');
-                                }
+                                }, 'expanded' => false
                         )
                     );
     }

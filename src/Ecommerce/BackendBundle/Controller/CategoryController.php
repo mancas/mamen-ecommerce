@@ -33,7 +33,7 @@ class CategoryController extends CustomController
             return $this->redirect($this->generateUrl('admin_category_index'));
         }
 
-        return $this->render('BackendBundle:Category:create.html.twig', array('edit' => true, 'form' => $form->createView()));
+        return $this->render('BackendBundle:Category:create.html.twig', array('edition' => true, 'category' => $category, 'form' => $form->createView()));
     }
 
     /**
@@ -61,6 +61,6 @@ class CategoryController extends CustomController
             return $this->redirect($this->generateUrl('admin_category_index'));
         }
 
-        return $this->render('BackendBundle:Category:create.html.twig', array('edit' => false, 'form' => $form->createView()));
+        return $this->render('BackendBundle:Category:create.html.twig', array('form' => $form->createView()));
     }
 }

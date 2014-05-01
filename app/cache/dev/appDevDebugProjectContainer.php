@@ -114,6 +114,8 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.hinclude' => 'getFragment_Renderer_HincludeService',
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'http_kernel' => 'getHttpKernelService',
+            'image.form_handler' => 'getImage_FormHandlerService',
+            'image.manager' => 'getImage_ManagerService',
             'item.item_form_handler' => 'getItem_ItemFormHandlerService',
             'kernel' => 'getKernelService',
             'locale_listener' => 'getLocaleListenerService',
@@ -628,16 +630,18 @@ class appDevDebugProjectContainer extends Container
         $d = new \Doctrine\Common\Cache\ArrayCache();
         $d->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
 
-        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity'));
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity', 4 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity', 5 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity'));
 
         $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $f->addDriver($e, 'Ecommerce\\UserBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\CategoryBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\ItemBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\OrderBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\FrontendBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\ImageBundle\\Entity');
 
         $g = new \Doctrine\ORM\Configuration();
-        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity'));
+        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity', 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\Entity', 'ImageBundle' => 'Ecommerce\\ImageBundle\\Entity'));
         $g->setMetadataCacheImpl($b);
         $g->setQueryCacheImpl($c);
         $g->setResultCacheImpl($d);
@@ -1374,6 +1378,32 @@ class appDevDebugProjectContainer extends Container
     protected function getHttpKernelService()
     {
         return $this->services['http_kernel'] = new \Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel($this->get('debug.event_dispatcher'), $this, $this->get('debug.controller_resolver'), $this->get('request_stack'));
+    }
+
+    /**
+     * Gets the 'image.form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler A Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler instance.
+     */
+    protected function getImage_FormHandlerService()
+    {
+        return $this->services['image.form_handler'] = new \Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler($this->get('image.manager'), $this->get('validator'));
+    }
+
+    /**
+     * Gets the 'image.manager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\ImageBundle\Form\Handler\ImageManager A Ecommerce\ImageBundle\Form\Handler\ImageManager instance.
+     */
+    protected function getImage_ManagerService()
+    {
+        return $this->services['image.manager'] = new \Ecommerce\ImageBundle\Form\Handler\ImageManager($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -3006,6 +3036,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Resources/views', 'Order');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/BackendBundle/Resources/views', 'Backend');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views', 'Frontend');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views', 'Image');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', 'WebProfiler');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', 'SensioDistribution');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/app/Resources/views');
@@ -3505,6 +3536,7 @@ class appDevDebugProjectContainer extends Container
                 'OrderBundle' => 'Ecommerce\\OrderBundle\\OrderBundle',
                 'BackendBundle' => 'Ecommerce\\BackendBundle\\BackendBundle',
                 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\FrontendBundle',
+                'ImageBundle' => 'Ecommerce\\ImageBundle\\ImageBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
@@ -4044,6 +4076,8 @@ class appDevDebugProjectContainer extends Container
             'user.user_form_handler.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserHandler',
             'item.item_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ItemFormHandler',
             'category.categoryformhandler.class' => 'Ecommerce\\BackendBundle\\Form\\Handler\\CategoryFormHandler',
+            'image.image_manager.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\ImageManager',
+            'image.create_image_form.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\CreateImageFormHandler',
             'web_profiler.controller.profiler.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController',
             'web_profiler.controller.router.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController',
             'web_profiler.controller.exception.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController',

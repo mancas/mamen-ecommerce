@@ -2,6 +2,7 @@
 
 namespace Ecommerce\ItemBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
@@ -11,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ecommerce\ItemBundle\Entity\ItemRepository")
  * @DoctrineAssert\UniqueEntity("id")
  * @UniqueEntity("id")
  */
@@ -36,7 +37,7 @@ class Item
     protected $description;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(name="price", type="float")
      */
     protected $price;
 
@@ -50,6 +51,11 @@ class Item
      * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
     protected $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ecommerce\ImageBundle\Entity\ImageItem", mappedBy="item", cascade={"persist", "remove", "merge"})
+     */
+    protected $images;
 
     /**
      * @Gedmo\Timestampable(on="update")
@@ -68,6 +74,11 @@ class Item
      * @Assert\Date()
      */
     protected $deleted;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * @param mixed $created
@@ -211,5 +222,21 @@ class Item
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * @param mixed $images
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

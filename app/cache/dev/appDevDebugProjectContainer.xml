@@ -23,6 +23,7 @@
       <parameter key="OrderBundle">Ecommerce\OrderBundle\OrderBundle</parameter>
       <parameter key="BackendBundle">Ecommerce\BackendBundle\BackendBundle</parameter>
       <parameter key="FrontendBundle">Ecommerce\FrontendBundle\FrontendBundle</parameter>
+      <parameter key="ImageBundle">Ecommerce\ImageBundle\ImageBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -540,6 +541,8 @@
     <parameter key="user.user_form_handler.class">Ecommerce\UserBundle\Form\Handler\UserHandler</parameter>
     <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
     <parameter key="category.categoryformhandler.class">Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler</parameter>
+    <parameter key="image.image_manager.class">Ecommerce\ImageBundle\Form\Handler\ImageManager</parameter>
+    <parameter key="image.create_image_form.class">Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler</parameter>
     <parameter key="web_profiler.controller.profiler.class">Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController</parameter>
     <parameter key="web_profiler.controller.router.class">Symfony\Bundle\WebProfilerBundle\Controller\RouterController</parameter>
     <parameter key="web_profiler.controller.exception.class">Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController</parameter>
@@ -2353,6 +2356,8 @@
               <argument key="CategoryBundle">Ecommerce\CategoryBundle\Entity</argument>
               <argument key="ItemBundle">Ecommerce\ItemBundle\Entity</argument>
               <argument key="OrderBundle">Ecommerce\OrderBundle\Entity</argument>
+              <argument key="FrontendBundle">Ecommerce\FrontendBundle\Entity</argument>
+              <argument key="ImageBundle">Ecommerce\ImageBundle\Entity</argument>
             </argument>
           </call>
           <call method="setMetadataCacheImpl">
@@ -2394,6 +2399,8 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2408,6 +2415,8 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2422,6 +2431,8 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2436,10 +2447,44 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
                   <argument>Ecommerce\OrderBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\FrontendBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\ImageBundle\Entity</argument>
                 </call>
               </service>
             </argument>
@@ -2541,6 +2586,13 @@
     </service>
     <service id="category.category_form_handler" class="Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="image.manager" class="Ecommerce\ImageBundle\Form\Handler\ImageManager">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="image.form_handler" class="Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler">
+      <argument type="service" id="image.manager"/>
+      <argument type="service" id="validator"/>
     </service>
     <service id="web_profiler.controller.profiler" class="Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController">
       <argument type="service" id="router" on-invalid="null"/>
@@ -2860,6 +2912,10 @@
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views</argument>
         <argument>Frontend</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views</argument>
+        <argument>Image</argument>
       </call>
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
