@@ -115,3 +115,18 @@ span.error{
     width:100%;
     border:1px solid #ccc;
 }
+
+i {
+    margin-right: 5px;
+}
+
+.image-box-item {
+    float: left;
+    margin-right: 15px;
+}
+
+.add-image {
+    margin: 0;
+    line-height: 100px;
+    cursor: pointer;
+}

@@ -36,6 +36,11 @@ class OrderItem
     protected $order;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $quantity = 1;
+
+    /**
      * @param mixed $id
      */
     public function setId($id)
@@ -81,6 +86,22 @@ class OrderItem
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 
 }

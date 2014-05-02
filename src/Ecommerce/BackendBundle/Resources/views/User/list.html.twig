@@ -33,13 +33,13 @@
                         <td><a title="Modificar" href="{{ path('admin_user_edit', { 'id': user.id }) }}">{{ user.name }}</a></td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.email }}</td>
-                        <td>
+                        <td class="text-center">
                             {% if user.deletedDate %}
                                 {{ "Eliminado"|trans }}
                             {% else %}
-                                <a title="Ver detalles" href="{{ path('admin_user_view', { 'id': user.id }) }}"><i class="fa fa-eye"></i></a>
-                                <a title="Modificar" href="{{ path('admin_user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil"></i></a>
-                                <a title="Borrar" class="delete" href="{{ path('admin_user_delete', { 'id': user.id }) }}"><i class="fa fa-trash-o"></i></a>
+                                <a title="Ver detalles" class="btn btn-primary btn-xs" href="{{ path('admin_user_view', { 'id': user.id }) }}"><i class="fa fa-eye"></i>{{ 'Ver' | trans }}</a>
+                                <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
+                                <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_user_delete', { 'id': user.id }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             {% endif %}
                         </td>
                     </tr>

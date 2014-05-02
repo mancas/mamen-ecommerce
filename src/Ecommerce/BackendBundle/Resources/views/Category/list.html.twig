@@ -36,9 +36,9 @@
                         <tr>
                             <td><a title="Modificar" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}">{{ category.category }}</a></td>
                             <td>{{ category.items | length }}</td>
-                            <td>
-                                <a title="Modificar" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}"><i class="fa fa-pencil"></i></a>
-                                <a title="Borrar" class="delete" href="{{ path('admin_category_delete', { 'slug': category.slug }) }}"><i class="fa fa-trash-o"></i></a>
+                            <td class="text-center">
+                                <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
+                                <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_category_delete', { 'slug': category.slug }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

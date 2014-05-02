@@ -62,9 +62,9 @@
                             <td>{{ item.description|length > 100 ? item.description|slice(0, 100) ~ '...' : item.description }}</td>
                             <td>{{ item.price }} <i class="fa fa-euro"></i></td>
                             <td>{{ item.category }}</td>
-                            <td>
-                                <a title="Modificar" href="{{ path('admin_item_edit', { 'slug': item.slug }) }}"><i class="fa fa-pencil"></i></a>
-                                <a title="Borrar" class="delete" href="{{ path('admin_item_delete', { 'slug': item.slug }) }}"><i class="fa fa-trash-o"></i></a>
+                            <td class="text-center">
+                                <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_item_edit', { 'slug': item.slug }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
+                                <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_item_delete', { 'slug': item.slug }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}
