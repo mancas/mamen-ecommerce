@@ -34,7 +34,7 @@
                     <tbody>
                     {% for category in categories %}
                         <tr>
-                            <td><a title="Modificar" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}">{{ category.category }}</a></td>
+                            <td><a title="Modificar" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}">{{ category }}</a></td>
                             <td>{{ category.items | length }}</td>
                             <td class="text-center">
                                 <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>

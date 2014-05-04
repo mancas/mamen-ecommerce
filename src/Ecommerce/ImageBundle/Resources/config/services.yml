@@ -1,6 +1,7 @@
 parameters:
     image.image_manager.class: Ecommerce\ImageBundle\Form\Handler\ImageManager
     image.create_image_form.class: Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler
+    image.createasynchronousformhandler.class: Ecommerce\ImageBundle\Form\Handler\CreateImageAsynchronousFormHandler
 
 services:
     image.manager:
@@ -9,3 +10,6 @@ services:
     image.form_handler:
         class: %image.create_image_form.class%
         arguments: [@image.manager, @validator]
+    image.create_image_asynchronous_form_handler:
+            class: %image.createasynchronousformhandler.class%
+            arguments: [@image.manager, @validator, @service_container]

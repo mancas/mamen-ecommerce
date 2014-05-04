@@ -125,8 +125,13 @@ i {
     margin-right: 15px;
 }
 
-.add-image {
+.upload-image {
     margin: 0;
     line-height: 100px;
     cursor: pointer;
+}
+
+
+.wrap-upload .spinner{
+    background: #F4F4F4 url('../img/ajax-loader.gif') no-repeat center !important;
 }

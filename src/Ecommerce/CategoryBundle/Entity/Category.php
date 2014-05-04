@@ -30,10 +30,10 @@ class Category
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
-    protected $category;
+    protected $name;
 
     /**
-     * @Gedmo\Slug(fields={"category"}, updatable=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
     protected $slug;
@@ -117,17 +117,17 @@ class Category
     /**
      * @param mixed $category
      */
-    public function setCategory($category)
+    public function setName($name)
     {
-        $this->category = $category;
+        $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getName()
     {
-        return $this->category;
+        return $this->name;
     }
 
     /**
@@ -194,6 +194,6 @@ class Category
 
     public function __toString()
     {
-        return $this->getCategory();
+        return $this->getName();
     }
 }

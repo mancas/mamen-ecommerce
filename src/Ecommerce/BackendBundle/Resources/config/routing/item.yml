@@ -17,3 +17,7 @@ admin_item_delete:
 admin_item_create:
     pattern: /create
     defaults: { _controller: BackendBundle:Item:create }
+
+admin_item_upload_images:
+    pattern: /upload-images/{id}
+    defaults: { _controller: BackendBundle:Item:uploadImages }

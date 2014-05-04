@@ -21,7 +21,7 @@ class ItemType extends AbstractType
                         array(
                             'class' => 'CategoryBundle:Category',
                             'query_builder' => function (EntityRepository $er) {
-                                    return $er->createQueryBuilder('c')->orderBy('c.category', 'ASC');
+                                    return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                                 }, 'expanded' => false
                         )
                     );

@@ -55,6 +55,12 @@ class FileHelper
         @unlink($path);
     }
 
+    public static function removeFileFromDirectory($objName, $directory)
+    {
+        $path = self::PATH . '/' . $directory . '/' . $objName;
+        @unlink($path);
+    }
+
     public static function executeConvert($path, $originalFilePath, $width, $height, $quality, $crop = false)
     {
         $size = getimagesize($originalFilePath);

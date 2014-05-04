@@ -21,6 +21,11 @@ class CustomController extends Controller
         $this->get('session')->getFlashBag()->set($class, $translatedMessage);
     }
 
+    protected function getTranslatedMessage($message)
+    {
+        return $this->get('translator')->trans($message);
+    }
+
     /**
      * @return \Doctrine\ORM\EntityManager
      */

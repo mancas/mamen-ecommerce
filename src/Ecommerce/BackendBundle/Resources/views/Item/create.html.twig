@@ -35,7 +35,9 @@
 
             <ul class="nav nav-tabs pull-right">
                 <li class="active"><a href="#product" data-toggle="tab"><i class="fa fa-puzzle-piece"></i>{{ 'Producto' | trans }}</a></li>
+                {% if item is defined %}
                 <li><a href="#images" data-toggle="tab"><i class="fa fa-picture-o"></i>{{ 'Imágenes' | trans }}</a></li>
+                {% endif %}
             </ul>
         </div>
         <div class="widget-content nopadding">
@@ -91,8 +93,20 @@
                                 {{ form_widget(form.category, { 'attr': { 'class': 'form-control required'} }) }}
                             </div>
                         </div>
-                    </div>
 
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-sm-10">
+                                <button id="register" type="submit" class="btn btn-primary">
+                                    {{ "Guardar cambios"|trans }}
+                                </button>
+                                <img style="display:none;" class="ml15 loader pull-lef" src="{{ asset('bundles/frontend/img/ajax-loader.gif') }}">
+                            </div>
+                            <p class="col-md-offset-2 col-sm-10 help-block">
+                                <span class="red">*</span> {{"Campos obligatorios" | trans }}
+                            </p>
+                        </div>
+                    </div>
+                    {% if item is defined %}
                     <div id="images" class="tab-pane">
                         <div class="row mt">
                             <div class="col-md-12">
@@ -102,7 +116,7 @@
                             </div>
                         </div>
                         {% if edition is defined %}
-                            <div class="col-sm-10 col-sm-offset-2 mt20" id="images_item">
+                            <div class="col-sm-12 mt20" id="images_item">
                                 {% if item.images is defined and item.images | length > 0%}
                                     {% for image in item.images %}
                                         {% set imagePath= image.ImageThumbnail.getWebFilePath ~ '?' ~ random() %}
@@ -114,7 +128,7 @@
                                                     <a title="{% if image.main %}{{ 'Principal'|trans }}{% else %}{{ 'No principal'|trans }}{% endif %}" class="main" href="">
                                                         <i class="fa {% if image.main %}fa-star{% else %}fa-star-o{% endif %}"></i>
                                                     </a>
-                                                    <a title="{{ 'Eliminar'|trans }}" class="delete" href="">
+                                                    <a title="{{ 'Eliminar'|trans }}" class="delete-image" href="{{ path('delete_image', {'id' : image.id}) }}">
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
                                                 </div>
@@ -123,32 +137,23 @@
                                     {% endfor %}
                                 {% endif %}
 
-                                <div class="image-box-item">
-                                    <div class="image-item">
-                                        <h1 class="add-image"><i class="fa fa-plus"></i></h1>
+                                <div class="wrap-upload image-box-item">
+                                    <div class="image-item upload-image">
+                                        <i class="fa fa-plus"></i>
                                     </div>
+                                    <span class="msg-upload hidden"></span>
                                 </div>
                             </div>
                         {% endif %}
                         <div class="form-group">
                             <div class="col-sm-10 col-sm-offset-2">
-                                <input type="file" multiple="multiple" class="hide" name="multiple_images[images][]" id="multiple_images_images">
+                                <input type="file" multiple="multiple" class="hide" data-url="{{ path('admin_item_upload_images', {'id' : item.id}) }}" name="multiple_images[images][]" id="multiple_images_images">
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endif %}
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-sm-10">
-                        <button id="register" type="submit" class="btn btn-primary">
-                            {{ "Guardar cambios"|trans }}
-                        </button>
-                        <img style="display:none;" class="ml15 loader pull-lef" src="{{ asset('bundles/frontend/img/ajax-loader.gif') }}">
-                    </div>
-                    <p class="col-md-offset-2 col-sm-10 help-block">
-                        <span class="red">*</span> {{"Campos obligatorios" | trans }}
-                    </p>
-                </div>
                 {{ form_rest(form) }}
             </form>
         </div>
@@ -162,22 +167,21 @@
 
     <script>
         $(document).ready(function() {
-            $('body').delegate('.add-image', 'click', function (event) {
+            $('body').delegate('.upload-image', 'click', function (event) {
                 event.preventDefault();
                 $('input[type=file]').click();
             });
 
-            $('input[type=file]').bind('change', function (event) {
-                var files = event.target.files;
-
-                for (var i = 0; i < files.length; i++) {
-                    loadImage(
-                            files[i],
-                            function (img) {
-                                document.body.appendChild(img);
-                            },
-                            {maxWidth: 100} // Options
-                    );
+            $('body').delegate('a.delete-image', 'click', function (event) {
+                event.preventDefault();
+                if (confirm('{{ "¿Estas seguro que quieres borrarlo?" | trans() }}')) {
+                    var path =  $(this).attr('href'),
+                        wrap = $(this).closest('.image-box-item');
+                    $.post(path, function(response) {
+                        if (response.ok) {
+                            wrap.remove();
+                        }
+                    });
                 }
             });
         });

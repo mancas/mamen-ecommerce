@@ -114,6 +114,7 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.hinclude' => 'getFragment_Renderer_HincludeService',
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'http_kernel' => 'getHttpKernelService',
+            'image.create_image_asynchronous_form_handler' => 'getImage_CreateImageAsynchronousFormHandlerService',
             'image.form_handler' => 'getImage_FormHandlerService',
             'image.manager' => 'getImage_ManagerService',
             'item.item_form_handler' => 'getItem_ItemFormHandlerService',
@@ -1378,6 +1379,19 @@ class appDevDebugProjectContainer extends Container
     protected function getHttpKernelService()
     {
         return $this->services['http_kernel'] = new \Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel($this->get('debug.event_dispatcher'), $this, $this->get('debug.controller_resolver'), $this->get('request_stack'));
+    }
+
+    /**
+     * Gets the 'image.create_image_asynchronous_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\ImageBundle\Form\Handler\CreateImageAsynchronousFormHandler A Ecommerce\ImageBundle\Form\Handler\CreateImageAsynchronousFormHandler instance.
+     */
+    protected function getImage_CreateImageAsynchronousFormHandlerService()
+    {
+        return $this->services['image.create_image_asynchronous_form_handler'] = new \Ecommerce\ImageBundle\Form\Handler\CreateImageAsynchronousFormHandler($this->get('image.manager'), $this->get('validator'), $this);
     }
 
     /**
@@ -4078,6 +4092,7 @@ class appDevDebugProjectContainer extends Container
             'category.categoryformhandler.class' => 'Ecommerce\\BackendBundle\\Form\\Handler\\CategoryFormHandler',
             'image.image_manager.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\ImageManager',
             'image.create_image_form.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\CreateImageFormHandler',
+            'image.createasynchronousformhandler.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\CreateImageAsynchronousFormHandler',
             'web_profiler.controller.profiler.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController',
             'web_profiler.controller.router.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController',
             'web_profiler.controller.exception.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController',

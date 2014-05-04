@@ -77,11 +77,52 @@ class ItemController extends CustomController
 
         if ($handler->handle($form, $request)) {
             $imagesHandler->handleMultiple($imageForm, $request, $item);
-            $this->setTranslatedFlashMessage('Se ha creado el producto correctamente');
+            $this->setTranslatedFlashMessage('Se ha creado el producto correctamente. ¡Ahora puede subir las imágenes!');
 
-            return $this->redirect($this->generateUrl('admin_item_index'));
+            return $this->redirect($this->generateUrl('admin_item_edit', array('slug' => $item->getSlug())));
         }
 
         return $this->render('BackendBundle:Item:create.html.twig', array('form' => $form->createView(), 'formImage' => $imageForm->createView()));
+    }
+
+    /**
+     * @ParamConverter("item", class="ItemBundle:Item")
+     */
+    public function uploadImagesAction(Request $request, Item $item)
+    {
+        $file = $request->files->get('multiple_images');
+        $file = $file['images'][0];
+
+        $formImgHandler = $this->get('image.create_image_asynchronous_form_handler');
+        $result = $formImgHandler->handleAjaxUpload($file, $item, $request);
+
+        if (!is_array($result)) {
+            $request_result = false;
+            $request_pathImage = null;
+            $request_idImage = null;
+            if ($result == false) {
+                $request_msg = $this->getTranslatedMessage("No se ha podido subir la imágen, inténtalo de nuevo");
+            } elseif (get_class($result) == "Symfony\\Component\\Validator\\ConstraintViolationList") {
+                $request_msg = $result->get(0)->getMessage();
+            }
+            $deleteImageUrl = null;
+            $imageMainUrl = null;
+        } else {
+            $request_result = true;
+            $request_msg = $this->getTranslatedMessage('La foto se ha subido correctamente');
+            $request_pathImage = $result['path'];
+            $request_idImage = $result['id'];
+            //$deleteImageUrl = $this->container->get('router')->generate('remove_image',array('id' => $request_idImage), true);
+            //$imageMainUrl = $this->container->get('router')->generate('change_image_main',array('slugItem' => $item->getSlug(), 'idImage' => $request_idImage), true);
+            $deleteImageUrl = null;
+            $imageMainUrl = null;
+        }
+
+        return $response = new \Symfony\Component\HttpFoundation\Response(json_encode(array('request_result'    => $request_result,
+            'request_msg'       => $request_msg,
+            'request_pathImage' => $request_pathImage,
+            'request_pathDelete'=> $deleteImageUrl,
+            'request_pathMain'  => $imageMainUrl,
+            'request_idImage'   => $request_idImage)));
     }
 }
