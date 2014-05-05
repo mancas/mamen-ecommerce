@@ -16,3 +16,7 @@ admin_items:
 admin_orders:
     resource: "@BackendBundle/Resources/config/routing/order.yml"
     prefix: /order/
+
+admin_manufacturers:
+    resource: "@BackendBundle/Resources/config/routing/manufacturer.yml"
+    prefix: /manufacturer/

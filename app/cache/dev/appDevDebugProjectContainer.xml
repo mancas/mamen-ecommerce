@@ -540,6 +540,7 @@
     <parameter key="user.user_manager.class">Ecommerce\UserBundle\Form\Handler\UserManager</parameter>
     <parameter key="user.user_form_handler.class">Ecommerce\UserBundle\Form\Handler\UserHandler</parameter>
     <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
+    <parameter key="manufacturer.manufacturer_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler</parameter>
     <parameter key="category.categoryformhandler.class">Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler</parameter>
     <parameter key="image.image_manager.class">Ecommerce\ImageBundle\Form\Handler\ImageManager</parameter>
     <parameter key="image.create_image_form.class">Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler</parameter>
@@ -2583,6 +2584,9 @@
       <argument type="service" id="user.manager"/>
     </service>
     <service id="item.item_form_handler" class="Ecommerce\ItemBundle\Form\Handler\ItemFormHandler">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="manufacturer.manufacturer_form_handler" class="Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
     </service>
     <service id="category.category_form_handler" class="Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler">

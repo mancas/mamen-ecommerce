@@ -81,6 +81,11 @@ class Item
      */
     protected $manufacturers;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $stock = 1;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -292,5 +297,21 @@ class Item
         if ($this->manufacturers->contains($manufacturer)) {
             $this->manufacturers->remove($manufacturer);
         }
+    }
+
+    /**
+     * @param mixed $stock
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStock()
+    {
+        return $this->stock;
     }
 }

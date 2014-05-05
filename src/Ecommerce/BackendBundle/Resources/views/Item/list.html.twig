@@ -52,6 +52,7 @@
                         <th>{{ "Descripción"|trans }}</th>
                         <th>{{ "Precio"|trans }}</th>
                         <th>{{ "Categoría"|trans }}</th>
+                        <th>{{ "Stock"|trans }}</th>
                         <th>{{ "Acciones"|trans }}</th>
                     </tr>
                     </thead>
@@ -62,6 +63,7 @@
                             <td>{{ item.description|length > 100 ? item.description|slice(0, 100) ~ '...' : item.description }}</td>
                             <td>{{ item.price }} <i class="fa fa-euro"></i></td>
                             <td>{{ item.category }}</td>
+                            <td>{{ item.stock }}</td>
                             <td class="text-center">
                                 <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_item_edit', { 'slug': item.slug }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
                                 <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_item_delete', { 'slug': item.slug }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>

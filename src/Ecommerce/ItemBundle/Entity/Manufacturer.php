@@ -35,6 +35,12 @@ class Manufacturer
      */
     protected $items;
 
+    /**
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    protected $slug;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -107,4 +113,21 @@ class Manufacturer
             $this->items->remove($item);
         }
     }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    
 }

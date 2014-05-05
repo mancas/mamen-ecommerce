@@ -24,7 +24,8 @@ class ItemType extends AbstractType
                                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                                 }, 'expanded' => false
                         )
-                    );
+                    )
+                ->add('stock', 'number', array('required' => false));
     }
 
     /**

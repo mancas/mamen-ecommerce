@@ -75,7 +75,7 @@
                                 {{ 'Precio'|trans }}
                                 <a href="#" data-placement="right" class="cf-tooltip" data-toggle="tooltip" title="{{ "Precio del producto"|trans }}"><span class="fa fa-question-sign"></span></a></label>
                             </label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="input-group">
                                     {{ form_widget(form.price, { 'attr': { 'class': 'form-control required'} }) }}
                                     <span class="input-group-addon"><i class="fa fa-euro"></i></span>
@@ -91,6 +91,17 @@
                             </label>
                             <div class="col-sm-3">
                                 {{ form_widget(form.category, { 'attr': { 'class': 'form-control required'} }) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="item_title" class="col-sm-2 control-label">
+                                <span class="red">*</span>
+                                {{ 'Stock'|trans }}
+                                <a href="#" data-placement="right" class="cf-tooltip" data-toggle="tooltip" title="{{ "Existencias del producto"|trans }}"><span class="fa fa-question-sign"></span></a></label>
+                            </label>
+                            <div class="col-sm-1">
+                                {{ form_widget(form.stock, { 'attr': { 'class': 'form-control required'} }) }}
                             </div>
                         </div>
 

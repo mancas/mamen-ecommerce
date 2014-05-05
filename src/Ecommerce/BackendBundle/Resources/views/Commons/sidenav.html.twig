@@ -8,11 +8,14 @@
         <li class="{% if action == 'admin_user_index' or action == 'admin_user_edit' or action == 'admin_user_view' %}active open{% endif %}">
             <a href="{{ path('admin_user_index') }}"><i class="fa fa-users"></i> <span>{{ "Usuarios"|trans }}</span></a>
         </li>
-        <li class="{% if action == 'admin_item_index' or action == 'admin_item_create' or action == 'admin_item_edit' %}active open{% endif %}">
-            <a href="{{ path('admin_item_index') }}"><i class="fa fa-puzzle-piece"></i> <span>{{ "Productos"|trans }}</span></a>
-        </li>
         <li class="{% if action == 'admin_category_index' or action == 'admin_category_create' or action == 'admin_category_edit' %}active open{% endif %}">
             <a href="{{ path('admin_category_index') }}"><i class="fa fa-folder-open"></i> <span>{{ "Categorias"|trans }}</span></a>
+        </li>
+        <li class="{% if action == 'admin_manufacturer_index' or action == 'admin_manufacturer_create' or action == 'admin_manufacturer_edit' %}active open{% endif %}">
+            <a href="{{ path('admin_manufacturer_index') }}"><i class="fa fa-briefcase"></i> <span>{{ "Fabricantes"|trans }}</span></a>
+        </li>
+        <li class="{% if action == 'admin_item_index' or action == 'admin_item_create' or action == 'admin_item_edit' %}active open{% endif %}">
+            <a href="{{ path('admin_item_index') }}"><i class="fa fa-puzzle-piece"></i> <span>{{ "Productos"|trans }}</span></a>
         </li>
         <li class="{% if action == 'admin_order_index' or action == 'admin_order_view' %}active open{% endif %}">
             <a href="{{ path('admin_order_index') }}"><i class="fa fa-truck"></i> <span>{{ "Pedidos"|trans }}</span></a>

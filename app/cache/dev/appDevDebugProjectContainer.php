@@ -121,6 +121,7 @@ class appDevDebugProjectContainer extends Container
             'kernel' => 'getKernelService',
             'locale_listener' => 'getLocaleListenerService',
             'logger' => 'getLoggerService',
+            'manufacturer.manufacturer_form_handler' => 'getManufacturer_ManufacturerFormHandlerService',
             'monolog.handler.console' => 'getMonolog_Handler_ConsoleService',
             'monolog.handler.debug' => 'getMonolog_Handler_DebugService',
             'monolog.handler.main' => 'getMonolog_Handler_MainService',
@@ -1476,6 +1477,19 @@ class appDevDebugProjectContainer extends Container
         $instance->pushHandler($this->get('monolog.handler.debug'));
 
         return $instance;
+    }
+
+    /**
+     * Gets the 'manufacturer.manufacturer_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler A Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler instance.
+     */
+    protected function getManufacturer_ManufacturerFormHandlerService()
+    {
+        return $this->services['manufacturer.manufacturer_form_handler'] = new \Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -4089,6 +4103,7 @@ class appDevDebugProjectContainer extends Container
             'user.user_manager.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserManager',
             'user.user_form_handler.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserHandler',
             'item.item_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ItemFormHandler',
+            'manufacturer.manufacturer_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ManufacturerFormHandler',
             'category.categoryformhandler.class' => 'Ecommerce\\BackendBundle\\Form\\Handler\\CategoryFormHandler',
             'image.image_manager.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\ImageManager',
             'image.create_image_form.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\CreateImageFormHandler',
