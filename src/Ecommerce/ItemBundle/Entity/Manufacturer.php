@@ -129,5 +129,5 @@ class Manufacturer
     {
         return $this->slug;
     }
-    
+
 }

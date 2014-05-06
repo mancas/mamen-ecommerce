@@ -1,5 +1,7 @@
 {% extends 'BackendBundle::base.html.twig' %}
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/backend/css/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/backend/css/custom.select2.css') }}" />
 {% endblock %}
 
 {% block header %}
@@ -40,4 +42,13 @@
     <script src="{{ asset('bundles/backend/js/jquery.iframe-transport.js') }}"></script>
     <script src="{{ asset('bundles/backend/js/jquery.fileupload.js') }}"></script>
     <script src="{{ asset('bundles/backend/js/util.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/select2.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.bo-tooltip').each(function () {
+                $(this).tooltip();
+            });
+        });
+    </script>
 {% endblock %}

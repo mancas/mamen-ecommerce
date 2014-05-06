@@ -112,10 +112,8 @@ class ItemController extends CustomController
             $request_msg = $this->getTranslatedMessage('La foto se ha subido correctamente');
             $request_pathImage = $result['path'];
             $request_idImage = $result['id'];
-            //$deleteImageUrl = $this->container->get('router')->generate('remove_image',array('id' => $request_idImage), true);
-            //$imageMainUrl = $this->container->get('router')->generate('change_image_main',array('slugItem' => $item->getSlug(), 'idImage' => $request_idImage), true);
-            $deleteImageUrl = null;
-            $imageMainUrl = null;
+            $deleteImageUrl = $this->container->get('router')->generate('delete_image',array('id' => $request_idImage), true);
+            $imageMainUrl = $this->container->get('router')->generate('change_image_main',array('id' => $request_idImage), true);
         }
 
         return $response = new \Symfony\Component\HttpFoundation\Response(json_encode(array('request_result'    => $request_result,

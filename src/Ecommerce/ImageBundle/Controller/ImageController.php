@@ -43,4 +43,36 @@ class ImageController extends CustomController
 
         return $this->getHttpJsonResponse($jsonResponse);
     }
+
+    /**
+     * @ParamConverter("imageItem", class="ImageBundle:ImageItem")
+     */
+    public function changeImageMainAction(ImageItem $imageItem, Request $request)
+    {
+        $jsonResponse = json_encode(array('ok' => false));
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getEntityManager();
+
+            if (!$imageItem) {
+                return $this->noPermission();
+            }
+            $imageMain = $imageItem->getItem()->getImageMain();
+            if ($imageMain && $imageItem->getId() != $imageMain->getId()) {
+                $imageMain->setMain(false);
+                $imageItem->setMain(true);
+                $em->persist($imageMain);
+                $em->persist($imageItem);
+                $em->flush();
+                $jsonResponse = json_encode(array('ok' => true));
+            }
+            if (!$imageMain) {
+                $imageItem->setMain(true);
+                $em->persist($imageItem);
+                $em->flush();
+                $jsonResponse = json_encode(array('ok' => true));
+            }
+        }
+
+        return $this->getHttpJsonResponse($jsonResponse);
+    }
 }

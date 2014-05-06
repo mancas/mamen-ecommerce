@@ -25,6 +25,16 @@ class ItemType extends AbstractType
                                 }, 'expanded' => false
                         )
                     )
+                ->add('manufacturers', 'entity',
+                    array(
+                        'class' => 'ItemBundle:Manufacturer',
+                        'query_builder' => function (EntityRepository $er) {
+                                return $er->createQueryBuilder('m')->orderBy('m.name', 'ASC');
+                            }, 'expanded' => false,
+                        'multiple' => true,
+                        'required' => false
+                    )
+                )
                 ->add('stock', 'number', array('required' => false));
     }
 

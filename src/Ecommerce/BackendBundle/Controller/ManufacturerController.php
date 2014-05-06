@@ -59,7 +59,7 @@ class ManufacturerController extends CustomController
         if ($handler->handle($form, $request)) {
             $this->setTranslatedFlashMessage('Se ha creado el fabricante correctamente');
 
-            return $this->redirect($this->generateUrl('admin_manufacturer_edit'));
+            return $this->redirect($this->generateUrl('admin_manufacturer_index'));
         }
 
         return $this->render('BackendBundle:Manufacturer:create.html.twig', array('form' => $form->createView()));
