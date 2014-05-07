@@ -1,0 +1,34 @@
+{% extends "FrontendBundle:Layouts:1column.html.twig" %}
+
+{% block title %}{{ "Ecommerce General"|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}home page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+    {# include 'FrontendBundle:Commons:banner-top.html.twig' #}
+    {# include 'FrontendBundle:Commons:search.html.twig' #}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            hi there
+        </div>
+        <div class="col-md-8">
+            hihi
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

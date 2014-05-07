@@ -24,6 +24,7 @@
       <parameter key="BackendBundle">Ecommerce\BackendBundle\BackendBundle</parameter>
       <parameter key="FrontendBundle">Ecommerce\FrontendBundle\FrontendBundle</parameter>
       <parameter key="ImageBundle">Ecommerce\ImageBundle\ImageBundle</parameter>
+      <parameter key="PaymentBundle">Ecommerce\PaymentBundle\PaymentBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -426,7 +427,28 @@
     <parameter key="assetic.value_supplier.class">Symfony\Bundle\AsseticBundle\DefaultValueSupplier</parameter>
     <parameter key="assetic.node.paths" type="collection"/>
     <parameter key="assetic.cache_dir">/home/manu/projects/mamen-ecommerce/app/cache/dev/assetic</parameter>
-    <parameter key="assetic.bundles" type="collection"/>
+    <parameter key="assetic.bundles" type="collection">
+      <parameter>FrameworkBundle</parameter>
+      <parameter>SecurityBundle</parameter>
+      <parameter>TwigBundle</parameter>
+      <parameter>MonologBundle</parameter>
+      <parameter>SwiftmailerBundle</parameter>
+      <parameter>AsseticBundle</parameter>
+      <parameter>DoctrineBundle</parameter>
+      <parameter>SensioFrameworkExtraBundle</parameter>
+      <parameter>StofDoctrineExtensionsBundle</parameter>
+      <parameter>UserBundle</parameter>
+      <parameter>CategoryBundle</parameter>
+      <parameter>ItemBundle</parameter>
+      <parameter>OrderBundle</parameter>
+      <parameter>BackendBundle</parameter>
+      <parameter>FrontendBundle</parameter>
+      <parameter>ImageBundle</parameter>
+      <parameter>PaymentBundle</parameter>
+      <parameter>WebProfilerBundle</parameter>
+      <parameter>SensioDistributionBundle</parameter>
+      <parameter>SensioGeneratorBundle</parameter>
+    </parameter>
     <parameter key="assetic.twig_extension.class">Symfony\Bundle\AsseticBundle\Twig\AsseticExtension</parameter>
     <parameter key="assetic.twig_formula_loader.class">Assetic\Extension\Twig\TwigFormulaLoader</parameter>
     <parameter key="assetic.helper.dynamic.class">Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper</parameter>
@@ -443,6 +465,11 @@
     <parameter key="assetic.ruby.bin">/usr/bin/ruby</parameter>
     <parameter key="assetic.sass.bin">/usr/local/bin/sass</parameter>
     <parameter key="assetic.filter.cssrewrite.class">Assetic\Filter\CssRewriteFilter</parameter>
+    <parameter key="assetic.filter.sass.class">Assetic\Filter\Sass\SassFilter</parameter>
+    <parameter key="assetic.filter.sass.bin">/usr/local/bin/sass</parameter>
+    <parameter key="assetic.filter.sass.timeout">null</parameter>
+    <parameter key="assetic.filter.sass.style">null</parameter>
+    <parameter key="assetic.filter.sass.compass">null</parameter>
     <parameter key="assetic.twig_extension.functions" type="collection"/>
     <parameter key="assetic.controller.class">Symfony\Bundle\AsseticBundle\Controller\AsseticController</parameter>
     <parameter key="assetic.routing_loader.class">Symfony\Bundle\AsseticBundle\Routing\AsseticLoader</parameter>
@@ -2120,7 +2147,28 @@
             <argument type="service" id="templating.name_parser"/>
             <argument>true</argument>
             <argument type="collection"/>
-            <argument type="collection"/>
+            <argument type="collection">
+              <argument>FrameworkBundle</argument>
+              <argument>SecurityBundle</argument>
+              <argument>TwigBundle</argument>
+              <argument>MonologBundle</argument>
+              <argument>SwiftmailerBundle</argument>
+              <argument>AsseticBundle</argument>
+              <argument>DoctrineBundle</argument>
+              <argument>SensioFrameworkExtraBundle</argument>
+              <argument>StofDoctrineExtensionsBundle</argument>
+              <argument>UserBundle</argument>
+              <argument>CategoryBundle</argument>
+              <argument>ItemBundle</argument>
+              <argument>OrderBundle</argument>
+              <argument>BackendBundle</argument>
+              <argument>FrontendBundle</argument>
+              <argument>ImageBundle</argument>
+              <argument>PaymentBundle</argument>
+              <argument>WebProfilerBundle</argument>
+              <argument>SensioDistributionBundle</argument>
+              <argument>SensioGeneratorBundle</argument>
+            </argument>
             <argument type="service" id="assetic.value_supplier.default" on-invalid="null"/>
           </service>
         </argument>
@@ -2177,6 +2225,7 @@
       <argument type="service" id="service_container"/>
       <argument type="collection">
         <argument key="cssrewrite">assetic.filter.cssrewrite</argument>
+        <argument key="sass">assetic.filter.sass</argument>
       </argument>
     </service>
     <service id="assetic.asset_manager" class="Assetic\Factory\LazyAssetManager">
@@ -2201,6 +2250,546 @@
           </service>
         </argument>
       </argument>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrameworkBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/FrameworkBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrameworkBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SecurityBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/SecurityBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SecurityBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>TwigBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/TwigBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>TwigBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MonologBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/MonologBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MonologBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SwiftmailerBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/SwiftmailerBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SwiftmailerBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/swiftmailer-bundle/Symfony/Bundle/SwiftmailerBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AsseticBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/AsseticBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AsseticBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/assetic-bundle/Symfony/Bundle/AsseticBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/DoctrineBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioFrameworkExtraBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/SensioFrameworkExtraBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioFrameworkExtraBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>StofDoctrineExtensionsBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/StofDoctrineExtensionsBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>StofDoctrineExtensionsBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/stof/doctrine-extensions-bundle/Stof/DoctrineExtensionsBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>UserBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/UserBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>UserBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>CategoryBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/CategoryBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>CategoryBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>ItemBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/ItemBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>ItemBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>OrderBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/OrderBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>OrderBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>BackendBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/BackendBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>BackendBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/BackendBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrontendBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/FrontendBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrontendBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>ImageBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/ImageBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>ImageBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>PaymentBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/PaymentBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>PaymentBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WebProfilerBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/WebProfilerBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WebProfilerBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/SensioDistributionBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/SensioGeneratorBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource" public="false">
@@ -2236,6 +2825,20 @@
     </service>
     <service id="assetic.filter.cssrewrite" class="Assetic\Filter\CssRewriteFilter">
       <tag name="assetic.filter" alias="cssrewrite"/>
+    </service>
+    <service id="assetic.filter.sass" class="Assetic\Filter\Sass\SassFilter">
+      <tag name="assetic.filter" alias="sass"/>
+      <argument>/usr/local/bin/sass</argument>
+      <argument>/usr/bin/ruby</argument>
+      <call method="setTimeout">
+        <argument>null</argument>
+      </call>
+      <call method="setStyle">
+        <argument>null</argument>
+      </call>
+      <call method="setCompass">
+        <argument>null</argument>
+      </call>
     </service>
     <service id="assetic.controller" class="Symfony\Bundle\AsseticBundle\Controller\AsseticController" scope="prototype">
       <argument type="service" id="request"/>
@@ -2360,6 +2963,7 @@
               <argument key="OrderBundle">Ecommerce\OrderBundle\Entity</argument>
               <argument key="FrontendBundle">Ecommerce\FrontendBundle\Entity</argument>
               <argument key="ImageBundle">Ecommerce\ImageBundle\Entity</argument>
+              <argument key="PaymentBundle">Ecommerce\PaymentBundle\Entity</argument>
             </argument>
           </call>
           <call method="setMetadataCacheImpl">
@@ -2403,6 +3007,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2419,6 +3024,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2435,6 +3041,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2451,6 +3058,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2467,6 +3075,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2483,10 +3092,28 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
                   <argument>Ecommerce\ImageBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\PaymentBundle\Entity</argument>
                 </call>
               </service>
             </argument>
@@ -2926,6 +3553,10 @@
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views</argument>
         <argument>Image</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views</argument>
+        <argument>Payment</argument>
       </call>
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>

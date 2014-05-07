@@ -20,8 +20,11 @@ class CategoryFormHandler
     {
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
+            $useInIndex = $request->request->get('category_index');
             if ($form->isValid()) {
                 $category = $form->getData();
+                if ($useInIndex)
+                    $category->setUseInIndex(true);
                 $this->em->persist($category);
                 $this->em->flush();
                 return true;

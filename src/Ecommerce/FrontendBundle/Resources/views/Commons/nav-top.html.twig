@@ -1,0 +1,36 @@
+{% set action = app.request.attributes.get('_route') %}
+<div class="navbar navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('frontend_homepage') }}">Ecommerce</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="" {% if action == 'what_is' %}class="current"{% endif %}>{{"¿Qué es Cornerfy?" | trans}}</a></li>
+                <li><a href="" {% if action == 'how_work' %}class="current"{% endif %}>{{"¿Cómo funciona?" | trans}}</a></li>
+                <li><a href="" {% if action == 'items' %}class="current"{% endif %}>{{"Espacios" | trans}}</a></li>
+                <li><a href="" {% if action == 'contact' %}class="current"{% endif %}>{{"Contacto" | trans}}</a></li>
+                {# if is_granted('ROLE_USER') %}
+                    <li class="profile">
+                        <a href="">
+                            <span class="visible-xs">{{"Mi perfil" | trans}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            {{"Cerrar" | trans}}
+                        </a>
+                    </li>
+                {% else %}
+                #}
+                    <li><a href="" class="btn-blue">{{"Acceder" | trans}}</a></li>
+                {# endif  #}
+            </ul>
+        </div>
+    </div>
+</div>

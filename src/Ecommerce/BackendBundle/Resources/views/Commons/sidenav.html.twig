@@ -17,8 +17,26 @@
         <li class="{% if action == 'admin_item_index' or action == 'admin_item_create' or action == 'admin_item_edit' %}active open{% endif %}">
             <a href="{{ path('admin_item_index') }}"><i class="fa fa-puzzle-piece"></i> <span>{{ "Productos"|trans }}</span></a>
         </li>
-        <li class="{% if action == 'admin_order_index' or action == 'admin_order_view' %}active open{% endif %}">
-            <a href="{{ path('admin_order_index') }}"><i class="fa fa-truck"></i> <span>{{ "Pedidos"|trans }}</span></a>
+        <li class="submenu {% if action == 'admin_order_index' or action == 'admin_order_view' %}open{% endif %}">
+            <a href="#">
+                <i class="fa fa-file"></i>
+                <span>{{ "Ventas"|trans }}</span>
+                <i class="arrow fa fa-chevron-right"></i>
+            </a>
+            <ul>
+                <li {% if action == 'admin_order_index' or action == 'admin_order_view' %}class="active"{% endif %}>
+                    <a href="{{ path('admin_order_index') }}"><i class="fa fa-shopping-cart"></i><span>{{ "Pedidos"|trans }}</span></a>
+                </li>
+                <li {% if action == 'admin_payment_index' %}class="active"{% endif %}>
+                    <a href=""><i class="fa fa-credit-card"></i><span>{{ "Pagos"|trans }}</span></a>
+                </li>
+                <li {% if action == 'admin_bill_index' %}class="active"{% endif %}>
+                    <a href=""><i class="fa fa-file-text-o"></i><span>{{ "Facturas"|trans }}</span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="{% if action == 'admin_billing_settings_index' or action == 'admin_billing_settings_create' or action == 'admin_billing_settings_edit' %}active open{% endif %}">
+            <a href="{{ path('admin_item_index') }}"><i class="fa fa-cogs"></i> <span>{{ "Datos de facturación"|trans }}</span></a>
         </li>
     </ul>
 </div>

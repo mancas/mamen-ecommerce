@@ -38,6 +38,7 @@ class appDevDebugProjectContainer extends Container
             'assetic.cache' => 'getAssetic_CacheService',
             'assetic.controller' => 'getAssetic_ControllerService',
             'assetic.filter.cssrewrite' => 'getAssetic_Filter_CssrewriteService',
+            'assetic.filter.sass' => 'getAssetic_Filter_SassService',
             'assetic.filter_manager' => 'getAssetic_FilterManagerService',
             'assetic.request_listener' => 'getAssetic_RequestListenerService',
             'assetic.value_supplier.default' => 'getAssetic_ValueSupplier_DefaultService',
@@ -287,9 +288,31 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAssetic_AssetManagerService()
     {
+        $a = $this->get('templating.loader');
+
         $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), new \Assetic\Cache\ConfigCache('/home/manu/projects/mamen-ecommerce/app/cache/dev/assetic/config'), true)));
 
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($this->get('templating.loader'), '', '/home/manu/projects/mamen-ecommerce/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrameworkBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/FrameworkBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrameworkBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SecurityBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SecurityBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SecurityBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'TwigBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/TwigBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'TwigBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MonologBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/MonologBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MonologBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SwiftmailerBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SwiftmailerBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SwiftmailerBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/swiftmailer-bundle/Symfony/Bundle/SwiftmailerBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/AsseticBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/assetic-bundle/Symfony/Bundle/AsseticBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/DoctrineBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', '/home/manu/projects/mamen-ecommerce/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SensioFrameworkExtraBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/home/manu/projects/mamen-ecommerce/vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'StofDoctrineExtensionsBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/StofDoctrineExtensionsBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'StofDoctrineExtensionsBundle', '/home/manu/projects/mamen-ecommerce/vendor/stof/doctrine-extensions-bundle/Stof/DoctrineExtensionsBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'UserBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/UserBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'UserBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'CategoryBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/CategoryBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'CategoryBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ItemBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/ItemBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ItemBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'OrderBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/OrderBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'OrderBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'BackendBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/BackendBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'BackendBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/BackendBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrontendBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/FrontendBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrontendBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ImageBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/ImageBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ImageBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'PaymentBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/PaymentBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'PaymentBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/WebProfilerBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SensioDistributionBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SensioGeneratorBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/home/manu/projects/mamen-ecommerce/vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', '/home/manu/projects/mamen-ecommerce/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
 
         return $instance;
     }
@@ -324,6 +347,25 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'assetic.filter.sass' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Assetic\Filter\Sass\SassFilter A Assetic\Filter\Sass\SassFilter instance.
+     */
+    protected function getAssetic_Filter_SassService()
+    {
+        $this->services['assetic.filter.sass'] = $instance = new \Assetic\Filter\Sass\SassFilter('/usr/local/bin/sass', '/usr/bin/ruby');
+
+        $instance->setTimeout(NULL);
+        $instance->setStyle(NULL);
+        $instance->setCompass(NULL);
+
+        return $instance;
+    }
+
+    /**
      * Gets the 'assetic.filter_manager' service.
      *
      * This service is shared.
@@ -333,7 +375,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAssetic_FilterManagerService()
     {
-        return $this->services['assetic.filter_manager'] = new \Symfony\Bundle\AsseticBundle\FilterManager($this, array('cssrewrite' => 'assetic.filter.cssrewrite'));
+        return $this->services['assetic.filter_manager'] = new \Symfony\Bundle\AsseticBundle\FilterManager($this, array('cssrewrite' => 'assetic.filter.cssrewrite', 'sass' => 'assetic.filter.sass'));
     }
 
     /**
@@ -632,7 +674,7 @@ class appDevDebugProjectContainer extends Container
         $d = new \Doctrine\Common\Cache\ArrayCache();
         $d->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
 
-        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity', 4 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity', 5 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity'));
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity', 4 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity', 5 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity', 6 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity'));
 
         $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $f->addDriver($e, 'Ecommerce\\UserBundle\\Entity');
@@ -641,9 +683,10 @@ class appDevDebugProjectContainer extends Container
         $f->addDriver($e, 'Ecommerce\\OrderBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\FrontendBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\ImageBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\PaymentBundle\\Entity');
 
         $g = new \Doctrine\ORM\Configuration();
-        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity', 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\Entity', 'ImageBundle' => 'Ecommerce\\ImageBundle\\Entity'));
+        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity', 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\Entity', 'ImageBundle' => 'Ecommerce\\ImageBundle\\Entity', 'PaymentBundle' => 'Ecommerce\\PaymentBundle\\Entity'));
         $g->setMetadataCacheImpl($b);
         $g->setQueryCacheImpl($c);
         $g->setResultCacheImpl($d);
@@ -3008,7 +3051,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FrameworkBundle', 1 => 'SecurityBundle', 2 => 'TwigBundle', 3 => 'MonologBundle', 4 => 'SwiftmailerBundle', 5 => 'AsseticBundle', 6 => 'DoctrineBundle', 7 => 'SensioFrameworkExtraBundle', 8 => 'StofDoctrineExtensionsBundle', 9 => 'UserBundle', 10 => 'CategoryBundle', 11 => 'ItemBundle', 12 => 'OrderBundle', 13 => 'BackendBundle', 14 => 'FrontendBundle', 15 => 'ImageBundle', 16 => 'PaymentBundle', 17 => 'WebProfilerBundle', 18 => 'SensioDistributionBundle', 19 => 'SensioGeneratorBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
         $instance->addGlobal('app', $this->get('templating.globals'));
 
@@ -3065,6 +3108,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/BackendBundle/Resources/views', 'Backend');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views', 'Frontend');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views', 'Image');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views', 'Payment');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', 'WebProfiler');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', 'SensioDistribution');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/app/Resources/views');
@@ -3565,6 +3609,7 @@ class appDevDebugProjectContainer extends Container
                 'BackendBundle' => 'Ecommerce\\BackendBundle\\BackendBundle',
                 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\FrontendBundle',
                 'ImageBundle' => 'Ecommerce\\ImageBundle\\ImageBundle',
+                'PaymentBundle' => 'Ecommerce\\PaymentBundle\\PaymentBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
@@ -3982,7 +4027,26 @@ class appDevDebugProjectContainer extends Container
             ),
             'assetic.cache_dir' => '/home/manu/projects/mamen-ecommerce/app/cache/dev/assetic',
             'assetic.bundles' => array(
-
+                0 => 'FrameworkBundle',
+                1 => 'SecurityBundle',
+                2 => 'TwigBundle',
+                3 => 'MonologBundle',
+                4 => 'SwiftmailerBundle',
+                5 => 'AsseticBundle',
+                6 => 'DoctrineBundle',
+                7 => 'SensioFrameworkExtraBundle',
+                8 => 'StofDoctrineExtensionsBundle',
+                9 => 'UserBundle',
+                10 => 'CategoryBundle',
+                11 => 'ItemBundle',
+                12 => 'OrderBundle',
+                13 => 'BackendBundle',
+                14 => 'FrontendBundle',
+                15 => 'ImageBundle',
+                16 => 'PaymentBundle',
+                17 => 'WebProfilerBundle',
+                18 => 'SensioDistributionBundle',
+                19 => 'SensioGeneratorBundle',
             ),
             'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
             'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',
@@ -4002,6 +4066,11 @@ class appDevDebugProjectContainer extends Container
             'assetic.ruby.bin' => '/usr/bin/ruby',
             'assetic.sass.bin' => '/usr/local/bin/sass',
             'assetic.filter.cssrewrite.class' => 'Assetic\\Filter\\CssRewriteFilter',
+            'assetic.filter.sass.class' => 'Assetic\\Filter\\Sass\\SassFilter',
+            'assetic.filter.sass.bin' => '/usr/local/bin/sass',
+            'assetic.filter.sass.timeout' => NULL,
+            'assetic.filter.sass.style' => NULL,
+            'assetic.filter.sass.compass' => NULL,
             'assetic.twig_extension.functions' => array(
 
             ),

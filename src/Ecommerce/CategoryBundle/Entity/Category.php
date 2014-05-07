@@ -61,6 +61,11 @@ class Category
      */
     protected $deleted;
 
+    /**
+     * @ORM\Column(name="useInIndex", type="boolean", nullable=true, options={"default" = 0})
+     */
+    protected $useInIndex = false;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -195,5 +200,21 @@ class Category
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @param mixed $useInIndex
+     */
+    public function setUseInIndex($useInIndex)
+    {
+        $this->useInIndex = $useInIndex;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUseInIndex()
+    {
+        return $this->useInIndex;
     }
 }

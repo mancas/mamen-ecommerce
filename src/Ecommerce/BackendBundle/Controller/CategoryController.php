@@ -63,4 +63,25 @@ class CategoryController extends CustomController
 
         return $this->render('BackendBundle:Category:create.html.twig', array('form' => $form->createView()));
     }
+
+    /**
+     * @ParamConverter("category", class="CategoryBundle:Category")
+     */
+    public function changeUseInIndexAction(Category $category)
+    {
+        $em = $this->getEntityManager();
+
+        if ($category->getUseInIndex()) {
+            $category->setUseInIndex(false);
+            $this->setTranslatedFlashMessage('La categoría ahora no se muestra en la página principal. Si no tienes 3 categorías mostrandose en la página principal, se utilizarán otras categorías según su fecha de creación');
+        } else {
+            $category->setUseInIndex(true);
+            $this->setTranslatedFlashMessage('La categoría se muestra ahora en la página principal. Ten en cuenta que se mostrarán solo 3 categorías ordenadas según la fecha de modificación');
+        }
+
+        $em->persist($category);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_category_index'));
+    }
 }

@@ -13,3 +13,8 @@ admin_category_create:
 admin_category_delete:
     pattern: /delete/{slug}
     defaults: { _controller: BackendBundle:Category:delete }
+
+admin_category_use_in_index:
+    pattern: /use-in-index/{slug}
+    defaults: { _controller: BackendBundle:Category:changeUseInIndex }
+
