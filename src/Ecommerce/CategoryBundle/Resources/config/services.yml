@@ -1,7 +1,7 @@
 parameters:
-#    category.example.class: Ecommerce\CategoryBundle\Example
+    subcategory.subcategory_form_handler.class: Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler
 
 services:
-#    category.example:
-#        class: %category.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    subcategory.subcategory_form_handler:
+        class: %subcategory.subcategory_form_handler.class%
+        arguments: [@doctrine.orm.entity_manager]

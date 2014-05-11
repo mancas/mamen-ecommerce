@@ -10,14 +10,27 @@
 
 {% block header %}
     {{ parent() }}
-    {# include 'FrontendBundle:Commons:banner-top.html.twig' #}
+    {% include 'FrontendBundle:Commons:banner-top.html.twig' %}
     {# include 'FrontendBundle:Commons:search.html.twig' #}
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-4">
-            hi there
+            <ul>
+                {% for category in categories %}
+                    <li>
+                        <span class="title">
+                            {{ category }}
+                        </span>
+                        <ul>
+                        {% for subcategory in category.subcategories %}
+                            <li>{{ subcategory }}</li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
         <div class="col-md-8">
             hihi

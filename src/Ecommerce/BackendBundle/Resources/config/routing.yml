@@ -5,6 +5,10 @@ admin_categories:
     resource: "@BackendBundle/Resources/config/routing/category.yml"
     prefix: /category/
 
+admin_subcategories:
+    resource: "@BackendBundle/Resources/config/routing/subcategory.yml"
+    prefix: /subcategory/
+
 admin_users:
     resource: "@BackendBundle/Resources/config/routing/user.yml"
     prefix: /user/

@@ -13,7 +13,7 @@ use Ecommerce\ItemBundle\Entity\Item;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ecommerce\CategoryBundle\Entity\CategoryRepository")
  * @DoctrineAssert\UniqueEntity("id")
  * @UniqueEntity("id")
  */
@@ -39,9 +39,9 @@ class Category
     protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ecommerce\ItemBundle\Entity\Item", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Ecommerce\CategoryBundle\Entity\Subcategory", mappedBy="category")
      */
-    protected $items;
+    protected $subcategories;
 
     /**
      * @Gedmo\Timestampable(on="update")
@@ -68,7 +68,7 @@ class Category
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->subcategories = new ArrayCollection();
     }
 
     /**
@@ -152,36 +152,6 @@ class Category
     }
 
     /**
-     * @param mixed $items
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    public function addItem($item)
-    {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-        }
-    }
-
-    public function removeItem($item)
-    {
-        if ($this->items->contains($item)) {
-            $this->items->remove($item);
-        }
-    }
-
-    /**
      * @param mixed $slug
      */
     public function setSlug($slug)
@@ -216,5 +186,35 @@ class Category
     public function getUseInIndex()
     {
         return $this->useInIndex;
+    }
+
+    /**
+     * @param mixed $subcategories
+     */
+    public function setSubcategories($subcategories)
+    {
+        $this->subcategories = $subcategories;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubcategories()
+    {
+        return $this->subcategories;
+    }
+
+    public function addSubcategory($subcategory)
+    {
+        if (!$this->subcategories->contains($subcategory)) {
+            $this->subcategories->add($subcategory);
+        }
+    }
+
+    public function removeSubcategory($subcategory)
+    {
+        if ($this->subcategories->contains($subcategory)) {
+            $this->subcategories->remove($subcategory);
+        }
     }
 }

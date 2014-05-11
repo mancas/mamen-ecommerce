@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" title="{{ 'Todos los productos' }}" href="">{{ 'Productos' | trans }}<i class="circle fa fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        {% for category in categories %}
+                            <li>
+                                <span class="title">
+                                    {{ category }}
+                                </span>
+                                <ul>
+                                    {% for subcategory in category.subcategories %}
+                                        <li>{{ subcategory }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- .col-md-12 -->
+    </div>
+</div><!-- .container -->

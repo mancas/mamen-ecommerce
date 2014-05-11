@@ -42,9 +42,9 @@ class Item
     protected $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ecommerce\CategoryBundle\Entity\Category", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Ecommerce\CategoryBundle\Entity\Subcategory", inversedBy="items")
      */
-    protected $category;
+    protected $subcategory;
 
     /**
      * @Gedmo\Slug(fields={"name"}, updatable=false)
@@ -141,19 +141,19 @@ class Item
     }
 
     /**
-     * @param mixed $category
+     * @param mixed $subcategory
      */
-    public function setCategory($category)
+    public function setSubcategory($subcategory)
     {
-        $this->category = $category;
+        $this->subcategory = $subcategory;
     }
 
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getSubcategory()
     {
-        return $this->category;
+        return $this->subcategory;
     }
 
     /**

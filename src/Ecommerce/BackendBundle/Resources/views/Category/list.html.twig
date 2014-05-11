@@ -27,7 +27,7 @@
                     <thead>
                     <tr>
                         <th>{{ "Nombre"|trans }}</th>
-                        <th>{{ "Nº de productos"|trans }}</th>
+                        <th>{{ "Nº de subcategorías"|trans }}</th>
                         <th>{{ "Mostrada en la página principal"|trans }}</th>
                         <th>{{ "Acciones"|trans }}</th>
                     </tr>
@@ -35,11 +35,12 @@
                     <tbody>
                     {% for category in categories %}
                         <tr>
-                            <td><a title="Modificar" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}">{{ category }}</a></td>
-                            <td>{{ category.items | length }}</td>
+                            <td><a title="Ver detalles" href="{{ path('admin_category_view', { 'slug': category.slug }) }}">{{ category }}</a></td>
+                            <td>{{ category.subcategories | length }}</td>
                             <td>{% if category.useInIndex %}{{ 'Sí' | trans }}{% else %}{{ 'No' | trans }}{% endif %}</td>
                             <td class="text-center">
                                 <a title="Usar en el index" class="btn btn-dark-green btn-xs" href="{{ path('admin_category_use_in_index', { 'slug': category.slug }) }}"><i class="fa fa-star"></i>{% if category.useInIndex %}{{ 'No mostrar en index' | trans }}{% else %}{{ 'Mostrar en index' | trans }}{% endif %}</a>
+                                <a title="Ver detalles" class="btn btn-dark-blue btn-xs" href="{{ path('admin_category_view', { 'slug': category.slug }) }}"><i class="fa fa-eye"></i>{{ 'Ver detalles' | trans }}</a>
                                 <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_category_edit', { 'slug': category.slug }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
                                 <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_category_delete', { 'slug': category.slug }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             </td>

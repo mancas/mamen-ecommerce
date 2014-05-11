@@ -84,4 +84,12 @@ class CategoryController extends CustomController
 
         return $this->redirect($this->generateUrl('admin_category_index'));
     }
+
+    /**
+     * @ParamConverter("category", class="CategoryBundle:Category")
+     */
+    public function viewAction(Category $category)
+    {
+        return $this->render('BackendBundle:Category:view.html.twig', array('category' => $category));
+    }
 }

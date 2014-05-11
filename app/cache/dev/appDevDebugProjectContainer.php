@@ -179,6 +179,7 @@ class appDevDebugProjectContainer extends Container
             'session_listener' => 'getSessionListenerService',
             'stof_doctrine_extensions.uploadable.manager' => 'getStofDoctrineExtensions_Uploadable_ManagerService',
             'streamed_response_listener' => 'getStreamedResponseListenerService',
+            'subcategory.subcategory_form_handler' => 'getSubcategory_SubcategoryFormHandlerService',
             'swiftmailer.email_sender.listener' => 'getSwiftmailer_EmailSender_ListenerService',
             'swiftmailer.mailer.default' => 'getSwiftmailer_Mailer_DefaultService',
             'swiftmailer.mailer.default.plugin.messagelogger' => 'getSwiftmailer_Mailer_Default_Plugin_MessageloggerService',
@@ -2298,6 +2299,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'subcategory.subcategory_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler A Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler instance.
+     */
+    protected function getSubcategory_SubcategoryFormHandlerService()
+    {
+        return $this->services['subcategory.subcategory_form_handler'] = new \Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler($this->get('doctrine.orm.default_entity_manager'));
+    }
+
+    /**
      * Gets the 'swiftmailer.email_sender.listener' service.
      *
      * This service is shared.
@@ -4171,6 +4185,7 @@ class appDevDebugProjectContainer extends Container
             'stof_doctrine_extensions.listener.reference_integrity.class' => 'Gedmo\\ReferenceIntegrity\\ReferenceIntegrityListener',
             'user.user_manager.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserManager',
             'user.user_form_handler.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserHandler',
+            'subcategory.subcategory_form_handler.class' => 'Ecommerce\\CategoryBundle\\Form\\Handler\\SubcategoryFormHandler',
             'item.item_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ItemFormHandler',
             'manufacturer.manufacturer_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ManufacturerFormHandler',
             'category.categoryformhandler.class' => 'Ecommerce\\BackendBundle\\Form\\Handler\\CategoryFormHandler',

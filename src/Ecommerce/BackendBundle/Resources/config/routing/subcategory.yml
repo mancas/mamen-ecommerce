@@ -1,0 +1,19 @@
+admin_subcategory_index:
+    pattern: /
+    defaults: { _controller: BackendBundle:Subcategory:list }
+
+admin_subcategory_edit:
+    pattern: /edit/{slug}
+    defaults: { _controller: BackendBundle:Subcategory:edit }
+
+admin_subcategory_create:
+    pattern: /create-user
+    defaults: { _controller: BackendBundle:Subcategory:create }
+
+admin_subcategory_delete:
+    pattern: /delete/{slug}
+    defaults: { _controller: BackendBundle:Subcategory:delete }
+
+admin_subcategory_view:
+    pattern: /view/{slug}
+    defaults: { _controller: BackendBundle:Subcategory:view }

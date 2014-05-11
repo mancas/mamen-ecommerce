@@ -7,6 +7,9 @@ class FrontendController extends CustomController
 {
     public function indexAction()
     {
-        return $this->render('FrontendBundle:Pages:home.html.twig');
+        $em = $this->getEntityManager();
+
+        $categories = $em->getRepository('CategoryBundle:Category')->findCategoriesDQL();
+        return $this->render('FrontendBundle:Pages:home.html.twig', array('categories' => $categories));
     }
 }
