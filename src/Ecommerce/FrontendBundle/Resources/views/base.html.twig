@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="{{ asset('bundles/frontend/css/bootstrap.min.css') }}">
         {% stylesheets filter='cssrewrite, sass' output='css/main.css'
         'bundles/frontend/css/font-awesome.min.css'
-        'bundles/frontend/css/custom.csss'%}
+        'bundles/frontend/css/custom.scss'%}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     {% endblock %}
@@ -29,9 +29,8 @@
     {% block header %}{% endblock %}
     {% block body %}{% endblock %}
     <div class="push"></div>
+    {% block footer %}{% endblock %}
 </div>
-{% block footer %}{% endblock %}
-
 {% block javascripts %}{% endblock %}
 </body>
 </html>

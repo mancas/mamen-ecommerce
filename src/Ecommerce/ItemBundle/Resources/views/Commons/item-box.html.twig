@@ -1,0 +1,20 @@
+<div class="col-md-3">
+    <div class="item-box">
+        <div class="top">
+            {% set imagePath= item.imageMain.ImageItemBox.getWebFilePath ~ '?' ~ random() %}
+            <img class="img-responsive" src="{{ asset(imagePath) }}">
+        </div>
+        <div class="bottom">
+            <div class="item-info text-center">
+                <div class="item-title">
+                    <a title="{{ item }}" href="">{{ item.name|length > 40 ? item.name|slice(0, 40) ~ '...' : item.name  }}</a>
+                </div>
+                <span class="item-price">{{ item.price }} <i class="fa fa-euro"></i></span>
+            </div>
+
+            <div class="item-options text-center">
+                <a class="btn btn-blue add-to-cart" title="{{ 'Añadir al carrito' | trans }}" href=""><i class="fa fa-shopping-cart"></i>{{ 'Añadir al carrito' | trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>

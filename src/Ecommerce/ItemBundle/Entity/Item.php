@@ -314,4 +314,9 @@ class Item
     {
         return $this->stock;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

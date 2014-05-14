@@ -39,7 +39,7 @@ class Subcategory
     protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ecommerce\ItemBundle\Entity\Item", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Ecommerce\ItemBundle\Entity\Item", mappedBy="subcategory")
      */
     protected $items;
 

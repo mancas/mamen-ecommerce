@@ -16,30 +16,42 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-4">
-            <ul>
-                {% for category in categories %}
-                    <li>
-                        <span class="title">
-                            {{ category }}
-                        </span>
-                        <ul>
-                        {% for subcategory in category.subcategories %}
-                            <li>{{ subcategory }}</li>
-                        {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-md-8">
-            hihi
-        </div>
+        <div class="col-md-12">
+            <div class="line-block">
+                <h2 class="line-title">{{ 'Productos recientes' | trans }}</h2>
+            </div>
+        </div><!-- .col-md-12 -->
+        {% for item in recentItems %}
+            {{ render(controller("ItemBundle:Item:itemBox", {'item': item})) }}
+        {% endfor %}
     </div>
+
+    {% for key, items in seoCategories %}
+        <div class="row mt50">
+            <div class="col-md-12">
+                <div class="line-block">
+                    <h2 class="line-title">{{ key }}</h2>
+                </div>
+            </div><!-- .col-md-12 -->
+            {% for item in items %}
+                {{ render(controller("ItemBundle:Item:itemBox", {'item': item})) }}
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-toggle, .dropdown-menu').hover(function (e) {
+                        $(this).parent().addClass('open');
+                    },
+                    function (e) {
+                        $(this).parent().removeClass('open');
+                    });
+        });
+    </script>
 {% endblock %}
 
 {% block footer %}

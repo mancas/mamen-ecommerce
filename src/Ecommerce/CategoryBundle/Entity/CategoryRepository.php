@@ -26,4 +26,24 @@ class CategoryRepository extends CustomEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findSEOCategories($limit = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c');
+
+        $qb->addOrderBy('c.updated','DESC');
+
+        $and = $qb->expr()->andx();
+
+        $and->add($qb->expr()->eq('c.useInIndex', true));
+
+        $qb->where($and);
+
+        if (isset($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
