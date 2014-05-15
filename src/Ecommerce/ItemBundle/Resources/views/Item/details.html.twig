@@ -1,0 +1,69 @@
+{% extends "FrontendBundle:Layouts:1column.html.twig" %}
+
+{% block title %}{{ "Ecommerce General"|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}home page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/frontend/css/jquery.bxslider.css') }}">
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+    {{ render(controller("FrontendBundle:Frontend:categoryNav")) }}
+{% endblock %}
+
+{% block content %}
+    <div class="line-block">
+        <h2 class="line-title">{{ item }}</h2>
+    </div>
+    <div class="item-details">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="carousel">
+                    <ul class="list-unstyled">
+                        {% for img in item.images %}
+                            {% set path = img.ImageItemCarousel.getWebFilePath ~ '?' ~ random() %}
+                            <li><img src="{{ asset(path) }}"></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if item.images | length > 1 %}
+                <div id="carousel-pager">
+                    {% for img in item.images %}
+                        {% set path = img.ImageItemCarousel.getWebFilePath ~ '?' ~ random() %}
+                        <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset(path) }}" /></a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+
+            </div>
+        </div><!-- .row -->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/frontend/js/jquery.bxslider.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-toggle, .dropdown-menu').hover(function (e) {
+                        $(this).parent().addClass('open');
+                    },
+                    function (e) {
+                        $(this).parent().removeClass('open');
+                    });
+
+            $('.carousel').bxSlider({
+                pagerCustom: '#carousel-pager'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

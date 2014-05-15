@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 abstract class Image
 {
     const WEB_PATH = 'bundles/frontend/img/';
-    const UPLOAD_PATH = '/var/www/mamen-ecommerce/web/uploads/';
+    const UPLOAD_PATH = '/var/www/ecommerce/web/uploads/';
     const ERROR_MESSAGE = "Ha ocurrido un error. Asegúrate de subir imágenes JPG o PNG de menos de 2 megas y mayores a 640x480.";
     const INFO_MESSAGE = "El formato de las imágenes ha de ser JPG o PNG, deben pesar menos de 2 megas y ser mayores a 640x480.";
     const AJAX_LOADER = 'bundles/frontend/img/ajax-loader.gif';
@@ -236,6 +236,26 @@ abstract class Image
     }
 
     public function setImageThumbnail(\Ecommerce\ImageBundle\Entity\ImageThumbnail $thumbnail)
+    {
+        $this->setUniqueImageCopy($thumbnail);
+    }
+
+    public function getImageItemCarousel()
+    {
+        return $this->getImageCopyFromType('ImageItemCarousel');
+    }
+
+    public function setImageItemCarousel(\Ecommerce\ImageBundle\Entity\ImageItemCarousel $carousel)
+    {
+        $this->setUniqueImageCopy($carousel);
+    }
+
+    public function getImageItemCarouselThumbnail()
+    {
+        return $this->getImageCopyFromType('ImageItemCarouselThumbnail');
+    }
+
+    public function setImageItemCarouselThumbnail(\Ecommerce\ImageBundle\Entity\ImageItemCarouselThumbnail $thumbnail)
     {
         $this->setUniqueImageCopy($thumbnail);
     }

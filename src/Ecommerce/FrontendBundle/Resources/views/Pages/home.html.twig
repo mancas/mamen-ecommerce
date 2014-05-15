@@ -10,6 +10,7 @@
 
 {% block header %}
     {{ parent() }}
+    {{ render(controller("FrontendBundle:Frontend:categoryNav")) }}
     {% include 'FrontendBundle:Commons:banner-top.html.twig' %}
     {# include 'FrontendBundle:Commons:search.html.twig' #}
 {% endblock %}

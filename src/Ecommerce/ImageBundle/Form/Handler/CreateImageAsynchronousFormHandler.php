@@ -38,6 +38,7 @@ class CreateImageAsynchronousFormHandler
             $imageConstraint->maxSize = Image::MAX_SIZE;
 
             $errorList = $this->validator->validateValue($img, $imageConstraint);
+
             if (count($errorList) == 0) {
                 if (get_class($img) == "Symfony\\Component\\HttpFoundation\\File\\UploadedFile") {
                     try {
@@ -56,7 +57,7 @@ class CreateImageAsynchronousFormHandler
 
                     } catch (\Exception $e) {
                         $this->imageManager->removeImage($image);
-
+ldd($e->getMessage());
                         return false;
                     }
                 } else {

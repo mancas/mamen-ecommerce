@@ -58,6 +58,26 @@ class ImageItem extends Image
         return $thumb;
     }
 
+    public function createImageItemCarousel()
+    {
+        $thumb = $this->getImageItemCarousel();
+        if (!$thumb) {
+            $thumb = new ImageItemCarousel();
+        }
+
+        return $thumb;
+    }
+
+    public function createImageItemCarouselThumbnail()
+    {
+        $thumb = $this->getImageItemCarouselThumbnail();
+        if (!$thumb) {
+            $thumb = new ImageItemCarouselThumbnail();
+        }
+
+        return $thumb;
+    }
+
     public function createCopies()
     {
         list($oldRoute, $copies) = parent::createCopies();
@@ -66,6 +86,14 @@ class ImageItem extends Image
         }
 
         if ($boxw = $this->createImageItemBoxW()) {
+            $copies[] = $boxw;
+        }
+
+        if ($boxw = $this->createImageItemCarousel()) {
+            $copies[] = $boxw;
+        }
+
+        if ($boxw = $this->createImageItemCarouselThumbnail()) {
             $copies[] = $boxw;
         }
 

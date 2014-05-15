@@ -1,3 +1,4 @@
+{% if item.imageMain %}
 <div class="col-md-3">
     <div class="item-box">
         <div class="top">
@@ -7,7 +8,7 @@
         <div class="bottom">
             <div class="item-info text-center">
                 <div class="item-title">
-                    <a title="{{ item }}" href="">{{ item.name|length > 40 ? item.name|slice(0, 40) ~ '...' : item.name  }}</a>
+                    <a title="{{ item }}" href="{{ path('item_details', {'slug': item.slug}) }}">{{ item.name|length > 40 ? item.name|slice(0, 40) ~ '...' : item.name  }}</a>
                 </div>
                 <span class="item-price">{{ item.price }} <i class="fa fa-euro"></i></span>
             </div>
@@ -18,3 +19,4 @@
         </div>
     </div>
 </div>
+{% endif %}

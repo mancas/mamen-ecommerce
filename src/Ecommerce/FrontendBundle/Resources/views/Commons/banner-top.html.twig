@@ -1,26 +1,5 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <ul id="categories" class="nav nav-tabs clearfix">
-                {% for category in categories %}
-                    <li>
-                        <a class="dropdown-toggle" title="{{ 'Ver categoría' | trans }} {{ category }}" href="">{{ category }}</a>
-                        <div class="sub-menu dropdown-menu">
-                            <div class="sub-menu-items">
-                                <ul class="list-unstyled subcategories-list">
-                                    {% for subcategory in category.subcategories %}
-                                        <li><i class="fa fa-angle-right"></i>{{ subcategory }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div><!-- .col-md-12 -->
-    </div>
-
-    <div class="row">
         <div class="slider">
 
         </div>
