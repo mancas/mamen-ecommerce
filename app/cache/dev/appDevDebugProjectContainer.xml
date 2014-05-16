@@ -634,6 +634,9 @@
     <parameter key="console.command.ids" type="collection"/>
   </parameters>
   <services>
+    <service id="twig.extension.stockbar" class="Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension">
+      <tag name="twig.extension"/>
+    </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="kernel"/>
@@ -2025,6 +2028,9 @@
         <argument key="charset">UTF-8</argument>
         <argument key="paths" type="collection"/>
       </argument>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.stockbar"/>
+      </call>
       <call method="addExtension">
         <argument type="service">
           <service class="Symfony\Bundle\SecurityBundle\Twig\Extension\LogoutUrlExtension" public="false">

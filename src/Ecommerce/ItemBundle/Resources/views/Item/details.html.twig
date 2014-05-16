@@ -22,32 +22,63 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="carousel">
-                    <ul class="list-unstyled">
+                    <ul class="bxslider">
                         {% for img in item.images %}
                             {% set path = img.ImageItemCarousel.getWebFilePath ~ '?' ~ random() %}
                             <li><img src="{{ asset(path) }}"></li>
                         {% endfor %}
                     </ul>
                 </div>
-                {% if item.images | length > 1 %}
-                <div id="carousel-pager">
-                    {% for img in item.images %}
-                        {% set path = img.ImageItemCarousel.getWebFilePath ~ '?' ~ random() %}
-                        <a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset(path) }}" /></a>
-                    {% endfor %}
-                </div>
-                {% endif %}
             </div>
             <div class="col-md-5">
+                <p class="item-description">
+                    {{ item.description | capitalize }}
+                </p>
 
+                <div class="item-cart-options">
+                    <div class="item-stock">
+                        <div class="stock">
+                            {{ drawStockBar(item.stockLevel) }}
+                        </div>
+                        <span>{% if item.stock == 0 %}{{ 'Sin stock' | trans }}{% else %}{{ 'En stock' | trans }}{% endif %}</span>
+                    </div>
+                    {% if item.stock > 0 %}
+                    <span>{{ 'Cantidad' | trans }}:</span>
+                    <input type="number" id="cart-quantity" name="quantity" value="1">
+                    <a class="btn btn-blue">
+                        <i class="fa fa-shopping-cart"></i>
+                        {{ 'Comprar' | trans }}
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div><!-- .row -->
+    </div>
+
+    <div class="line-block">
+        <h2 class="line-title">{{ 'Productos relacionados' | trans }}</h2>
+    </div>
+
+    <div class="related-items">
+        {% for thumb in relatedItems %}
+        <div class="item-thumbnail">
+            <a title="{{ thumb }}" href="{{ path('item_details', {'slug': thumb.slug}) }}">
+                <div class="thumbnail-img">
+                    <img src="{{ asset(thumb.imageMain.ImageThumbnail.getWebFilePath) }}">
+                </div>
+                <div class="thumb-info">
+                    <span>{{ thumb.name|length > 30 ? thumb.name|slice(0, 30) ~ '...' : thumb.name  }}</span><br>
+                    <span class="price">{{ thumb.price }} <i class="fa fa-euro"></i></span>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/frontend/js/jquery.bxslider.min.js') }}"></script>
+    <script src="{{ asset('bundles/frontend/js/jquery.bxslider.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.dropdown-toggle, .dropdown-menu').hover(function (e) {
@@ -57,8 +88,12 @@
                         $(this).parent().removeClass('open');
                     });
 
-            $('.carousel').bxSlider({
-                pagerCustom: '#carousel-pager'
+            $('.bxslider').bxSlider({
+            {% if item.images | length > 1 %}
+                imagesPager: [{% for thumb in item.images %} '{{ asset(thumb.ImageItemCarouselThumbnail.getWebFilePath) }}' {% if loop.last %}{% else %},{% endif %} {% endfor %}]
+            {% else %}
+                pager: false,
+            {% endif %}
             });
         });
     </script>

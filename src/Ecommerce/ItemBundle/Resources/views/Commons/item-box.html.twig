@@ -14,7 +14,11 @@
             </div>
 
             <div class="item-options text-center">
+                {% if item.stock > 0 %}
                 <a class="btn btn-blue add-to-cart" title="{{ 'Añadir al carrito' | trans }}" href=""><i class="fa fa-shopping-cart"></i>{{ 'Añadir al carrito' | trans }}</a>
+                {% else %}
+                <a class="btn btn-disabled" title="{{ 'Agotado' | trans }}" href="">{{ 'Agotado' | trans }}</a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ $background-blue: #E6F6FA;
 $gray: #404040;
 $footer-gray: #888888;
 $footer-background: #F3F3F3;
+$disabled-gray: #DDDDDD;
 
 body {
   background: url(../img/texture.png) repeat;
@@ -113,6 +114,23 @@ a {
   padding-top: 12px;
   border-bottom: none;
   margin-bottom: 12px;
+
+  .home {
+    a{
+      transition: all 0.25s ease;
+      -webkit-transition: all 0.25s ease;
+      margin-right: 0;
+      border: none;
+      padding: 8px 10px;
+      font-weight: bold;
+      color: $blue;
+      font-size: 16px;
+
+      &:hover {
+        color: $pink;
+      }
+    }
+  }
 
   .dropdown-toggle {
     transition: all 0.25s ease;
@@ -304,5 +322,81 @@ a {
   &:hover {
     background-color: $blue-hover;
     color: $white;
+  }
+}
+
+.btn-disabled {
+  background-color: $disabled-gray;
+  color: $gray;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+}
+
+/** ITEM DETAILS **/
+.item-description {
+  color: $gray;
+  text-indent: 30px;
+}
+
+.item-cart-options {
+  margin-top: 30px;
+
+  .item-stock {
+    display: block;
+    margin-bottom: 15px;
+    .stock {
+      width: 50px;
+      float: left;
+      overflow: hidden;
+      position: relative;
+      margin-right: 10px;
+
+      .progress {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  input {
+    max-width: 50px;
+    margin-right: 8px;
+  }
+
+  span {
+    color: $gray;
+    font-weight: bold;
+  }
+}
+
+.related-items {
+  .item-thumbnail {
+    display: inline-block;
+    width: 120px;
+
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .thumbnail-img {
+      margin-bottom: 8px;
+      border-bottom: solid 2px $blue-hover;
+    }
+
+    .thumb-info {
+      font-size: 13px;
+
+      span {
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      .price {
+        color: $pink;
+        font-size: 16px;
+      }
+    }
   }
 }

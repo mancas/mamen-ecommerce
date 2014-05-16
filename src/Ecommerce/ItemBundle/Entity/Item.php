@@ -18,6 +18,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Item
 {
+    const OUT_OF_STOCK = 1;
+    const LOW_STOCK = 10;
+    const MEDIUM_STOCK = 50;
+    const HIGH_STOCK = 100;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -313,6 +318,26 @@ class Item
     public function getStock()
     {
         return $this->stock;
+    }
+
+    public function getStockLevel()
+    {
+        $currentStock = $this->getStock();
+        if ($currentStock == 0) {
+            return self::OUT_OF_STOCK;
+        } else {
+            if ($currentStock >= self::HIGH_STOCK) {
+                return self::HIGH_STOCK;
+            } else {
+                if ($currentStock > self::LOW_STOCK) {
+                    return self::MEDIUM_STOCK;
+                } else {
+                    if ($currentStock <= self::LOW_STOCK) {
+                        return self::LOW_STOCK;
+                    }
+                }
+            }
+        }
     }
 
     public function __toString()

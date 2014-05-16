@@ -1,0 +1,5 @@
+services:
+    twig.extension.stockbar:
+        class: Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension
+        tags:
+            - { name: twig.extension }

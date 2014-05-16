@@ -54,4 +54,27 @@ class ItemRepository extends CustomEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findRelatedItems($item, $limit = null)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p','i', 's');
+
+        $qb->leftJoin('p.images', 'i');
+        $qb->leftJoin('p.subcategory', 's');
+        $qb->addOrderBy('p.updated','DESC');
+
+        $and = $qb->expr()->andx();
+
+        $and->add($qb->expr()->neq('p.slug', "'" . $item->getSlug() . "'"));
+        $and->add($qb->expr()->eq('s.slug', "'" . $item->getSubcategory()->getSlug() . "'"));
+
+        $qb->where($and);
+
+        if (isset($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

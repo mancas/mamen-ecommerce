@@ -27,6 +27,9 @@ class ItemController extends CustomController
      */
     public function detailsAction(Item $item)
     {
-        return $this->render('ItemBundle:Item:details.html.twig', array('item' => $item));
+        $em = $this->getEntityManager();
+        $relatedItems = $em->getRepository('ItemBundle:Item')->findRelatedItems($item);
+
+        return $this->render('ItemBundle:Item:details.html.twig', array('item' => $item, 'relatedItems' => $relatedItems));
     }
 }

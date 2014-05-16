@@ -237,6 +237,7 @@ class appDevDebugProjectContainer extends Container
             'twig' => 'getTwigService',
             'twig.controller.exception' => 'getTwig_Controller_ExceptionService',
             'twig.exception_listener' => 'getTwig_ExceptionListenerService',
+            'twig.extension.stockbar' => 'getTwig_Extension_StockbarService',
             'twig.loader' => 'getTwig_LoaderService',
             'twig.translation.extractor' => 'getTwig_Translation_ExtractorService',
             'uri_signer' => 'getUriSignerService',
@@ -3052,6 +3053,7 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['twig'] = $instance = new \Twig_Environment($this->get('twig.loader'), array('debug' => true, 'strict_variables' => true, 'exception_controller' => 'twig.controller.exception:showAction', 'autoescape_service' => NULL, 'autoescape_service_method' => NULL, 'cache' => '/home/manu/projects/mamen-ecommerce/app/cache/dev/twig', 'charset' => 'UTF-8', 'paths' => array()));
 
+        $instance->addExtension($this->get('twig.extension.stockbar'));
         $instance->addExtension(new \Symfony\Bundle\SecurityBundle\Twig\Extension\LogoutUrlExtension($this->get('templating.helper.logout_url')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\SecurityExtension($this->get('security.context', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\TranslationExtension($this->get('translator')));
@@ -3096,6 +3098,19 @@ class appDevDebugProjectContainer extends Container
     protected function getTwig_ExceptionListenerService()
     {
         return $this->services['twig.exception_listener'] = new \Symfony\Component\HttpKernel\EventListener\ExceptionListener('twig.controller.exception:showAction', $this->get('monolog.logger.request', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+    }
+
+    /**
+     * Gets the 'twig.extension.stockbar' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension A Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension instance.
+     */
+    protected function getTwig_Extension_StockbarService()
+    {
+        return $this->services['twig.extension.stockbar'] = new \Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension();
     }
 
     /**

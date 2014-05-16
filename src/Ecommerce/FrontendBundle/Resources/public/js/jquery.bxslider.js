@@ -1,8 +1,8 @@
 /**
- * BxSlider v4.1.2 - Fully loaded, responsive content slider
+ * BxSlider v4.1.1 - Fully loaded, responsive content slider
  * http://bxslider.com
  *
- * Copyright 2014, Steven Wanderski - http://stevenwanderski.com - http://bxcreative.com
+ * Copyright 2013, Steven Wanderski - http://stevenwanderski.com - http://bxcreative.com
  * Written while drinking Belgian ales and listening to jazz
  *
  * Released under the MIT license - http://opensource.org/licenses/MIT
@@ -33,8 +33,8 @@
         useCSS: true,
         preloadImages: 'visible',
         responsive: true,
-        slideZIndex: 50,
-        wrapperClass: 'bx-wrapper',
+        imagesPager: '',
+        intervalNav: null,
 
         // TOUCH
         touchEnabled: true,
@@ -70,7 +70,6 @@
         autoDirection: 'next',
         autoHover: false,
         autoDelay: 0,
-        autoSlideForOnePage: false,
 
         // CAROUSEL
         minSlides: 1,
@@ -83,8 +82,7 @@
         onSlideBefore: function() {},
         onSlideAfter: function() {},
         onSlideNext: function() {},
-        onSlidePrev: function() {},
-        onSliderResize: function() {}
+        onSlidePrev: function() {}
     }
 
     $.fn.bxSlider = function(options){
@@ -174,6 +172,7 @@
             el.children(slider.settings.slideSelector).each(function() {
                 $(this).data("origStyle", $(this).attr("style"));
             });
+
             // perform all DOM / CSS modifications
             setup();
         }
@@ -183,7 +182,7 @@
          */
         var setup = function(){
             // wrap el in a wrapper
-            el.wrap('<div class="' + slider.settings.wrapperClass + '"><div class="bx-viewport"></div></div>');
+            el.wrap('<div class="bx-wrapper"><div class="bx-viewport"></div></div>');
             // store a namspace reference to .bx-viewport
             slider.viewport = el.parent();
             // add a loading div to display while images are loading
@@ -237,7 +236,7 @@
                     display: 'none'
                 });
                 // prepare the z-index on the showing element
-                slider.children.eq(slider.settings.startSlide).css({zIndex: slider.settings.slideZIndex, display: 'block'});
+                slider.children.eq(slider.settings.startSlide).css({zIndex: 50, display: 'block'});
             }
             // create an element to contain all slider controls (pager, start / stop, etc)
             slider.controls.el = $('<div class="bx-controls" />');
@@ -311,8 +310,8 @@
             slider.initialized = true;
             // bind the resize call to the window
             if (slider.settings.responsive) $(window).bind('resize', resizeWindow);
-            // if auto is true and has more than 1 page, start the show
-            if (slider.settings.auto && slider.settings.autoStart && (getPagerQty() > 1 || slider.settings.autoSlideForOnePage)) initAuto();
+            // if auto is true, start the show
+            if (slider.settings.auto && slider.settings.autoStart) initAuto();
             // if ticker is true, start the ticker
             if (slider.settings.ticker) initTicker();
             // if pager is requested, make the appropriate pager link active
@@ -369,14 +368,6 @@
                     return $(this).outerHeight(false);
                 }).get());
             }
-
-            if(slider.viewport.css('box-sizing') == 'border-box'){
-                height +=	parseFloat(slider.viewport.css('padding-top')) + parseFloat(slider.viewport.css('padding-bottom')) +
-                    parseFloat(slider.viewport.css('border-top-width')) + parseFloat(slider.viewport.css('border-bottom-width'));
-            }else if(slider.viewport.css('box-sizing') == 'padding-box'){
-                height +=	parseFloat(slider.viewport.css('padding-top')) + parseFloat(slider.viewport.css('padding-bottom'));
-            }
-
             return height;
         }
 
@@ -433,9 +424,8 @@
                     slidesShowing = slider.settings.maxSlides;
                     // if viewport is between min / max thresholds, divide viewport width by first child width
                 }else{
-                    var childWidth = slider.children.first().width() + slider.settings.slideMargin;
-                    slidesShowing = Math.floor((slider.viewport.width() +
-                        slider.settings.slideMargin) / childWidth);
+                    var childWidth = slider.children.first().width();
+                    slidesShowing = Math.floor(slider.viewport.width() / childWidth);
                 }
                 // if "vertical" mode, slides showing will always be minSlides
             }else if(slider.settings.mode == 'vertical'){
@@ -452,7 +442,7 @@
             // if moveSlides is specified by the user
             if(slider.settings.moveSlides > 0){
                 if(slider.settings.infiniteLoop){
-                    pagerQty = Math.ceil(slider.children.length / getMoveBy());
+                    pagerQty = slider.children.length / getMoveBy();
                 }else{
                     // use a while loop to determine pages
                     var breakPoint = 0;
@@ -494,7 +484,7 @@
                     var lastChild = slider.children.last();
                     var position = lastChild.position();
                     // set the left position
-                    setPositionProperty(-(position.left - (slider.viewport.width() - lastChild.outerWidth())), 'reset', 0);
+                    setPositionProperty(-(position.left - (slider.viewport.width() - lastChild.width())), 'reset', 0);
                 }else if(slider.settings.mode == 'vertical'){
                     // get the last showing index's position
                     var lastShowingIndex = slider.children.length - slider.settings.minSlides;
@@ -590,6 +580,7 @@
         var populatePager = function(){
             var pagerHtml = '';
             var pagerQty = getPagerQty();
+
             // loop through each pager item
             for(var i=0; i < pagerQty; i++){
                 var linkContent = '';
@@ -603,8 +594,15 @@
                 }
                 // var linkContent = slider.settings.buildPager && $.isFunction(slider.settings.buildPager) ? slider.settings.buildPager(i) : i + 1;
                 // add the markup to the string
-                pagerHtml += '<div class="bx-pager-item"><a href="" data-slide-index="' + i + '" class="bx-pager-link">' + linkContent + '</a></div>';
-            };
+
+                if(slider.settings.imagesPager){
+                    pagerHtml += '<div class="bx-pager-item"><a href="" data-slide-index="' + i + '" class="bx-pager-link bx-pager-link-image"><img src="' + slider.settings.imagesPager[i] + '"></a></div>';
+                }else{
+                    pagerHtml += '<div class="bx-pager-item"><a href="" data-slide-index="' + i + '" class="bx-pager-link">' + linkContent + '</a></div>';
+                }
+
+            }
+
             // populate the pager element with pager links
             slider.pagerEl.html(pagerHtml);
         }
@@ -629,7 +627,20 @@
                 slider.pagerEl = $(slider.settings.pagerCustom);
             }
             // assign the pager click binding
-            slider.pagerEl.on('click', 'a', clickPagerBind);
+            slider.pagerEl.delegate('a', 'click', clickPagerBind);
+
+
+            //Añade la navegación de las miniaturas
+            slider.controls.prev_nav = $('<a href="#" class="move move-left"><i class="fa fa-angle-left"></i></a>');
+            slider.controls.next_nav = $('<a href="#" class="move move-right"><i class="fa fa-angle-right"></i></a>');
+
+            slider.controls.el.prepend(slider.controls.prev_nav);
+            slider.controls.el.prepend(slider.controls.next_nav);
+            // bind click actions to the controls
+            slider.controls.prev_nav.bind('mouseover', overPrevNavBind);
+            slider.controls.prev_nav.bind('mouseout', stopMoveNavBind);
+            slider.controls.next_nav.bind('mouseover', overNextNavBind);
+            slider.controls.next_nav.bind('mouseout', stopMoveNavBind);
         }
 
         /**
@@ -669,8 +680,8 @@
             // add the controls to the DOM
             slider.controls.autoEl = $('<div class="bx-controls-auto" />');
             // bind click actions to the controls
-            slider.controls.autoEl.on('click', '.bx-start', clickStartBind);
-            slider.controls.autoEl.on('click', '.bx-stop', clickStopBind);
+            slider.controls.autoEl.delegate('.bx-start', 'click', clickStartBind);
+            slider.controls.autoEl.delegate('.bx-stop', 'click', clickStopBind);
             // if autoControlsCombine, insert only the "start" control
             if(slider.settings.autoControlsCombine){
                 slider.controls.autoEl.append(slider.controls.start);
@@ -702,6 +713,44 @@
                     $(this).append('<div class="bx-caption"><span>' + title + '</span></div>');
                 }
             });
+        }
+
+        /**
+         * Navegación a la izquierda
+         */
+        var overPrevNavBind = function(e){
+            e.preventDefault();
+            slider.settings.intervalNav = setInterval(function(){
+                var left = parseInt($('.bx-pager').css('left'));
+                if (left < 0)  {
+                    $('.bx-pager').css('left', (left + 5) + 'px');
+                }
+            },50);
+        }
+
+        /**
+         * Navegación a la derecha
+         */
+        var overNextNavBind = function(e){
+            slider.settings.intervalNav = setInterval(function(){
+                var left = parseInt($('.bx-pager').css('left')),
+                    maxWidth = calculateMaxWidth();
+                console.info(maxWidth);
+                if (maxWidth > 0 && left > maxWidth) {
+                    $('.bx-pager').css('left', (left - 5) + 'px');
+                }
+            },50);
+        }
+
+        var stopMoveNavBind = function(){
+            window.clearInterval(slider.settings.intervalNav);
+        }
+
+        var calculateMaxWidth = function() {
+            var childrenLength = $('.bx-pager').children().length;
+            var childrenWidht = $('.bx-pager').children('.bx-pager-item:first-child').width();
+
+            return childrenWidht * childrenLength;
         }
 
         /**
@@ -762,12 +811,10 @@
             // if auto show is running, stop it
             if (slider.settings.auto) el.stopAuto();
             var pagerLink = $(e.currentTarget);
-            if(pagerLink.attr('data-slide-index') !== undefined){
-                var pagerIndex = parseInt(pagerLink.attr('data-slide-index'));
-                // if clicked pager link is not active, continue with the goToSlide call
-                if(pagerIndex != slider.active.index) el.goToSlide(pagerIndex);
-                e.preventDefault();
-            }
+            var pagerIndex = parseInt(pagerLink.attr('data-slide-index'));
+            // if clicked pager link is not active, continue with the goToSlide call
+            if(pagerIndex != slider.active.index) el.goToSlide(pagerIndex);
+            e.preventDefault();
         }
 
         /**
@@ -810,10 +857,8 @@
                 }else if(slider.active.index == slider.children.length - 1){
                     position = slider.children.eq(slider.children.length - 1).position();
                 }
-                if(position){
-                    if (slider.settings.mode == 'horizontal') { setPositionProperty(-position.left, 'reset', 0); }
-                    else if (slider.settings.mode == 'vertical') { setPositionProperty(-position.top, 'reset', 0); }
-                }
+                if (slider.settings.mode == 'horizontal') { setPositionProperty(-position.left, 'reset', 0);; }
+                else if (slider.settings.mode == 'vertical') { setPositionProperty(-position.top, 'reset', 0);; }
             }
             // declare that the transition is complete
             slider.working = false;
@@ -1079,8 +1124,6 @@
          * Window resize event callback
          */
         var resizeWindow = function(e){
-            // don't do anything if slider isn't initialized.
-            if(!slider.initialized) return;
             // get the new window dimens (again, thank you IE)
             var windowWidthNew = $(window).width();
             var windowHeightNew = $(window).height();
@@ -1093,8 +1136,6 @@
                 windowHeight = windowHeightNew;
                 // update all dynamic elements
                 el.redrawSlider();
-                // Call user resize handler
-                slider.settings.onSliderResize.call(el, slider.active.index);
             }
         }
 
@@ -1152,8 +1193,8 @@
                 // fade out the visible child and reset its z-index value
                 slider.children.filter(':visible').fadeOut(slider.settings.speed).css({zIndex: 0});
                 // fade in the newly requested slide
-                slider.children.eq(slider.active.index).css('zIndex', slider.settings.slideZIndex+1).fadeIn(slider.settings.speed, function(){
-                    $(this).css('zIndex', slider.settings.slideZIndex);
+                slider.children.eq(slider.active.index).css('zIndex', 51).fadeIn(slider.settings.speed, function(){
+                    $(this).css('zIndex', 50);
                     updateAfterSlideTransition();
                 });
                 // slider mode is not "fade"
@@ -1267,13 +1308,6 @@
         }
 
         /**
-         * Returns current slide element
-         */
-        el.getCurrentSlideElement = function(){
-            return slider.children.eq(slider.active.index);
-        }
-
-        /**
          * Returns number of slides in show
          */
         el.getSlideCount = function(){
@@ -1285,7 +1319,7 @@
          */
         el.redrawSlider = function(){
             // resize all children in ratio to new screen size
-            slider.children.add(el.find('.bx-clone')).width(getSlideWidth());
+            slider.children.add(el.find('.bx-clone')).outerWidth(getSlideWidth());
             // adjust the height
             slider.viewport.css('height', getViewportHeight());
             // update the slide position
@@ -1318,7 +1352,7 @@
             if(slider.controls.el) slider.controls.el.remove();
             if(slider.controls.next) slider.controls.next.remove();
             if(slider.controls.prev) slider.controls.prev.remove();
-            if(slider.pagerEl && slider.settings.controls) slider.pagerEl.remove();
+            if(slider.pagerEl) slider.pagerEl.remove();
             $('.bx-caption', this).remove();
             if(slider.controls.autoEl) slider.controls.autoEl.remove();
             clearInterval(slider.interval);

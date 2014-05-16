@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-md-12">
             <ul id="categories" class="nav nav-tabs clearfix">
+                <li class="home">
+                    <a title="{{ 'Inicio' | trans }}" href="{{ path('frontend_homepage') }}"><i class="fa fa-home"></i></a>
+                </li>
                 {% for category in categories %}
                     <li>
                         <a class="dropdown-toggle" title="{{ 'Ver categoría' | trans }} {{ category }}" href="">{{ category }}</a>
