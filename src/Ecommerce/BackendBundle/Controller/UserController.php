@@ -5,6 +5,8 @@ namespace Ecommerce\BackendBundle\Controller;
 use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\UserBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Ecommerce\UserBundle\Entity\User;
 
 class UserController extends CustomController
 {

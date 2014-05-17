@@ -78,6 +78,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
     protected $registeredDate;
 
     /**
+     * @ORM\Column(name="deleted", type="datetime", nullable=true)
+     */
+    protected $deletedDate;
+
+    /**
      * @ORM\Column(name="validated", type="boolean", nullable=true, options={"default" = 0})
      */
     protected $validated = false;
@@ -327,6 +332,22 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function getValidatedCode()
     {
         return $this->validatedCode;
+    }
+
+    /**
+     * @param mixed $deletedDate
+     */
+    public function setDeletedDate($deletedDate)
+    {
+        $this->deletedDate = $deletedDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeletedDate()
+    {
+        return $this->deletedDate;
     }
 
 }

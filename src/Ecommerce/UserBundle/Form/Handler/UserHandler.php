@@ -6,7 +6,7 @@ use Ecommerce\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 
-class CreateUserFormHandler
+class UserHandler
 {
     private $userManager;
 

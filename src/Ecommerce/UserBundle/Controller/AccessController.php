@@ -40,4 +40,9 @@ class AccessController extends CustomController
 
         return $this->render('UserBundle:Access:success-register.html.twig', array('user' => $this->get('security.context')->getToken()->getUser(), 'form' => $form->createView()));
     }
+
+    public function validateUserAction(Request $request)
+    {
+        
+    }
 }
