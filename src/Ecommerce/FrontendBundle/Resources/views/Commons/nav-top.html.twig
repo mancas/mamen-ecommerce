@@ -11,22 +11,21 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right main-nav">
-                {# if is_granted('ROLE_USER') %}
+                {% if is_granted('ROLE_USER') %}
                     <li class="profile">
                         <a href="">
-                            <span class="visible-xs">{{"Mi cuenta" | trans}}</span>
+                            {{"Mi cuenta" | trans}}
                         </a>
                     </li>
                     <li>
                         <a href="">
-                            {{"Cerrar" | trans}}
+                            {{"Cerrar sesión" | trans}}
                         </a>
                     </li>
                 {% else %}
-                #}
-                    <li><a href="" class="">{{"Acceder" | trans}}</a></li>
-                {# endif  #}
-                <li><a href="" {% if action == 'contact' %}class="current"{% endif %}>{{"Contacto" | trans}}</a></li>
+                    <li><a href="{{ path('login') }}" class="">{{"Acceder" | trans}}</a></li>
+                {% endif  %}
+                {#<li><a href="" {% if action == 'contact' %}class="current"{% endif %}>{{"Contacto" | trans}}</a></li>#}
                 <li class="shopping-cart">
                     <a class="dropdown-toggle" href="">
                         <span class="badge badge-info cart-items">3</span>

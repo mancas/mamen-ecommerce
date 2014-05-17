@@ -77,6 +77,17 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     protected $registeredDate;
 
+    /**
+     * @ORM\Column(name="validated", type="boolean", nullable=true, options={"default" = 0})
+     */
+    protected $validated = false;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     * @Assert\NotBlank()
+     */
+    protected $validatedCode;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -244,13 +255,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->addresses;
     }
 
-    public function addAddress(Ecommerce\UserBundle\Entity\Address $address)
+    public function addAddress(\Ecommerce\UserBundle\Entity\Address $address)
     {
         if (!$this->addresses->contains($address))
             $this->addresses->add($address);
     }
 
-    public function removeAddress(Ecommerce\UserBundle\Entity\Address $address)
+    public function removeAddress(\Ecommerce\UserBundle\Entity\Address $address)
     {
         if ($this->addresses->contains($address))
             $this->addresses->remove($address);
@@ -285,4 +296,37 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
         return $mainAddress;
     }
+
+    /**
+     * @param mixed $validated
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * @param mixed $validatedCode
+     */
+    public function setValidatedCode($validatedCode)
+    {
+        $this->validatedCode = $validatedCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidatedCode()
+    {
+        return $this->validatedCode;
+    }
+
 }

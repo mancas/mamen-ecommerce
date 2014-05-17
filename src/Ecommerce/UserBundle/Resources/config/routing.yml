@@ -1,3 +1,6 @@
-user_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: UserBundle:Default:index }
+register:
+    pattern: /registro
+    defaults: { _controller: UserBundle:Access:register }
+success_register:
+    pattern: /registro-completado
+    defaults: { _controller: UserBundle:Access:successRegister }

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ItemController extends CustomController
 {
+    const RELATED_ITEMS_LIMIT = 8;
     /**
      * @param Item $item
      *
@@ -28,7 +29,7 @@ class ItemController extends CustomController
     public function detailsAction(Item $item)
     {
         $em = $this->getEntityManager();
-        $relatedItems = $em->getRepository('ItemBundle:Item')->findRelatedItems($item);
+        $relatedItems = $em->getRepository('ItemBundle:Item')->findRelatedItems($item, self::RELATED_ITEMS_LIMIT);
 
         return $this->render('ItemBundle:Item:details.html.twig', array('item' => $item, 'relatedItems' => $relatedItems));
     }

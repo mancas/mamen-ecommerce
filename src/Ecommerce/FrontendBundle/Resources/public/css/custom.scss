@@ -26,6 +26,17 @@ a {
 /** HELPER CLASSES **/
 .mt50 { margin-top: 50px; }
 
+.text-12 { font-size: 12px; }
+
+.ml-10 { margin-left: -10px; }
+
+.mb20 { margin-bottom: 20px !important; }
+
+/** COLOR CLASSES **/
+.blue {
+  color: $blue;
+}
+
 #wrap {
   background-color: $white;
   /**max-width: 1170px;**/
@@ -142,11 +153,13 @@ a {
     color: $pink;
   }
 
-  .open a {
-    border: none;
-    background-color: $pink;
-    border-radius: 0px;
-    color: $white;
+  .open {
+    .dropdown-toggle {
+      border: none;
+      background-color: $pink;
+      border-radius: 0px;
+      color: $white;
+    }
   }
 
   .sub-menu {
@@ -201,7 +214,6 @@ a {
     background-color: $white;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 15px;
     min-height: 150px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -223,7 +235,55 @@ a {
   }
 
   .item-info {
-    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .item-options {
+    background-color: $footer-background;
+    overflow: hidden;
+    min-height: 74px;
+    line-height: 74px;
+    ul {
+      overflow: hidden;
+      margin-bottom: 0px;
+    }
+
+    li {
+      float: left;
+      width: 50%;
+      height: 74px;
+      position: relative;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      display: inline-block;
+      border-radius: 100px;
+      background-color: $blue;
+      margin-top: 7px;
+    }
+
+    .circle:before {
+      background: url(../img/circle.png) center center no-repeat;
+      display: block;
+      content: " ";
+      height: 60px;
+      width: 60px;
+    }
+
+    .item-price{
+      font-size: 20px;
+      color: $pink;
+    }
+
+    .fa-euro {
+      color: $pink;
+    }
+
+    li:first-child {
+      border-right: solid 1px $disabled-gray;
+    }
   }
 
   .item-price {
@@ -307,6 +367,18 @@ a {
   }
 }
 
+.line-block-md {
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+.line-block-xs {
+  max-width: 400px;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
 /** BADGES **/
 .badge-info {
   background-color: $pink;
@@ -330,6 +402,23 @@ a {
   color: $gray;
   transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease;
+}
+
+/** PAGINATION **/
+.pagination {
+  .active {
+    a {
+      background-color: $blue;
+      border-color: $blue;
+      transition: all 0.25s ease;
+      -webkit-transition: all 0.25s ease;
+
+      &:hover {
+        background-color:  $blue-hover;
+        border-color: $blue-hover
+      }
+    }
+  }
 }
 
 /** ITEM DETAILS **/
@@ -399,4 +488,41 @@ a {
       }
     }
   }
+}
+
+/** LOGIN **/
+.small-box {
+  display: block;
+  max-width: 600px;
+  border-radius: 4px;
+  min-height: 200px;
+  margin: auto;
+  background-color: $footer-background;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+
+  .login-form:after {
+    width: 1px;
+    height: 100%;
+    display: block;
+    background-color: $white;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .register {
+    text-align: center;
+    margin-top: 50px;
+  }
+}
+
+.small-box-xs {
+  border-radius: 4px;
+  min-height: 200px;
+  margin: auto;
+  background-color: $footer-background;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
 }

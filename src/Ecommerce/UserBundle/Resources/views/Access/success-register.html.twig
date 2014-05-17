@@ -1,0 +1,58 @@
+{% extends "FrontendBundle:Layouts:1column.html.twig" %}
+
+{% block title %}{{ "Valida tu cuenta en Ecommerce"|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}home page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="line-block mb20">
+                <h2 class="line-title">{{ 'Te has registrado correctamente' | trans }}</h2>
+            </div>
+
+            <p>
+                {{ 'Ya formas parte de Ecommerce, ahora solo falta que valides tu cuenta. Te hemos enviado un email a ' | trans }} <i class="blue">{{ user.email }}</i>.
+                {{ 'Para validar la cuenta solo tienes que introducir el código que aparece en el correo.' | trans }}
+            </p>
+            <p>
+
+            </p>
+            <p class="mb20">
+                {{ 'Recuerda revisar la carpeta de ' | trans }}<strong>{{ 'SPAM' |trans }}</strong>. {{ 'Si no lo has recibido, puedes pedir que te lo reenviemos haciendo click ' | trans }}
+                <a title="{{ 'Reenviar correo' | trans }}" href="">{{ 'aquí' | trans }}</a>.
+            </p>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <form id="validated-code" action="" role="form" method="post" novalidate="novalidate">
+                        <div class="form-group">
+                            {{ form_widget(form.code, {'attr': {'class': 'form-control', 'autocomplete' : 'off'}}) }}
+                        </div>
+
+                        {{ form_rest(form)}}
+                        <button id="register" type="submit" class="btn btn-blue">{{ "¡Valídame!" | trans }}</button>
+                        <img style="display:none;" class="ml15 loader pull-left" src="{{ asset('bundles/frontend/img/ajax-loader.gif') }}">
+                    </form>
+                </div>
+            </div><!-- .row -->
+        </div><!-- .col-md-12 -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

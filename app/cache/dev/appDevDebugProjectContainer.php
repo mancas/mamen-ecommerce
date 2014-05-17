@@ -115,6 +115,8 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.hinclude' => 'getFragment_Renderer_HincludeService',
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'http_kernel' => 'getHttpKernelService',
+            'ideup.simple_paginator' => 'getIdeup_SimplePaginatorService',
+            'ideup.simple_paginator.adapter_factory' => 'getIdeup_SimplePaginator_AdapterFactoryService',
             'image.create_image_asynchronous_form_handler' => 'getImage_CreateImageAsynchronousFormHandlerService',
             'image.form_handler' => 'getImage_FormHandlerService',
             'image.manager' => 'getImage_ManagerService',
@@ -152,13 +154,11 @@ class appDevDebugProjectContainer extends Container
             'security.csrf.token_manager' => 'getSecurity_Csrf_TokenManagerService',
             'security.encoder_factory' => 'getSecurity_EncoderFactoryService',
             'security.firewall' => 'getSecurity_FirewallService',
-            'security.firewall.map.context.dev' => 'getSecurity_Firewall_Map_Context_DevService',
-            'security.firewall.map.context.login' => 'getSecurity_Firewall_Map_Context_LoginService',
-            'security.firewall.map.context.secured_area' => 'getSecurity_Firewall_Map_Context_SecuredAreaService',
+            'security.firewall.map.context.user' => 'getSecurity_Firewall_Map_Context_UserService',
             'security.rememberme.response_listener' => 'getSecurity_Rememberme_ResponseListenerService',
             'security.role_hierarchy' => 'getSecurity_RoleHierarchyService',
             'security.secure_random' => 'getSecurity_SecureRandomService',
-            'security.user.provider.concrete.in_memory' => 'getSecurity_User_Provider_Concrete_InMemoryService',
+            'security.user.provider.concrete.user' => 'getSecurity_User_Provider_Concrete_UserService',
             'security.validator.user_password' => 'getSecurity_Validator_UserPasswordService',
             'sensio_distribution.webconfigurator' => 'getSensioDistribution_WebconfiguratorService',
             'sensio_framework_extra.cache.listener' => 'getSensioFrameworkExtra_Cache_ListenerService',
@@ -195,6 +195,7 @@ class appDevDebugProjectContainer extends Container
             'templating.helper.assets' => 'getTemplating_Helper_AssetsService',
             'templating.helper.code' => 'getTemplating_Helper_CodeService',
             'templating.helper.form' => 'getTemplating_Helper_FormService',
+            'templating.helper.ideup.simple_paginator' => 'getTemplating_Helper_Ideup_SimplePaginatorService',
             'templating.helper.logout_url' => 'getTemplating_Helper_LogoutUrlService',
             'templating.helper.request' => 'getTemplating_Helper_RequestService',
             'templating.helper.router' => 'getTemplating_Helper_RouterService',
@@ -237,11 +238,15 @@ class appDevDebugProjectContainer extends Container
             'twig' => 'getTwigService',
             'twig.controller.exception' => 'getTwig_Controller_ExceptionService',
             'twig.exception_listener' => 'getTwig_ExceptionListenerService',
+            'twig.extension.ideup.simple_paginator' => 'getTwig_Extension_Ideup_SimplePaginatorService',
             'twig.extension.stockbar' => 'getTwig_Extension_StockbarService',
             'twig.loader' => 'getTwig_LoaderService',
             'twig.translation.extractor' => 'getTwig_Translation_ExtractorService',
             'uri_signer' => 'getUriSignerService',
+            'user.auto_login_user' => 'getUser_AutoLoginUserService',
+            'user.create_salt_listener' => 'getUser_CreateSaltListenerService',
             'user.manager' => 'getUser_ManagerService',
+            'user.register_user_form_handler' => 'getUser_RegisterUserFormHandlerService',
             'user.user_form_handler' => 'getUser_UserFormHandlerService',
             'validator' => 'getValidatorService',
             'validator.expression' => 'getValidator_ExpressionService',
@@ -303,6 +308,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/DoctrineBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', '/home/manu/projects/mamen-ecommerce/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SensioFrameworkExtraBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/home/manu/projects/mamen-ecommerce/vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'StofDoctrineExtensionsBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/StofDoctrineExtensionsBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'StofDoctrineExtensionsBundle', '/home/manu/projects/mamen-ecommerce/vendor/stof/doctrine-extensions-bundle/Stof/DoctrineExtensionsBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'IdeupSimplePaginatorBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/IdeupSimplePaginatorBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'IdeupSimplePaginatorBundle', '/home/manu/projects/mamen-ecommerce/vendor/ideup/simple-paginator-bundle/Ideup/SimplePaginatorBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'UserBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/UserBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'UserBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'CategoryBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/CategoryBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'CategoryBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ItemBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/ItemBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ItemBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
@@ -562,6 +568,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addSubscriberService('sensio_framework_extra.view.listener', 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\TemplateListener');
         $instance->addSubscriberService('sensio_framework_extra.cache.listener', 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\HttpCacheListener');
         $instance->addSubscriberService('sensio_framework_extra.security.listener', 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\SecurityListener');
+        $instance->addSubscriberService('user.auto_login_user', 'Ecommerce\\UserBundle\\EventListener\\AutoLoginUserListener');
         $instance->addSubscriberService('web_profiler.debug_toolbar', 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener');
 
         return $instance;
@@ -592,7 +599,8 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['debug.templating.engine.php'] = $instance = new \Symfony\Bundle\FrameworkBundle\Templating\TimedPhpEngine($this->get('templating.name_parser'), $this, $this->get('templating.loader'), $this->get('debug.stopwatch'), $this->get('templating.globals'));
 
-        $instance->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'stopwatch' => 'templating.helper.stopwatch', 'logout_url' => 'templating.helper.logout_url', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic'));
+        $instance->setCharset('UTF-8');
+        $instance->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'stopwatch' => 'templating.helper.stopwatch', 'logout_url' => 'templating.helper.logout_url', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic', 'simple_paginator_helper' => 'templating.helper.ideup.simple_paginator'));
 
         return $instance;
     }
@@ -651,6 +659,7 @@ class appDevDebugProjectContainer extends Container
         $f = new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this);
         $f->addEventSubscriber($d);
         $f->addEventSubscriber($e);
+        $f->addEventSubscriber($this->get('user.create_salt_listener'));
 
         return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => NULL, 'dbname' => 'mamen-ecommerce', 'user' => 'root', 'password' => 'root', 'charset' => 'UTF8', 'driverOptions' => array()), $c, $f, array());
     }
@@ -1428,6 +1437,38 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'ideup.simple_paginator' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ideup\SimplePaginatorBundle\Paginator\Paginator A Ideup\SimplePaginatorBundle\Paginator\Paginator instance.
+     * 
+     * @throws InactiveScopeException when the 'ideup.simple_paginator' service is requested while the 'request' scope is not active
+     */
+    protected function getIdeup_SimplePaginatorService()
+    {
+        if (!isset($this->scopedServices['request'])) {
+            throw new InactiveScopeException('ideup.simple_paginator', 'request');
+        }
+
+        return $this->services['ideup.simple_paginator'] = $this->scopedServices['request']['ideup.simple_paginator'] = new \Ideup\SimplePaginatorBundle\Paginator\Paginator($this->get('request'), $this->get('ideup.simple_paginator.adapter_factory'));
+    }
+
+    /**
+     * Gets the 'ideup.simple_paginator.adapter_factory' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ideup\SimplePaginatorBundle\Paginator\Adapter\AdapterFactory A Ideup\SimplePaginatorBundle\Paginator\Adapter\AdapterFactory instance.
+     */
+    protected function getIdeup_SimplePaginator_AdapterFactoryService()
+    {
+        return $this->services['ideup.simple_paginator.adapter_factory'] = new \Ideup\SimplePaginatorBundle\Paginator\Adapter\AdapterFactory();
+    }
+
+    /**
      * Gets the 'image.create_image_asynchronous_form_handler' service.
      *
      * This service is shared.
@@ -1945,7 +1986,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_EncoderFactoryService()
     {
-        return $this->services['security.encoder_factory'] = new \Symfony\Component\Security\Core\Encoder\EncoderFactory(array('Symfony\\Component\\Security\\Core\\User\\User' => array('class' => 'Symfony\\Component\\Security\\Core\\Encoder\\PlaintextPasswordEncoder', 'arguments' => array(0 => false))));
+        return $this->services['security.encoder_factory'] = new \Symfony\Component\Security\Core\Encoder\EncoderFactory(array('Ecommerce\\UserBundle\\Entity\\User' => array('class' => 'Symfony\\Component\\Security\\Core\\Encoder\\MessageDigestPasswordEncoder', 'arguments' => array(0 => 'sha512', 1 => true, 2 => 10)), 'Symfony\\Component\\Security\\Core\\User\\User' => array('class' => 'Symfony\\Component\\Security\\Core\\Encoder\\PlaintextPasswordEncoder', 'arguments' => array(0 => false))));
     }
 
     /**
@@ -1958,63 +1999,48 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_FirewallService()
     {
-        return $this->services['security.firewall'] = new \Symfony\Component\Security\Http\Firewall(new \Symfony\Bundle\SecurityBundle\Security\FirewallMap($this, array('security.firewall.map.context.dev' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/(_(profiler|wdt)|css|images|js)/'), 'security.firewall.map.context.login' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/demo/secured/login$'), 'security.firewall.map.context.secured_area' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/demo/secured/'))), $this->get('debug.event_dispatcher'));
+        return $this->services['security.firewall'] = new \Symfony\Component\Security\Http\Firewall(new \Symfony\Bundle\SecurityBundle\Security\FirewallMap($this, array('security.firewall.map.context.user' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/'))), $this->get('debug.event_dispatcher'));
     }
 
     /**
-     * Gets the 'security.firewall.map.context.dev' service.
+     * Gets the 'security.firewall.map.context.user' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
      *
      * @return Symfony\Bundle\SecurityBundle\Security\FirewallContext A Symfony\Bundle\SecurityBundle\Security\FirewallContext instance.
      */
-    protected function getSecurity_Firewall_Map_Context_DevService()
-    {
-        return $this->services['security.firewall.map.context.dev'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(), NULL);
-    }
-
-    /**
-     * Gets the 'security.firewall.map.context.login' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return Symfony\Bundle\SecurityBundle\Security\FirewallContext A Symfony\Bundle\SecurityBundle\Security\FirewallContext instance.
-     */
-    protected function getSecurity_Firewall_Map_Context_LoginService()
-    {
-        return $this->services['security.firewall.map.context.login'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(), NULL);
-    }
-
-    /**
-     * Gets the 'security.firewall.map.context.secured_area' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return Symfony\Bundle\SecurityBundle\Security\FirewallContext A Symfony\Bundle\SecurityBundle\Security\FirewallContext instance.
-     */
-    protected function getSecurity_Firewall_Map_Context_SecuredAreaService()
+    protected function getSecurity_Firewall_Map_Context_UserService()
     {
         $a = $this->get('monolog.logger.security', ContainerInterface::NULL_ON_INVALID_REFERENCE);
         $b = $this->get('security.context');
-        $c = $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE);
-        $d = $this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE);
-        $e = $this->get('http_kernel');
-        $f = $this->get('security.authentication.manager');
+        $c = $this->get('security.user.provider.concrete.user');
+        $d = $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE);
+        $e = $this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE);
+        $f = $this->get('http_kernel');
+        $g = $this->get('security.authentication.manager');
 
-        $g = new \Symfony\Component\Security\Http\AccessMap();
+        $h = new \Symfony\Component\Security\Http\AccessMap();
 
-        $h = new \Symfony\Component\Security\Http\HttpUtils($d, $d);
+        $i = new \Symfony\Component\Security\Core\User\InMemoryUserProvider();
+        $i->createUser(new \Symfony\Component\Security\Core\User\User('user', 'userpass', array(0 => 'ROLE_USER')));
+        $i->createUser(new \Symfony\Component\Security\Core\User\User('admin', 'adminpass', array(0 => 'ROLE_ADMIN')));
 
-        $i = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, $h, new \Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler($h, '_demo'), array('csrf_parameter' => '_csrf_token', 'intention' => 'logout', 'logout_path' => '_demo_logout'));
-        $i->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+        $j = new \Symfony\Component\Security\Http\HttpUtils($e, $e);
 
-        $j = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler($h, array('login_path' => '_demo_login', 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false));
-        $j->setProviderKey('secured_area');
+        $k = new \Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices(array(0 => $c), '7a6d5e633cddaead7bd4b4e075c2818c', 'user', array('lifetime' => 5184000, 'name' => 'REMEMBERME', 'path' => '/', 'domain' => NULL, 'secure' => false, 'httponly' => true, 'always_remember_me' => false, 'remember_me_parameter' => '_remember_me'), $a);
 
-        return $this->services['security.firewall.map.context.secured_area'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($g, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('security.user.provider.concrete.in_memory')), 'secured_area', $a, $c), 2 => $i, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $f, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $h, 'secured_area', $j, new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($e, $h, array('login_path' => '_demo_login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'), $a), array('check_path' => '_security_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $c, NULL), 4 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $g, $f)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $h, 'secured_area', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($e, $h, '_demo_login', false), NULL, NULL, $a));
+        $l = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, $j, new \Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler($j, '/'), array('csrf_parameter' => '_csrf_token', 'intention' => 'logout', 'logout_path' => 'logout'));
+        $l->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+        $l->addHandler($k);
+
+        $m = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler($j, array('login_path' => 'login', 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false));
+        $m->setProviderKey('user');
+
+        $n = new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $g, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $j, 'user', $m, new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($f, $j, array('login_path' => 'login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'), $a), array('check_path' => 'login_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $d, NULL);
+        $n->setRememberMeServices($k);
+
+        return $this->services['security.firewall.map.context.user'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($h, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $c, 1 => $i), 'user', $a, $d), 2 => $l, 3 => $n, 4 => new \Symfony\Component\Security\Http\Firewall\RememberMeListener($b, $k, $g, $a, $d), 5 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '53773ba9a8158', $a), 6 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $h, $g)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $j, 'user', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($f, $j, 'login', false), NULL, NULL, $a));
     }
 
     /**
@@ -2417,7 +2443,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getTemplatingService()
     {
-        $this->services['templating'] = $instance = new \Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine($this->get('twig'), $this->get('templating.name_parser'), $this->get('templating.locator'), $this->get('debug.stopwatch'), $this->get('templating.globals'));
+        $this->services['templating'] = $instance = new \Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine($this->get('twig'), $this->get('templating.name_parser'), $this->get('templating.locator'), $this->get('debug.stopwatch'));
 
         $instance->setDefaultEscapingStrategy(array(0 => $instance, 1 => 'guessDefaultEscapingStrategy'));
 
@@ -2522,6 +2548,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'templating.helper.ideup.simple_paginator' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ideup\SimplePaginatorBundle\Templating\Helper\PaginatorHelper A Ideup\SimplePaginatorBundle\Templating\Helper\PaginatorHelper instance.
+     */
+    protected function getTemplating_Helper_Ideup_SimplePaginatorService()
+    {
+        return $this->services['templating.helper.ideup.simple_paginator'] = new \Ideup\SimplePaginatorBundle\Templating\Helper\PaginatorHelper($this);
+    }
+
+    /**
      * Gets the 'templating.helper.logout_url' service.
      *
      * This service is shared.
@@ -2533,7 +2572,7 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['templating.helper.logout_url'] = $instance = new \Symfony\Bundle\SecurityBundle\Templating\Helper\LogoutUrlHelper($this, $this->get('router'));
 
-        $instance->registerListener('secured_area', '_demo_logout', 'logout', '_csrf_token', NULL);
+        $instance->registerListener('user', 'logout', 'logout', '_csrf_token', NULL);
 
         return $instance;
     }
@@ -3067,8 +3106,9 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FrameworkBundle', 1 => 'SecurityBundle', 2 => 'TwigBundle', 3 => 'MonologBundle', 4 => 'SwiftmailerBundle', 5 => 'AsseticBundle', 6 => 'DoctrineBundle', 7 => 'SensioFrameworkExtraBundle', 8 => 'StofDoctrineExtensionsBundle', 9 => 'UserBundle', 10 => 'CategoryBundle', 11 => 'ItemBundle', 12 => 'OrderBundle', 13 => 'BackendBundle', 14 => 'FrontendBundle', 15 => 'ImageBundle', 16 => 'PaymentBundle', 17 => 'WebProfilerBundle', 18 => 'SensioDistributionBundle', 19 => 'SensioGeneratorBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FrameworkBundle', 1 => 'SecurityBundle', 2 => 'TwigBundle', 3 => 'MonologBundle', 4 => 'SwiftmailerBundle', 5 => 'AsseticBundle', 6 => 'DoctrineBundle', 7 => 'SensioFrameworkExtraBundle', 8 => 'StofDoctrineExtensionsBundle', 9 => 'IdeupSimplePaginatorBundle', 10 => 'UserBundle', 11 => 'CategoryBundle', 12 => 'ItemBundle', 13 => 'OrderBundle', 14 => 'BackendBundle', 15 => 'FrontendBundle', 16 => 'ImageBundle', 17 => 'PaymentBundle', 18 => 'WebProfilerBundle', 19 => 'SensioDistributionBundle', 20 => 'SensioGeneratorBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
+        $instance->addExtension($this->get('twig.extension.ideup.simple_paginator'));
         $instance->addGlobal('app', $this->get('templating.globals'));
 
         return $instance;
@@ -3101,6 +3141,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'twig.extension.ideup.simple_paginator' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ideup\SimplePaginatorBundle\Twig\Extension\PaginatorExtension A Ideup\SimplePaginatorBundle\Twig\Extension\PaginatorExtension instance.
+     */
+    protected function getTwig_Extension_Ideup_SimplePaginatorService()
+    {
+        return $this->services['twig.extension.ideup.simple_paginator'] = new \Ideup\SimplePaginatorBundle\Twig\Extension\PaginatorExtension($this->get('templating.helper.ideup.simple_paginator'));
+    }
+
+    /**
      * Gets the 'twig.extension.stockbar' service.
      *
      * This service is shared.
@@ -3130,6 +3183,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views', 'Twig');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/symfony/swiftmailer-bundle/Symfony/Bundle/SwiftmailerBundle/Resources/views', 'Swiftmailer');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/Resources/views', 'Doctrine');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/ideup/simple-paginator-bundle/Ideup/SimplePaginatorBundle/Resources/views', 'IdeupSimplePaginator');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Resources/views', 'User');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Resources/views', 'Category');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Resources/views', 'Item');
@@ -3173,6 +3227,32 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'user.auto_login_user' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\UserBundle\EventListener\AutoLoginUserListener A Ecommerce\UserBundle\EventListener\AutoLoginUserListener instance.
+     */
+    protected function getUser_AutoLoginUserService()
+    {
+        return $this->services['user.auto_login_user'] = new \Ecommerce\UserBundle\EventListener\AutoLoginUserListener($this->get('security.context'));
+    }
+
+    /**
+     * Gets the 'user.create_salt_listener' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber A Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber instance.
+     */
+    protected function getUser_CreateSaltListenerService()
+    {
+        return $this->services['user.create_salt_listener'] = new \Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber($this->get('security.encoder_factory'));
+    }
+
+    /**
      * Gets the 'user.manager' service.
      *
      * This service is shared.
@@ -3183,6 +3263,19 @@ class appDevDebugProjectContainer extends Container
     protected function getUser_ManagerService()
     {
         return $this->services['user.manager'] = new \Ecommerce\UserBundle\Form\Handler\UserManager($this->get('doctrine.orm.default_entity_manager'));
+    }
+
+    /**
+     * Gets the 'user.register_user_form_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler A Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler instance.
+     */
+    protected function getUser_RegisterUserFormHandlerService()
+    {
+        return $this->services['user.register_user_form_handler'] = new \Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler($this->get('user.manager'));
     }
 
     /**
@@ -3416,7 +3509,9 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.in_memory'), new \Symfony\Component\Security\Core\User\UserChecker(), 'secured_area', $this->get('security.encoder_factory'), true)), true);
+        $a = new \Symfony\Component\Security\Core\User\UserChecker();
+
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.user'), $a, 'user', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider($a, '7a6d5e633cddaead7bd4b4e075c2818c', 'user'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('53773ba9a8158')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3458,7 +3553,7 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'security.user.provider.concrete.in_memory' service.
+     * Gets the 'security.user.provider.concrete.user' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
@@ -3467,16 +3562,11 @@ class appDevDebugProjectContainer extends Container
      * If you want to be able to request this service from the container directly,
      * make it public, otherwise you might end up with broken code.
      *
-     * @return Symfony\Component\Security\Core\User\InMemoryUserProvider A Symfony\Component\Security\Core\User\InMemoryUserProvider instance.
+     * @return Symfony\Bridge\Doctrine\Security\User\EntityUserProvider A Symfony\Bridge\Doctrine\Security\User\EntityUserProvider instance.
      */
-    protected function getSecurity_User_Provider_Concrete_InMemoryService()
+    protected function getSecurity_User_Provider_Concrete_UserService()
     {
-        $this->services['security.user.provider.concrete.in_memory'] = $instance = new \Symfony\Component\Security\Core\User\InMemoryUserProvider();
-
-        $instance->createUser(new \Symfony\Component\Security\Core\User\User('user', 'userpass', array(0 => 'ROLE_USER')));
-        $instance->createUser(new \Symfony\Component\Security\Core\User\User('admin', 'adminpass', array(0 => 'ROLE_ADMIN')));
-
-        return $instance;
+        return $this->services['security.user.provider.concrete.user'] = new \Symfony\Bridge\Doctrine\Security\User\EntityUserProvider($this->get('doctrine'), 'Ecommerce\\UserBundle\\Entity\\User', 'email', NULL);
     }
 
     /**
@@ -3597,7 +3687,7 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParameterBag()
     {
@@ -3631,6 +3721,7 @@ class appDevDebugProjectContainer extends Container
                 'DoctrineBundle' => 'Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
                 'StofDoctrineExtensionsBundle' => 'Stof\\DoctrineExtensionsBundle\\StofDoctrineExtensionsBundle',
+                'IdeupSimplePaginatorBundle' => 'Ideup\\SimplePaginatorBundle\\IdeupSimplePaginatorBundle',
                 'UserBundle' => 'Ecommerce\\UserBundle\\UserBundle',
                 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\CategoryBundle',
                 'ItemBundle' => 'Ecommerce\\ItemBundle\\ItemBundle',
@@ -4065,17 +4156,18 @@ class appDevDebugProjectContainer extends Container
                 6 => 'DoctrineBundle',
                 7 => 'SensioFrameworkExtraBundle',
                 8 => 'StofDoctrineExtensionsBundle',
-                9 => 'UserBundle',
-                10 => 'CategoryBundle',
-                11 => 'ItemBundle',
-                12 => 'OrderBundle',
-                13 => 'BackendBundle',
-                14 => 'FrontendBundle',
-                15 => 'ImageBundle',
-                16 => 'PaymentBundle',
-                17 => 'WebProfilerBundle',
-                18 => 'SensioDistributionBundle',
-                19 => 'SensioGeneratorBundle',
+                9 => 'IdeupSimplePaginatorBundle',
+                10 => 'UserBundle',
+                11 => 'CategoryBundle',
+                12 => 'ItemBundle',
+                13 => 'OrderBundle',
+                14 => 'BackendBundle',
+                15 => 'FrontendBundle',
+                16 => 'ImageBundle',
+                17 => 'PaymentBundle',
+                18 => 'WebProfilerBundle',
+                19 => 'SensioDistributionBundle',
+                20 => 'SensioGeneratorBundle',
             ),
             'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
             'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',
@@ -4198,8 +4290,15 @@ class appDevDebugProjectContainer extends Container
             'stof_doctrine_extensions.listener.softdeleteable.class' => 'Gedmo\\SoftDeleteable\\SoftDeleteableListener',
             'stof_doctrine_extensions.listener.uploadable.class' => 'Gedmo\\Uploadable\\UploadableListener',
             'stof_doctrine_extensions.listener.reference_integrity.class' => 'Gedmo\\ReferenceIntegrity\\ReferenceIntegrityListener',
+            'simple_paginator_adapter_factory.class' => 'Ideup\\SimplePaginatorBundle\\Paginator\\Adapter\\AdapterFactory',
+            'simple_paginator.class' => 'Ideup\\SimplePaginatorBundle\\Paginator\\Paginator',
+            'twig.extension.simple_paginator.class' => 'Ideup\\SimplePaginatorBundle\\Twig\\Extension\\PaginatorExtension',
+            'templating.helper.simple_paginator.class' => 'Ideup\\SimplePaginatorBundle\\Templating\\Helper\\PaginatorHelper',
             'user.user_manager.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserManager',
             'user.user_form_handler.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\UserHandler',
+            'user.register_user_form_handler.class' => 'Ecommerce\\UserBundle\\Form\\Handler\\RegisterUserFormHandler',
+            'user.create_salt.class' => 'Ecommerce\\UserBundle\\EventListener\\RegisterUserEventSubscriber',
+            'user.auto_login_user.class' => 'Ecommerce\\UserBundle\\EventListener\\AutoLoginUserListener',
             'subcategory.subcategory_form_handler.class' => 'Ecommerce\\CategoryBundle\\Form\\Handler\\SubcategoryFormHandler',
             'item.item_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ItemFormHandler',
             'manufacturer.manufacturer_form_handler.class' => 'Ecommerce\\ItemBundle\\Form\\Handler\\ManufacturerFormHandler',

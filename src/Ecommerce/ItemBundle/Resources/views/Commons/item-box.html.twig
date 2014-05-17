@@ -10,15 +10,22 @@
                 <div class="item-title">
                     <a title="{{ item }}" href="{{ path('item_details', {'slug': item.slug}) }}">{{ item.name|length > 40 ? item.name|slice(0, 40) ~ '...' : item.name  }}</a>
                 </div>
-                <span class="item-price">{{ item.price }} <i class="fa fa-euro"></i></span>
             </div>
 
             <div class="item-options text-center">
-                {% if item.stock > 0 %}
-                <a class="btn btn-blue add-to-cart" title="{{ 'Añadir al carrito' | trans }}" href=""><i class="fa fa-shopping-cart"></i>{{ 'Añadir al carrito' | trans }}</a>
-                {% else %}
-                <a class="btn btn-disabled" title="{{ 'Agotado' | trans }}" href="">{{ 'Agotado' | trans }}</a>
-                {% endif %}
+                <ul class="list-unstyled">
+                    <li>
+                        <span class="item-price">{{ item.price }}</span>
+                        <i class="fa fa-euro"></i>
+                    </li>
+                    <li>
+                        {% if item.stock > 0 %}
+                            <a class="btn btn-blue add-to-cart" title="{{ 'Añadir al carrito' | trans }}" href=""><i class="fa fa-shopping-cart"></i>{{ 'Añadir' | trans }}</a>
+                        {% else %}
+                            <a class="btn btn-disabled" title="{{ 'Agotado' | trans }}" href="">{{ 'Agotado' | trans }}</a>
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

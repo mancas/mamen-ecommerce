@@ -17,6 +17,7 @@
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="StofDoctrineExtensionsBundle">Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle</parameter>
+      <parameter key="IdeupSimplePaginatorBundle">Ideup\SimplePaginatorBundle\IdeupSimplePaginatorBundle</parameter>
       <parameter key="UserBundle">Ecommerce\UserBundle\UserBundle</parameter>
       <parameter key="CategoryBundle">Ecommerce\CategoryBundle\CategoryBundle</parameter>
       <parameter key="ItemBundle">Ecommerce\ItemBundle\ItemBundle</parameter>
@@ -437,6 +438,7 @@
       <parameter>DoctrineBundle</parameter>
       <parameter>SensioFrameworkExtraBundle</parameter>
       <parameter>StofDoctrineExtensionsBundle</parameter>
+      <parameter>IdeupSimplePaginatorBundle</parameter>
       <parameter>UserBundle</parameter>
       <parameter>CategoryBundle</parameter>
       <parameter>ItemBundle</parameter>
@@ -564,8 +566,15 @@
     <parameter key="stof_doctrine_extensions.listener.softdeleteable.class">Gedmo\SoftDeleteable\SoftDeleteableListener</parameter>
     <parameter key="stof_doctrine_extensions.listener.uploadable.class">Gedmo\Uploadable\UploadableListener</parameter>
     <parameter key="stof_doctrine_extensions.listener.reference_integrity.class">Gedmo\ReferenceIntegrity\ReferenceIntegrityListener</parameter>
+    <parameter key="simple_paginator_adapter_factory.class">Ideup\SimplePaginatorBundle\Paginator\Adapter\AdapterFactory</parameter>
+    <parameter key="simple_paginator.class">Ideup\SimplePaginatorBundle\Paginator\Paginator</parameter>
+    <parameter key="twig.extension.simple_paginator.class">Ideup\SimplePaginatorBundle\Twig\Extension\PaginatorExtension</parameter>
+    <parameter key="templating.helper.simple_paginator.class">Ideup\SimplePaginatorBundle\Templating\Helper\PaginatorHelper</parameter>
     <parameter key="user.user_manager.class">Ecommerce\UserBundle\Form\Handler\UserManager</parameter>
     <parameter key="user.user_form_handler.class">Ecommerce\UserBundle\Form\Handler\UserHandler</parameter>
+    <parameter key="user.register_user_form_handler.class">Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler</parameter>
+    <parameter key="user.create_salt.class">Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber</parameter>
+    <parameter key="user.auto_login_user.class">Ecommerce\UserBundle\EventListener\AutoLoginUserListener</parameter>
     <parameter key="subcategory.subcategory_form_handler.class">Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler</parameter>
     <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
     <parameter key="manufacturer.manufacturer_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler</parameter>
@@ -1090,6 +1099,10 @@
       <call method="addSubscriberService">
         <argument>sensio_framework_extra.security.listener</argument>
         <argument>Sensio\Bundle\FrameworkExtraBundle\EventListener\SecurityListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>user.auto_login_user</argument>
+        <argument>Ecommerce\UserBundle\EventListener\AutoLoginUserListener</argument>
       </call>
       <call method="addSubscriberService">
         <argument>web_profiler.debug_toolbar</argument>
@@ -1702,13 +1715,27 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false">
-            <argument type="service" id="security.user.provider.concrete.in_memory"/>
+            <argument type="service" id="security.user.provider.concrete.user"/>
             <argument type="service">
               <service class="Symfony\Component\Security\Core\User\UserChecker" public="false"/>
             </argument>
-            <argument>secured_area</argument>
+            <argument>user</argument>
             <argument type="service" id="security.encoder_factory"/>
             <argument>true</argument>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider" public="false">
+            <argument type="service">
+              <service class="Symfony\Component\Security\Core\User\UserChecker" public="false"/>
+            </argument>
+            <argument>7a6d5e633cddaead7bd4b4e075c2818c</argument>
+            <argument>user</argument>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+            <argument>53773ba9a8158</argument>
           </service>
         </argument>
       </argument>
@@ -1768,19 +1795,9 @@
         <service class="Symfony\Bundle\SecurityBundle\Security\FirewallMap" public="false">
           <argument type="service" id="service_container"/>
           <argument type="collection">
-            <argument key="security.firewall.map.context.dev" type="service">
+            <argument key="security.firewall.map.context.user" type="service">
               <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                <argument>^/(_(profiler|wdt)|css|images|js)/</argument>
-              </service>
-            </argument>
-            <argument key="security.firewall.map.context.login" type="service">
-              <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                <argument>^/demo/secured/login$</argument>
-              </service>
-            </argument>
-            <argument key="security.firewall.map.context.secured_area" type="service">
-              <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                <argument>^/demo/secured/</argument>
+                <argument>^/</argument>
               </service>
             </argument>
           </argument>
@@ -1801,8 +1818,8 @@
       <argument type="service" id="service_container"/>
       <argument type="service" id="router"/>
       <call method="registerListener">
-        <argument>secured_area</argument>
-        <argument>_demo_logout</argument>
+        <argument>user</argument>
+        <argument>logout</argument>
         <argument>logout</argument>
         <argument>_csrf_token</argument>
         <argument>null</argument>
@@ -1812,39 +1829,13 @@
       <tag name="templating.helper" alias="security"/>
       <argument type="service" id="security.context" on-invalid="ignore"/>
     </service>
-    <service id="security.user.provider.concrete.in_memory" class="Symfony\Component\Security\Core\User\InMemoryUserProvider" public="false">
-      <call method="createUser">
-        <argument type="service">
-          <service class="Symfony\Component\Security\Core\User\User" public="false">
-            <argument>user</argument>
-            <argument>userpass</argument>
-            <argument type="collection">
-              <argument>ROLE_USER</argument>
-            </argument>
-          </service>
-        </argument>
-      </call>
-      <call method="createUser">
-        <argument type="service">
-          <service class="Symfony\Component\Security\Core\User\User" public="false">
-            <argument>admin</argument>
-            <argument>adminpass</argument>
-            <argument type="collection">
-              <argument>ROLE_ADMIN</argument>
-            </argument>
-          </service>
-        </argument>
-      </call>
-    </service>
-    <service id="security.firewall.map.context.dev" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
-      <argument type="collection"/>
+    <service id="security.user.provider.concrete.user" class="Symfony\Bridge\Doctrine\Security\User\EntityUserProvider" public="false">
+      <argument type="service" id="doctrine"/>
+      <argument>Ecommerce\UserBundle\Entity\User</argument>
+      <argument>email</argument>
       <argument>null</argument>
     </service>
-    <service id="security.firewall.map.context.login" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
-      <argument type="collection"/>
-      <argument>null</argument>
-    </service>
-    <service id="security.firewall.map.context.secured_area" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
+    <service id="security.firewall.map.context.user" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\ChannelListener" public="false">
@@ -1865,9 +1856,35 @@
           <service class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
             <argument type="service" id="security.context"/>
             <argument type="collection">
-              <argument type="service" id="security.user.provider.concrete.in_memory"/>
+              <argument type="service" id="security.user.provider.concrete.user"/>
+              <argument type="service">
+                <service class="Symfony\Component\Security\Core\User\InMemoryUserProvider" public="false">
+                  <call method="createUser">
+                    <argument type="service">
+                      <service class="Symfony\Component\Security\Core\User\User" public="false">
+                        <argument>user</argument>
+                        <argument>userpass</argument>
+                        <argument type="collection">
+                          <argument>ROLE_USER</argument>
+                        </argument>
+                      </service>
+                    </argument>
+                  </call>
+                  <call method="createUser">
+                    <argument type="service">
+                      <service class="Symfony\Component\Security\Core\User\User" public="false">
+                        <argument>admin</argument>
+                        <argument>adminpass</argument>
+                        <argument type="collection">
+                          <argument>ROLE_ADMIN</argument>
+                        </argument>
+                      </service>
+                    </argument>
+                  </call>
+                </service>
+              </argument>
             </argument>
-            <argument>secured_area</argument>
+            <argument>user</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
           </service>
@@ -1889,24 +1906,46 @@
                     <argument type="service" id="router" on-invalid="null"/>
                   </service>
                 </argument>
-                <argument>_demo</argument>
+                <argument>/</argument>
               </service>
             </argument>
             <argument type="collection">
               <argument key="csrf_parameter">_csrf_token</argument>
               <argument key="intention">logout</argument>
-              <argument key="logout_path">_demo_logout</argument>
+              <argument key="logout_path">logout</argument>
             </argument>
             <call method="addHandler">
               <argument type="service">
                 <service class="Symfony\Component\Security\Http\Logout\SessionLogoutHandler" public="false"/>
               </argument>
             </call>
+            <call method="addHandler">
+              <argument type="service">
+                <service class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false">
+                  <argument type="collection">
+                    <argument type="service" id="security.user.provider.concrete.user"/>
+                  </argument>
+                  <argument>7a6d5e633cddaead7bd4b4e075c2818c</argument>
+                  <argument>user</argument>
+                  <argument type="collection">
+                    <argument key="lifetime">5184000</argument>
+                    <argument key="name">REMEMBERME</argument>
+                    <argument key="path">/</argument>
+                    <argument key="domain">null</argument>
+                    <argument key="secure">false</argument>
+                    <argument key="httponly">true</argument>
+                    <argument key="always_remember_me">false</argument>
+                    <argument key="remember_me_parameter">_remember_me</argument>
+                  </argument>
+                  <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+                </service>
+              </argument>
+            </call>
           </service>
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener" public="false">
-            <tag name="security.remember_me_aware" id="secured_area" provider="security.user.provider.concrete.in_memory"/>
+            <tag name="security.remember_me_aware" id="user" provider="security.user.provider.concrete.user"/>
             <argument type="service" id="security.context"/>
             <argument type="service" id="security.authentication.manager"/>
             <argument type="service">
@@ -1920,7 +1959,7 @@
                 <argument type="service" id="router" on-invalid="null"/>
               </service>
             </argument>
-            <argument>secured_area</argument>
+            <argument>user</argument>
             <argument type="service">
               <service class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler" public="false">
                 <argument type="service">
@@ -1930,14 +1969,14 @@
                   </service>
                 </argument>
                 <argument type="collection">
-                  <argument key="login_path">_demo_login</argument>
+                  <argument key="login_path">login</argument>
                   <argument key="always_use_default_target_path">false</argument>
                   <argument key="default_target_path">/</argument>
                   <argument key="target_path_parameter">_target_path</argument>
                   <argument key="use_referer">false</argument>
                 </argument>
                 <call method="setProviderKey">
-                  <argument>secured_area</argument>
+                  <argument>user</argument>
                 </call>
               </service>
             </argument>
@@ -1951,7 +1990,7 @@
                   </service>
                 </argument>
                 <argument type="collection">
-                  <argument key="login_path">_demo_login</argument>
+                  <argument key="login_path">login</argument>
                   <argument key="failure_path">null</argument>
                   <argument key="failure_forward">false</argument>
                   <argument key="failure_path_parameter">_failure_path</argument>
@@ -1960,7 +1999,7 @@
               </service>
             </argument>
             <argument type="collection">
-              <argument key="check_path">_security_check</argument>
+              <argument key="check_path">login_check</argument>
               <argument key="use_forward">false</argument>
               <argument key="require_previous_session">true</argument>
               <argument key="username_parameter">_username</argument>
@@ -1972,6 +2011,63 @@
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
             <argument>null</argument>
+            <call method="setRememberMeServices">
+              <argument type="service">
+                <service class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false">
+                  <argument type="collection">
+                    <argument type="service" id="security.user.provider.concrete.user"/>
+                  </argument>
+                  <argument>7a6d5e633cddaead7bd4b4e075c2818c</argument>
+                  <argument>user</argument>
+                  <argument type="collection">
+                    <argument key="lifetime">5184000</argument>
+                    <argument key="name">REMEMBERME</argument>
+                    <argument key="path">/</argument>
+                    <argument key="domain">null</argument>
+                    <argument key="secure">false</argument>
+                    <argument key="httponly">true</argument>
+                    <argument key="always_remember_me">false</argument>
+                    <argument key="remember_me_parameter">_remember_me</argument>
+                  </argument>
+                  <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+                </service>
+              </argument>
+            </call>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Http\Firewall\RememberMeListener" public="false">
+            <argument type="service" id="security.context"/>
+            <argument type="service">
+              <service class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false">
+                <argument type="collection">
+                  <argument type="service" id="security.user.provider.concrete.user"/>
+                </argument>
+                <argument>7a6d5e633cddaead7bd4b4e075c2818c</argument>
+                <argument>user</argument>
+                <argument type="collection">
+                  <argument key="lifetime">5184000</argument>
+                  <argument key="name">REMEMBERME</argument>
+                  <argument key="path">/</argument>
+                  <argument key="domain">null</argument>
+                  <argument key="secure">false</argument>
+                  <argument key="httponly">true</argument>
+                  <argument key="always_remember_me">false</argument>
+                  <argument key="remember_me_parameter">_remember_me</argument>
+                </argument>
+                <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+              </service>
+            </argument>
+            <argument type="service" id="security.authentication.manager"/>
+            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+            <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
+            <argument type="service" id="security.context"/>
+            <argument>53773ba9a8158</argument>
+            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
         <argument type="service">
@@ -1996,7 +2092,7 @@
               <argument type="service" id="router" on-invalid="null"/>
             </service>
           </argument>
-          <argument>secured_area</argument>
+          <argument>user</argument>
           <argument type="service">
             <service class="Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint" public="false">
               <argument type="service" id="http_kernel"/>
@@ -2006,7 +2102,7 @@
                   <argument type="service" id="router" on-invalid="null"/>
                 </service>
               </argument>
-              <argument>_demo_login</argument>
+              <argument>login</argument>
               <argument>false</argument>
             </service>
           </argument>
@@ -2164,6 +2260,7 @@
               <argument>DoctrineBundle</argument>
               <argument>SensioFrameworkExtraBundle</argument>
               <argument>StofDoctrineExtensionsBundle</argument>
+              <argument>IdeupSimplePaginatorBundle</argument>
               <argument>UserBundle</argument>
               <argument>CategoryBundle</argument>
               <argument>ItemBundle</argument>
@@ -2186,6 +2283,9 @@
             <tag name="twig.extension"/>
           </service>
         </argument>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.ideup.simple_paginator"/>
       </call>
       <call method="addGlobal">
         <argument>app</argument>
@@ -2492,6 +2592,33 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>StofDoctrineExtensionsBundle</argument>
                   <argument>/home/manu/projects/mamen-ecommerce/vendor/stof/doctrine-extensions-bundle/Stof/DoctrineExtensionsBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>IdeupSimplePaginatorBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/IdeupSimplePaginatorBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>IdeupSimplePaginatorBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/vendor/ideup/simple-paginator-bundle/Ideup/SimplePaginatorBundle/Resources/views</argument>
                   <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
@@ -2934,6 +3061,9 @@
               </service>
             </argument>
           </call>
+          <call method="addEventSubscriber">
+            <argument type="service" id="user.create_salt_listener"/>
+          </call>
         </service>
       </argument>
       <argument type="collection"/>
@@ -3211,11 +3341,35 @@
       </argument>
       <argument>Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo</argument>
     </service>
+    <service id="ideup.simple_paginator.adapter_factory" class="Ideup\SimplePaginatorBundle\Paginator\Adapter\AdapterFactory"/>
+    <service id="ideup.simple_paginator" class="Ideup\SimplePaginatorBundle\Paginator\Paginator" scope="request">
+      <argument type="service" id="request"/>
+      <argument type="service" id="ideup.simple_paginator.adapter_factory"/>
+    </service>
+    <service id="twig.extension.ideup.simple_paginator" class="Ideup\SimplePaginatorBundle\Twig\Extension\PaginatorExtension">
+      <tag name="twig.extension" alias="simple_paginator_extension"/>
+      <argument type="service" id="templating.helper.ideup.simple_paginator"/>
+    </service>
+    <service id="templating.helper.ideup.simple_paginator" class="Ideup\SimplePaginatorBundle\Templating\Helper\PaginatorHelper">
+      <tag name="templating.helper" alias="simple_paginator_helper"/>
+      <argument type="service" id="service_container"/>
+    </service>
     <service id="user.manager" class="Ecommerce\UserBundle\Form\Handler\UserManager">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
     </service>
     <service id="user.user_form_handler" class="Ecommerce\UserBundle\Form\Handler\UserHandler">
       <argument type="service" id="user.manager"/>
+    </service>
+    <service id="user.register_user_form_handler" class="Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler">
+      <argument type="service" id="user.manager"/>
+    </service>
+    <service id="user.create_salt_listener" class="Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber">
+      <tag name="doctrine.event_subscriber"/>
+      <argument type="service" id="security.encoder_factory"/>
+    </service>
+    <service id="user.auto_login_user" class="Ecommerce\UserBundle\EventListener\AutoLoginUserListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="security.context"/>
     </service>
     <service id="subcategory.subcategory_form_handler" class="Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
@@ -3444,6 +3598,9 @@
       <argument type="service" id="templating.loader"/>
       <argument type="service" id="debug.stopwatch"/>
       <argument type="service" id="templating.globals"/>
+      <call method="setCharset">
+        <argument>UTF-8</argument>
+      </call>
       <call method="setHelpers">
         <argument type="collection">
           <argument key="slots">templating.helper.slots</argument>
@@ -3459,6 +3616,7 @@
           <argument key="logout_url">templating.helper.logout_url</argument>
           <argument key="security">templating.helper.security</argument>
           <argument key="assetic">assetic.helper.dynamic</argument>
+          <argument key="simple_paginator_helper">templating.helper.ideup.simple_paginator</argument>
         </argument>
       </call>
     </service>
@@ -3467,7 +3625,6 @@
       <argument type="service" id="templating.name_parser"/>
       <argument type="service" id="templating.locator"/>
       <argument type="service" id="debug.stopwatch"/>
-      <argument type="service" id="templating.globals"/>
       <call method="setDefaultEscapingStrategy">
         <argument type="collection">
           <argument type="service" id="templating"/>
@@ -3504,6 +3661,14 @@
     </service>
     <service id="security.encoder_factory" class="Symfony\Component\Security\Core\Encoder\EncoderFactory">
       <argument type="collection">
+        <argument key="Ecommerce\UserBundle\Entity\User" type="collection">
+          <argument key="class">%security.encoder.digest.class%</argument>
+          <argument key="arguments" type="collection">
+            <argument>sha512</argument>
+            <argument>true</argument>
+            <argument>10</argument>
+          </argument>
+        </argument>
         <argument key="Symfony\Component\Security\Core\User\User" type="collection">
           <argument key="class">%security.encoder.plain.class%</argument>
           <argument key="arguments" type="collection">
@@ -3535,6 +3700,10 @@
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/Resources/views</argument>
         <argument>Doctrine</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/vendor/ideup/simple-paginator-bundle/Ideup/SimplePaginatorBundle/Resources/views</argument>
+        <argument>IdeupSimplePaginator</argument>
       </call>
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Resources/views</argument>

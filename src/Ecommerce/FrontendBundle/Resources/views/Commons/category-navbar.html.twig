@@ -12,7 +12,9 @@
                             <div class="sub-menu-items">
                                 <ul class="list-unstyled subcategories-list">
                                     {% for subcategory in category.subcategories %}
-                                        <li><i class="fa fa-angle-right"></i>{{ subcategory }}</li>
+                                        {% if subcategory.items | length > 0 %}
+                                        <li><i class="fa fa-angle-right"></i><a title="{{ subcategory }}" href="{{ path('view_subcategory', {'slug' : subcategory.slug}) }}">{{ subcategory }}</a></li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>

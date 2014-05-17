@@ -1,6 +1,9 @@
 parameters:
     user.user_manager.class: Ecommerce\UserBundle\Form\Handler\UserManager
     user.user_form_handler.class: Ecommerce\UserBundle\Form\Handler\UserHandler
+    user.register_user_form_handler.class: Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler
+    user.create_salt.class: Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber
+    user.auto_login_user.class: Ecommerce\UserBundle\EventListener\AutoLoginUserListener
 
 services:
     user.manager:
@@ -9,3 +12,16 @@ services:
     user.user_form_handler:
         class: %user.user_form_handler.class%
         arguments: [@user.manager]
+    user.register_user_form_handler:
+        class: %user.register_user_form_handler.class%
+        arguments: [@user.manager]
+    user.create_salt_listener:
+        class: %user.create_salt.class%
+        arguments: [@security.encoder_factory]
+        tags:
+            - { name: doctrine.event_subscriber }
+    user.auto_login_user:
+        class: %user.auto_login_user.class%
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }

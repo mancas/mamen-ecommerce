@@ -30,3 +30,12 @@ user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /
 
+login:
+    pattern: /login
+    defaults: { _controller: UserBundle:Access:login }
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout

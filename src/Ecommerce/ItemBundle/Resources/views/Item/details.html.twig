@@ -81,13 +81,6 @@
     <script src="{{ asset('bundles/frontend/js/jquery.bxslider.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('.dropdown-toggle, .dropdown-menu').hover(function (e) {
-                        $(this).parent().addClass('open');
-                    },
-                    function (e) {
-                        $(this).parent().removeClass('open');
-                    });
-
             $('.bxslider').bxSlider({
             {% if item.images | length > 1 %}
                 imagesPager: [{% for thumb in item.images %} '{{ asset(thumb.ImageItemCarouselThumbnail.getWebFilePath) }}' {% if loop.last %}{% else %},{% endif %} {% endfor %}]
