@@ -1,3 +1,7 @@
+location:
+    resource: "@LocationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 payment:
     resource: "@PaymentBundle/Resources/config/routing.yml"
     prefix:   /
@@ -28,7 +32,7 @@ category:
 
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /u
 
 login:
     pattern: /login

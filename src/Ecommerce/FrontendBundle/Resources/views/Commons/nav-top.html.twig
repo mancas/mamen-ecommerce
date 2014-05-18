@@ -13,8 +13,8 @@
             <ul class="nav navbar-nav navbar-right main-nav">
                 {% if is_granted('ROLE_USER') %}
                     <li class="profile">
-                        <a href="">
-                            {{"Mi cuenta" | trans}}
+                        <a href="{{ path('user_profile') }}">
+                           {{"Mi cuenta" | trans}}
                         </a>
                     </li>
                     <li>

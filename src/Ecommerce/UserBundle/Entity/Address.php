@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ecommerce\UserBundle\Entity\AddressRepository")
  * @DoctrineAssert\UniqueEntity("id")
  * @UniqueEntity("id")
  */

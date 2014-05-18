@@ -1,0 +1,7 @@
+parameters:
+#    location.example.class: Ecommerce\LocationBundle\Example
+
+services:
+#    location.example:
+#        class: %location.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -13,7 +13,7 @@ use Ecommerce\UserBundle\Entity\Address;
 
 /**
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ecommerce\UserBundle\Entity\UserRepository")
  * @DoctrineAssert\UniqueEntity("email")
  * @UniqueEntity("email")
  */
@@ -92,6 +92,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * @Assert\NotBlank()
      */
     protected $validatedCode;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $nif;
 
     public function __construct()
     {
@@ -350,4 +355,19 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->deletedDate;
     }
 
+    /**
+     * @param mixed $nif
+     */
+    public function setNif($nif)
+    {
+        $this->nif = $nif;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNif()
+    {
+        return $this->nif;
+    }
 }

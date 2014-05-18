@@ -1,0 +1,24 @@
+{% extends "FrontendBundle:Layouts:2columns.html.twig" %}
+
+{% block sectionclass %}manager page{% endblock %}
+{% block header %}{{ parent() }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'UserBundle:Commons:user-sidenav.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="line-block mb20">
+            <h2 class="line-title">{% block sectionTitle%}{% endblock %}</h2>
+        </div>
+        {% block userContent%}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

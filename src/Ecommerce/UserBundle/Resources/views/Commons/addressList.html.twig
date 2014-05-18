@@ -1,0 +1,5 @@
+{% if addresses | length > 0 %}
+    {% for address in addresses %}
+        {{ address.name }}
+    {% endfor %}
+{% endif %}

@@ -24,8 +24,8 @@ security:
             form_login:
                login_path: login
                check_path: login_check
-               #success_handler: cornerfy.security.authentication.success_handler
-               #default_target_path: /u/perfil
+               success_handler: security.authentication.success_handler
+               default_target_path: /u/mi-cuenta
             logout:
                path: logout
             remember_me:
@@ -33,4 +33,6 @@ security:
                lifetime: 5184000
 
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/u/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/u/email-disponible, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/u/*, roles: ROLE_USER }

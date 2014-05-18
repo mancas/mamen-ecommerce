@@ -27,9 +27,13 @@ a {
 /** HELPER CLASSES **/
 .mt50 { margin-top: 50px; }
 
+.mt30 { margin-top: 30px; }
+
 .text-12 { font-size: 12px; }
 
 .ml-10 { margin-left: -10px; }
+
+.mr8 { margin-right: 8px; }
 
 .mb20 { margin-bottom: 20px !important; }
 
@@ -522,5 +526,83 @@ span.error {
   .register {
     text-align: center;
     margin-top: 50px;
+  }
+}
+
+/** STACKS **/
+.stack {
+  border-radius: 4px;
+  margin: auto;
+  background-color: $footer-background;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  color: $blue;
+
+  i {
+    margin-right: 8px;
+  }
+
+  ul {
+    line-height: 35px;
+  }
+
+  a {
+    &:hover {
+      text-decoration: none;
+      color: $pink;
+    }
+  }
+
+  .active {
+    color: $pink;
+
+    a {
+      color: $pink;
+    }
+  }
+}
+
+/** USER PROFILE **/
+.box {
+  h5 {
+    display: block;
+    background-color: $footer-background;
+    padding: 8px 10px;
+    box-shadow: 0 0 1px rgba(50, 50, 50, 0.2);
+    -moz-box-shadow: 0 0 1px rgba(50, 50, 50, 0.2);
+    -webkit-box-shadow: 0 0 1px rgba(50, 50, 50, 0.2);
+    border: solid 1px $light-gray;
+
+    a {
+      display: block;
+      color: $gray;
+      outline: none !important;
+
+      &:hover, &:active, &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .stack-box {
+    display: block;
+    background-color: $white;
+    box-shadow: 0 1px 3px rgba(50, 50, 50, 0.2);
+    margin-top: -10px;
+    padding-top: 15px;
+
+    .content {
+      padding: 0px 10px 15px 10px;
+    }
+
+    .stack-box-title {
+      font-size: 14px;
+      color: $blue-hover;
+    }
+
+    .controls {
+      display: block;
+      text-align: right;
+    }
   }
 }

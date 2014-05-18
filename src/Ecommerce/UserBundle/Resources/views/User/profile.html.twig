@@ -1,0 +1,57 @@
+{% extends "UserBundle:Layouts:base.html.twig" %}
+
+{% block sectionclass %}manager page{% endblock %}
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'UserBundle:Commons:user-sidenav.html.twig' %}
+{% endblock %}
+
+{% block sectionTitle %}
+    {{ 'Mi cuenta' | trans }}
+{% endblock %}
+
+{% block userContent %}
+    <h5><a data-toggle="collapse" href="#personal-data"><i class="fa fa-user mr8"></i>{{ 'Datos personales' | trans }}<i class="pull-right fa fa-chevron-down"></i></a></h5>
+    <div class="stack-box">
+        <div id="personal-data" class="content collapse in">
+            <form id="user-profile" action="" class="form-inline" role="form" method="post" novalidate="novalidate">
+                <h6 class="stack-box-title">{{ 'Nombre y apellidos' | trans }}</h6>
+                <div class="form-group">
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <h6 class="stack-box-title mt30">{{ 'Información adicional' | trans }}</h6>
+                <div class="form-group">
+                    {{ form_widget(form.nif, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {{ form_rest(form)}}
+                <div class="controls">
+                    <img style="display:none;" class="ml15 loader" src="{{ asset('bundles/frontend/img/ajax_loader_blue.gif') }}">
+                    <button id="save-personal-data" type="submit" class="btn btn-blue">{{ "Guardar" | trans }}</button>
+                </div><!-- .form-group -->
+            </form>
+        </div>
+    </div>
+
+    <h5><a data-toggle="collapse" href="#user-addresses"><i class="fa fa-map-marker mr8"></i>{{ 'Direcciones' | trans }}<i class="pull-right fa fa-chevron-down"></i></a></h5>
+    <div class="stack-box">
+        <div id="user-addresses" class="content collapse">
+            <h6 class="stack-box-title">{{ 'Mis direcciones' | trans }}</h6>
+            <div id="addresses">
+                {{ render(controller("UserBundle:User:adressList", {'user' : user})) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

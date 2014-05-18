@@ -1,7 +1,8 @@
 parameters:
-#    frontend.example.class: Ecommerce\FrontendBundle\Example
+    security.authentication.success_handler.class: Ecommerce\FrontendBundle\Component\Security\AuthenticationSuccessHandler
 
 services:
-#    frontend.example:
-#        class: %frontend.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    security.authentication.success_handler:
+        class: %security.authentication.success_handler.class%
+        public: false
+        arguments:  ['@router']
