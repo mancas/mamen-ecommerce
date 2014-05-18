@@ -43,4 +43,9 @@ class CustomController extends Controller
 
         return $criteria;
     }
+
+    protected function getCurrentUser()
+    {
+        return $this->get('security.context')->getToken()->getUser();
+    }
 }

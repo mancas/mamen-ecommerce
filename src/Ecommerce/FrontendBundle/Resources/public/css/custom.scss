@@ -11,6 +11,7 @@ $gray: #404040;
 $footer-gray: #888888;
 $footer-background: #F3F3F3;
 $disabled-gray: #DDDDDD;
+$red: #FF0000;
 
 body {
   background: url(../img/texture.png) repeat;
@@ -421,6 +422,13 @@ a {
   }
 }
 
+/** VALIDATION ERRORS **/
+span.error {
+  font-size: 12px;
+  color: $red;
+  display: block;
+}
+
 /** ITEM DETAILS **/
 .item-description {
   color: $gray;
@@ -493,7 +501,6 @@ a {
 /** LOGIN **/
 .small-box {
   display: block;
-  max-width: 600px;
   border-radius: 4px;
   min-height: 200px;
   margin: auto;
@@ -516,13 +523,4 @@ a {
     text-align: center;
     margin-top: 50px;
   }
-}
-
-.small-box-xs {
-  border-radius: 4px;
-  min-height: 200px;
-  margin: auto;
-  background-color: $footer-background;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  padding: 20px;
 }

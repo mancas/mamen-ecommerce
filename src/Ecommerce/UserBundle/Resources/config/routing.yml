@@ -1,6 +1,15 @@
 register:
     pattern: /registro
     defaults: { _controller: UserBundle:Access:register }
+
 success_register:
     pattern: /registro-completado
     defaults: { _controller: UserBundle:Access:successRegister }
+
+validate_user:
+    pattern: /valida-tu-cuenta
+    defaults: { _controller: UserBundle:Access:validateUser }
+
+check_if_email_is_available:
+    pattern: /email-disponible
+    defaults: { _controller: UserBundle:Access:checkIfEmailIsAvailable }
