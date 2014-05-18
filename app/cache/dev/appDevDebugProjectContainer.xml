@@ -26,6 +26,7 @@
       <parameter key="FrontendBundle">Ecommerce\FrontendBundle\FrontendBundle</parameter>
       <parameter key="ImageBundle">Ecommerce\ImageBundle\ImageBundle</parameter>
       <parameter key="PaymentBundle">Ecommerce\PaymentBundle\PaymentBundle</parameter>
+      <parameter key="LocationBundle">Ecommerce\LocationBundle\LocationBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -447,6 +448,7 @@
       <parameter>FrontendBundle</parameter>
       <parameter>ImageBundle</parameter>
       <parameter>PaymentBundle</parameter>
+      <parameter>LocationBundle</parameter>
       <parameter>WebProfilerBundle</parameter>
       <parameter>SensioDistributionBundle</parameter>
       <parameter>SensioGeneratorBundle</parameter>
@@ -1735,7 +1737,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5378924b976fa</argument>
+            <argument>5378c7618bfd9</argument>
           </service>
         </argument>
       </argument>
@@ -2085,7 +2087,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5378924b976fa</argument>
+            <argument>5378c7618bfd9</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -2322,6 +2324,7 @@
               <argument>FrontendBundle</argument>
               <argument>ImageBundle</argument>
               <argument>PaymentBundle</argument>
+              <argument>LocationBundle</argument>
               <argument>WebProfilerBundle</argument>
               <argument>SensioDistributionBundle</argument>
               <argument>SensioGeneratorBundle</argument>
@@ -2905,6 +2908,33 @@
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
+                  <argument>LocationBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/app/Resources/LocationBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>LocationBundle</argument>
+                  <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
                   <argument>WebProfilerBundle</argument>
                   <argument>/home/manu/projects/mamen-ecommerce/app/Resources/WebProfilerBundle/views</argument>
                   <argument>/\.[^.]+\.twig$/</argument>
@@ -3154,6 +3184,7 @@
               <argument key="FrontendBundle">Ecommerce\FrontendBundle\Entity</argument>
               <argument key="ImageBundle">Ecommerce\ImageBundle\Entity</argument>
               <argument key="PaymentBundle">Ecommerce\PaymentBundle\Entity</argument>
+              <argument key="LocationBundle">Ecommerce\LocationBundle\Entity</argument>
             </argument>
           </call>
           <call method="setMetadataCacheImpl">
@@ -3198,6 +3229,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -3215,6 +3247,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -3232,6 +3265,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -3249,6 +3283,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -3266,6 +3301,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -3283,6 +3319,7 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -3300,10 +3337,29 @@
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
                         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
                   <argument>Ecommerce\PaymentBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity</argument>
+                        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Ecommerce\LocationBundle\Entity</argument>
                 </call>
               </service>
             </argument>
@@ -3789,6 +3845,10 @@
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views</argument>
         <argument>Payment</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Resources/views</argument>
+        <argument>Location</argument>
       </call>
       <call method="addPath">
         <argument>/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>

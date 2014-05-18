@@ -317,6 +317,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrontendBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/FrontendBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrontendBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ImageBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/ImageBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'ImageBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'PaymentBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/PaymentBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'PaymentBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'LocationBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/LocationBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'LocationBundle', '/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/WebProfilerBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SensioDistributionBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/home/manu/projects/mamen-ecommerce/app/Resources/SensioGeneratorBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/home/manu/projects/mamen-ecommerce/vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
@@ -685,7 +686,7 @@ class appDevDebugProjectContainer extends Container
         $d = new \Doctrine\Common\Cache\ArrayCache();
         $d->setNamespace('sf2orm_default_fd5165aa63ec52bf1ed93dace27bacc9b49777453d33cfc5d98e03e1aaf059fb');
 
-        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity', 4 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity', 5 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity', 6 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity'));
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/UserBundle/Entity', 1 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/CategoryBundle/Entity', 2 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ItemBundle/Entity', 3 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/OrderBundle/Entity', 4 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Entity', 5 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Entity', 6 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Entity', 7 => '/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Entity'));
 
         $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $f->addDriver($e, 'Ecommerce\\UserBundle\\Entity');
@@ -695,9 +696,10 @@ class appDevDebugProjectContainer extends Container
         $f->addDriver($e, 'Ecommerce\\FrontendBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\ImageBundle\\Entity');
         $f->addDriver($e, 'Ecommerce\\PaymentBundle\\Entity');
+        $f->addDriver($e, 'Ecommerce\\LocationBundle\\Entity');
 
         $g = new \Doctrine\ORM\Configuration();
-        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity', 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\Entity', 'ImageBundle' => 'Ecommerce\\ImageBundle\\Entity', 'PaymentBundle' => 'Ecommerce\\PaymentBundle\\Entity'));
+        $g->setEntityNamespaces(array('UserBundle' => 'Ecommerce\\UserBundle\\Entity', 'CategoryBundle' => 'Ecommerce\\CategoryBundle\\Entity', 'ItemBundle' => 'Ecommerce\\ItemBundle\\Entity', 'OrderBundle' => 'Ecommerce\\OrderBundle\\Entity', 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\Entity', 'ImageBundle' => 'Ecommerce\\ImageBundle\\Entity', 'PaymentBundle' => 'Ecommerce\\PaymentBundle\\Entity', 'LocationBundle' => 'Ecommerce\\LocationBundle\\Entity'));
         $g->setMetadataCacheImpl($b);
         $g->setQueryCacheImpl($c);
         $g->setResultCacheImpl($d);
@@ -2046,7 +2048,7 @@ class appDevDebugProjectContainer extends Container
         $p = new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $g, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $m, 'user', new \Ecommerce\FrontendBundle\Component\Security\AuthenticationSuccessHandler($e), new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($f, $m, array('login_path' => 'login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'), $a), array('check_path' => 'login_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $d, NULL);
         $p->setRememberMeServices($n);
 
-        return $this->services['security.firewall.map.context.user'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $c, 1 => $l), 'user', $a, $d), 2 => $o, 3 => $p, 4 => new \Symfony\Component\Security\Http\Firewall\RememberMeListener($b, $n, $g, $a, $d), 5 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5378924b976fa', $a), 6 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $g)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $m, 'user', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($f, $m, 'login', false), NULL, NULL, $a));
+        return $this->services['security.firewall.map.context.user'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $c, 1 => $l), 'user', $a, $d), 2 => $o, 3 => $p, 4 => new \Symfony\Component\Security\Http\Firewall\RememberMeListener($b, $n, $g, $a, $d), 5 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5378c7618bfd9', $a), 6 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $g)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $m, 'user', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($f, $m, 'login', false), NULL, NULL, $a));
     }
 
     /**
@@ -3112,7 +3114,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FrameworkBundle', 1 => 'SecurityBundle', 2 => 'TwigBundle', 3 => 'MonologBundle', 4 => 'SwiftmailerBundle', 5 => 'AsseticBundle', 6 => 'DoctrineBundle', 7 => 'SensioFrameworkExtraBundle', 8 => 'StofDoctrineExtensionsBundle', 9 => 'IdeupSimplePaginatorBundle', 10 => 'UserBundle', 11 => 'CategoryBundle', 12 => 'ItemBundle', 13 => 'OrderBundle', 14 => 'BackendBundle', 15 => 'FrontendBundle', 16 => 'ImageBundle', 17 => 'PaymentBundle', 18 => 'WebProfilerBundle', 19 => 'SensioDistributionBundle', 20 => 'SensioGeneratorBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FrameworkBundle', 1 => 'SecurityBundle', 2 => 'TwigBundle', 3 => 'MonologBundle', 4 => 'SwiftmailerBundle', 5 => 'AsseticBundle', 6 => 'DoctrineBundle', 7 => 'SensioFrameworkExtraBundle', 8 => 'StofDoctrineExtensionsBundle', 9 => 'IdeupSimplePaginatorBundle', 10 => 'UserBundle', 11 => 'CategoryBundle', 12 => 'ItemBundle', 13 => 'OrderBundle', 14 => 'BackendBundle', 15 => 'FrontendBundle', 16 => 'ImageBundle', 17 => 'PaymentBundle', 18 => 'LocationBundle', 19 => 'WebProfilerBundle', 20 => 'SensioDistributionBundle', 21 => 'SensioGeneratorBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
         $instance->addExtension($this->get('twig.extension.ideup.simple_paginator'));
         $instance->addGlobal('app', $this->get('templating.globals'));
@@ -3198,6 +3200,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/FrontendBundle/Resources/views', 'Frontend');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/ImageBundle/Resources/views', 'Image');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/PaymentBundle/Resources/views', 'Payment');
+        $instance->addPath('/home/manu/projects/mamen-ecommerce/src/Ecommerce/LocationBundle/Resources/views', 'Location');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', 'WebProfiler');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', 'SensioDistribution');
         $instance->addPath('/home/manu/projects/mamen-ecommerce/app/Resources/views');
@@ -3517,7 +3520,7 @@ class appDevDebugProjectContainer extends Container
     {
         $a = new \Symfony\Component\Security\Core\User\UserChecker();
 
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.user'), $a, 'user', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider($a, '7a6d5e633cddaead7bd4b4e075c2818c', 'user'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5378924b976fa')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.user'), $a, 'user', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider($a, '7a6d5e633cddaead7bd4b4e075c2818c', 'user'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5378c7618bfd9')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3736,6 +3739,7 @@ class appDevDebugProjectContainer extends Container
                 'FrontendBundle' => 'Ecommerce\\FrontendBundle\\FrontendBundle',
                 'ImageBundle' => 'Ecommerce\\ImageBundle\\ImageBundle',
                 'PaymentBundle' => 'Ecommerce\\PaymentBundle\\PaymentBundle',
+                'LocationBundle' => 'Ecommerce\\LocationBundle\\LocationBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
@@ -4171,9 +4175,10 @@ class appDevDebugProjectContainer extends Container
                 15 => 'FrontendBundle',
                 16 => 'ImageBundle',
                 17 => 'PaymentBundle',
-                18 => 'WebProfilerBundle',
-                19 => 'SensioDistributionBundle',
-                20 => 'SensioGeneratorBundle',
+                18 => 'LocationBundle',
+                19 => 'WebProfilerBundle',
+                20 => 'SensioDistributionBundle',
+                21 => 'SensioGeneratorBundle',
             ),
             'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
             'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',

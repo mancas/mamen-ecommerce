@@ -67,6 +67,11 @@ class Address
     protected $created;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Ecommerce\LocationBundle\Entity\City")
+     */
+    protected $city;
+
+    /**
      * @param mixed $address
      */
     public function setAddress($address)
@@ -193,4 +198,21 @@ class Address
     {
         return $this->main;
     }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+    
 }
