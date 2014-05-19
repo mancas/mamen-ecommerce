@@ -1,0 +1,19 @@
+<div id="personal-data" class="content collapse in">
+    <form id="user-profile" action="" class="form-inline" role="form" method="post" novalidate="novalidate">
+        <h6 class="stack-box-title">{{ 'Nombre y apellidos' | trans }}</h6>
+        <div class="form-group">
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <h6 class="stack-box-title mt30">{{ 'Información adicional' | trans }}</h6>
+        <div class="form-group">
+            {{ form_widget(form.nif, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_rest(form)}}
+        <div class="controls">
+            <img style="display:none;" class="ml15 loader" src="{{ asset('bundles/frontend/img/ajax_loader_blue.gif') }}">
+            <button id="save-personal-data" type="submit" class="btn btn-blue">{{ "Guardar" | trans }}</button>
+        </div><!-- .form-group -->
+    </form>
+</div>

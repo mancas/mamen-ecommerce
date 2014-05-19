@@ -238,6 +238,7 @@ class appDevDebugProjectContainer extends Container
             'twig' => 'getTwigService',
             'twig.controller.exception' => 'getTwig_Controller_ExceptionService',
             'twig.exception_listener' => 'getTwig_ExceptionListenerService',
+            'twig.extension.ajax' => 'getTwig_Extension_AjaxService',
             'twig.extension.ideup.simple_paginator' => 'getTwig_Extension_Ideup_SimplePaginatorService',
             'twig.extension.stockbar' => 'getTwig_Extension_StockbarService',
             'twig.loader' => 'getTwig_LoaderService',
@@ -246,6 +247,7 @@ class appDevDebugProjectContainer extends Container
             'user.auto_login_user' => 'getUser_AutoLoginUserService',
             'user.create_salt_listener' => 'getUser_CreateSaltListenerService',
             'user.manager' => 'getUser_ManagerService',
+            'user.new_address_handler' => 'getUser_NewAddressHandlerService',
             'user.register_user_form_handler' => 'getUser_RegisterUserFormHandlerService',
             'user.user_form_handler' => 'getUser_UserFormHandlerService',
             'validator' => 'getValidatorService',
@@ -2048,7 +2050,7 @@ class appDevDebugProjectContainer extends Container
         $p = new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $g, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $m, 'user', new \Ecommerce\FrontendBundle\Component\Security\AuthenticationSuccessHandler($e), new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($f, $m, array('login_path' => 'login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'), $a), array('check_path' => 'login_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $d, NULL);
         $p->setRememberMeServices($n);
 
-        return $this->services['security.firewall.map.context.user'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $c, 1 => $l), 'user', $a, $d), 2 => $o, 3 => $p, 4 => new \Symfony\Component\Security\Http\Firewall\RememberMeListener($b, $n, $g, $a, $d), 5 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5378c7618bfd9', $a), 6 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $g)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $m, 'user', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($f, $m, 'login', false), NULL, NULL, $a));
+        return $this->services['security.firewall.map.context.user'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $c, 1 => $l), 'user', $a, $d), 2 => $o, 3 => $p, 4 => new \Symfony\Component\Security\Http\Firewall\RememberMeListener($b, $n, $g, $a, $d), 5 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '537a671b91aff', $a), 6 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $g)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $m, 'user', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($f, $m, 'login', false), NULL, NULL, $a));
     }
 
     /**
@@ -3101,6 +3103,7 @@ class appDevDebugProjectContainer extends Container
         $this->services['twig'] = $instance = new \Twig_Environment($this->get('twig.loader'), array('debug' => true, 'strict_variables' => true, 'exception_controller' => 'twig.controller.exception:showAction', 'autoescape_service' => NULL, 'autoescape_service_method' => NULL, 'cache' => '/home/manu/projects/mamen-ecommerce/app/cache/dev/twig', 'charset' => 'UTF-8', 'paths' => array()));
 
         $instance->addExtension($this->get('twig.extension.stockbar'));
+        $instance->addExtension($this->get('twig.extension.ajax'));
         $instance->addExtension(new \Symfony\Bundle\SecurityBundle\Twig\Extension\LogoutUrlExtension($this->get('templating.helper.logout_url')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\SecurityExtension($this->get('security.context', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\TranslationExtension($this->get('translator')));
@@ -3146,6 +3149,19 @@ class appDevDebugProjectContainer extends Container
     protected function getTwig_ExceptionListenerService()
     {
         return $this->services['twig.exception_listener'] = new \Symfony\Component\HttpKernel\EventListener\ExceptionListener('twig.controller.exception:showAction', $this->get('monolog.logger.request', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+    }
+
+    /**
+     * Gets the 'twig.extension.ajax' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\FrontendBundle\Twig\Extension\AjaxExtension A Ecommerce\FrontendBundle\Twig\Extension\AjaxExtension instance.
+     */
+    protected function getTwig_Extension_AjaxService()
+    {
+        return $this->services['twig.extension.ajax'] = new \Ecommerce\FrontendBundle\Twig\Extension\AjaxExtension($this);
     }
 
     /**
@@ -3272,6 +3288,19 @@ class appDevDebugProjectContainer extends Container
     protected function getUser_ManagerService()
     {
         return $this->services['user.manager'] = new \Ecommerce\UserBundle\Form\Handler\UserManager($this->get('doctrine.orm.default_entity_manager'));
+    }
+
+    /**
+     * Gets the 'user.new_address_handler' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Ecommerce\LocationBundle\Form\Handler\NewAddressHandler A Ecommerce\LocationBundle\Form\Handler\NewAddressHandler instance.
+     */
+    protected function getUser_NewAddressHandlerService()
+    {
+        return $this->services['user.new_address_handler'] = new \Ecommerce\LocationBundle\Form\Handler\NewAddressHandler($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -3520,7 +3549,7 @@ class appDevDebugProjectContainer extends Container
     {
         $a = new \Symfony\Component\Security\Core\User\UserChecker();
 
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.user'), $a, 'user', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider($a, '7a6d5e633cddaead7bd4b4e075c2818c', 'user'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5378c7618bfd9')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.user'), $a, 'user', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider($a, '7a6d5e633cddaead7bd4b4e075c2818c', 'user'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('537a671b91aff')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -4317,6 +4346,7 @@ class appDevDebugProjectContainer extends Container
             'image.image_manager.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\ImageManager',
             'image.create_image_form.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\CreateImageFormHandler',
             'image.createasynchronousformhandler.class' => 'Ecommerce\\ImageBundle\\Form\\Handler\\CreateImageAsynchronousFormHandler',
+            'user.new_address_handler.class' => 'Ecommerce\\LocationBundle\\Form\\Handler\\NewAddressHandler',
             'web_profiler.controller.profiler.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController',
             'web_profiler.controller.router.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController',
             'web_profiler.controller.exception.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController',

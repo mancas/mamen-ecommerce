@@ -1,0 +1,44 @@
+<div id="user-addresses" class="content collapse in">
+    <div class="new-address-form">
+        <form id="new-address" data-callback="updateContent('{{ path('get_addresses') }}', 'addresses');resetForm('new-address')" action="{{ path('new_address') }}" class="form-inline" role="form" method="post" novalidate="novalidate">
+            <h6 class="stack-box-title">{{ 'Nombre' | trans }}</h6>
+            <div class="form-group">
+                {{ form_widget(addressForm.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <h6 class="stack-box-title mt30">{{ 'Dirección' | trans }}</h6>
+
+            <div class="form-group block">
+                {{ form_widget(addressForm.address, {'attr': {'class': 'form-control w70'}}) }}
+                {{ form_widget(addressForm.postalCode, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <h6 class="stack-box-title mt30">{{ 'Localización' | trans }}</h6>
+
+            <div class="form-group">
+                <!-- Provinces -->
+                <select name="p" id="p" class="form-control" autocomplete="off">
+                    <option value="" selected="selected">{{ 'Provincia' | trans }}</option>
+                    {% for province in provinces %}
+                        <option value="{{ province.getId }}">{{ province.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Cities -->
+                <select name="c" id="c" class="form-control" autocomplete="off">
+                    <option value="" selected="selected">{{ 'Localidad' | trans }}</option>
+                </select>
+            </div>
+
+            {{ form_rest(addressForm)}}
+            <div class="controls">
+                <img id="address-loader" style="display:none;" class="ml15 loader" src="{{ asset('bundles/frontend/img/ajax_loader_blue.gif') }}">
+                <button id="save-new-address" type="submit" class="btn btn-blue">{{ "Añadir" | trans }}</button>
+            </div><!-- .form-group -->
+        </form>
+    </div>
+
+    <div id="addresses" class="">
+        {{ render(controller("UserBundle:User:adressList", {'user' : user})) }}
+    </div>
+</div>

@@ -12,6 +12,7 @@ $footer-gray: #888888;
 $footer-background: #F3F3F3;
 $disabled-gray: #DDDDDD;
 $red: #FF0000;
+$light-pink: #F9AAC1;
 
 body {
   background: url(../img/texture.png) repeat;
@@ -29,6 +30,8 @@ a {
 
 .mt30 { margin-top: 30px; }
 
+.mt20 { margin-top: 20px; }
+
 .text-12 { font-size: 12px; }
 
 .ml-10 { margin-left: -10px; }
@@ -36,6 +39,12 @@ a {
 .mr8 { margin-right: 8px; }
 
 .mb20 { margin-bottom: 20px !important; }
+
+.block {
+  display: block !important;
+}
+
+.w70 { width: 70% !important; }
 
 /** COLOR CLASSES **/
 .blue {
@@ -409,6 +418,18 @@ a {
   -webkit-transition: all 0.25s ease;
 }
 
+.btn-main {
+  background-color: $pink;
+  border-color: $pink;
+  color: #FFFFFF;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+
+  &:hover {
+    background-color: $light-pink;
+  }
+}
+
 /** PAGINATION **/
 .pagination {
   .active {
@@ -562,6 +583,11 @@ span.error {
   }
 }
 
+.stack-sidenav {
+  background-color: $white;
+  margin-top: 50px;
+}
+
 /** USER PROFILE **/
 .box {
   h5 {
@@ -603,6 +629,22 @@ span.error {
     .controls {
       display: block;
       text-align: right;
+    }
+  }
+}
+
+#addresses {
+  padding-top: 50px;
+  font-size: 12px;
+
+  .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
+  }
+
+  .main {
+    background-color: #FCF8E3;
+    &:hover {
+      background-color: #FAF2CC !important;
     }
   }
 }

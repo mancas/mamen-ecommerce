@@ -15,6 +15,9 @@ a {
 .mt30 {
   margin-top: 30px; }
 
+.mt20 {
+  margin-top: 20px; }
+
 .text-12 {
   font-size: 12px; }
 
@@ -26,6 +29,12 @@ a {
 
 .mb20 {
   margin-bottom: 20px !important; }
+
+.block {
+  display: block !important; }
+
+.w70 {
+  width: 70% !important; }
 
 /** COLOR CLASSES **/
 .blue {
@@ -283,6 +292,15 @@ a {
   transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease; }
 
+.btn-main {
+  background-color: #f12b63;
+  border-color: #f12b63;
+  color: #FFFFFF;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease; }
+  .btn-main:hover {
+    background-color: #f9aac1; }
+
 /** PAGINATION **/
 .pagination .active a {
   background-color: #4cb1ca;
@@ -382,6 +400,10 @@ span.error {
     .stack .active a {
       color: #f12b63; }
 
+.stack-sidenav {
+  background-color: white;
+  margin-top: 50px; }
+
 /** USER PROFILE **/
 .box h5 {
   display: block;
@@ -411,3 +433,13 @@ span.error {
   .box .stack-box .controls {
     display: block;
     text-align: right; }
+
+#addresses {
+  padding-top: 50px;
+  font-size: 12px; }
+  #addresses .table > thead > tr > th, #addresses .table > tbody > tr > th, #addresses .table > tfoot > tr > th, #addresses .table > thead > tr > td, #addresses .table > tbody > tr > td, #addresses .table > tfoot > tr > td {
+    vertical-align: middle; }
+  #addresses .main {
+    background-color: #FCF8E3; }
+    #addresses .main:hover {
+      background-color: #FAF2CC !important; }

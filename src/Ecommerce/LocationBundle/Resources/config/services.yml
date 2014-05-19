@@ -1,7 +1,7 @@
 parameters:
-#    location.example.class: Ecommerce\LocationBundle\Example
+    user.new_address_handler.class: Ecommerce\LocationBundle\Form\Handler\NewAddressHandler
 
 services:
-#    location.example:
-#        class: %location.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    user.new_address_handler:
+        class: %user.new_address_handler.class%
+        arguments: [@doctrine.orm.entity_manager]

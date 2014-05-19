@@ -21,3 +21,15 @@ user_profile:
 user_orders:
     pattern: /mis-pedidos
     defaults: { _controller: UserBundle:User:orders }
+
+new_address:
+    pattern: /nueva-direccion
+    defaults: { _controller: UserBundle:User:newAddress }
+
+change_main_address:
+    pattern: /direccion-principal/{slug}
+    defaults: { _controller: UserBundle:User:changeMainAddress }
+
+delete_address:
+    pattern: /eliminar-direccion/{slug}
+    defaults: { _controller: UserBundle:User:deleteAddress }

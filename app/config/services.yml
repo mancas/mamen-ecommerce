@@ -3,3 +3,9 @@ services:
         class: Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension
         tags:
             - { name: twig.extension }
+    twig.extension.ajax:
+            class: Ecommerce\FrontendBundle\Twig\Extension\AjaxExtension
+            arguments:
+                container: @service_container
+            tags:
+                - { name: twig.extension }

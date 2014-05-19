@@ -584,6 +584,7 @@
     <parameter key="image.image_manager.class">Ecommerce\ImageBundle\Form\Handler\ImageManager</parameter>
     <parameter key="image.create_image_form.class">Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler</parameter>
     <parameter key="image.createasynchronousformhandler.class">Ecommerce\ImageBundle\Form\Handler\CreateImageAsynchronousFormHandler</parameter>
+    <parameter key="user.new_address_handler.class">Ecommerce\LocationBundle\Form\Handler\NewAddressHandler</parameter>
     <parameter key="web_profiler.controller.profiler.class">Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController</parameter>
     <parameter key="web_profiler.controller.router.class">Symfony\Bundle\WebProfilerBundle\Controller\RouterController</parameter>
     <parameter key="web_profiler.controller.exception.class">Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController</parameter>
@@ -647,6 +648,10 @@
   <services>
     <service id="twig.extension.stockbar" class="Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension">
       <tag name="twig.extension"/>
+    </service>
+    <service id="twig.extension.ajax" class="Ecommerce\FrontendBundle\Twig\Extension\AjaxExtension">
+      <tag name="twig.extension"/>
+      <argument key="container" type="service" id="service_container"/>
     </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
@@ -1737,7 +1742,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5378c7618bfd9</argument>
+            <argument>537a671b91aff</argument>
           </service>
         </argument>
       </argument>
@@ -2087,7 +2092,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5378c7618bfd9</argument>
+            <argument>537a671b91aff</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -2181,6 +2186,9 @@
       </argument>
       <call method="addExtension">
         <argument type="service" id="twig.extension.stockbar"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.ajax"/>
       </call>
       <call method="addExtension">
         <argument type="service">
@@ -3503,6 +3511,9 @@
       <argument type="service" id="image.manager"/>
       <argument type="service" id="validator"/>
       <argument type="service" id="service_container"/>
+    </service>
+    <service id="user.new_address_handler" class="Ecommerce\LocationBundle\Form\Handler\NewAddressHandler">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
     </service>
     <service id="web_profiler.controller.profiler" class="Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController">
       <argument type="service" id="router" on-invalid="null"/>
