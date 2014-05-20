@@ -21,10 +21,29 @@ class UserController extends CustomController
         $addressForm = $this->createForm(new AddressType());
         $provinces = $em->getRepository('LocationBundle:Province')->findAll();
 
+        if (!$user->isProfileComplete()) {
+            $this->setTranslatedFlashMessage('Recuerda rellenar tus datos personales para poder realizar compras');
+        }
+
         return $this->render('UserBundle:User:profile.html.twig', array('user' => $user,
                                                                         'form' => $form->createView(),
                                                                         'addressForm' => $addressForm->createView(),
                                                                         'provinces' => $provinces));
+    }
+
+    public function editProfileAction(Request $request)
+    {
+        $jsonResponse = json_encode(array('ok' => false));
+        if ($request->isXmlHttpRequest()) {
+            $user = $this->getCurrentUser();
+            $form = $this->createForm(new UserProfileType(), $user);
+            $handler = $this->get('user.user_form_handler');
+            if ($handler->handle($form, $request)) {
+                $jsonResponse = json_encode(array('ok' => true));
+            }
+        }
+
+        return $this->getHttpJsonResponse($jsonResponse);
     }
 
     public function newAddressAction(Request $request)

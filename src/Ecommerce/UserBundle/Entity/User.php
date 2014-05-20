@@ -370,4 +370,9 @@ class User implements UserInterface, \Serializable, EquatableInterface
     {
         return $this->nif;
     }
+
+    public function isProfileComplete()
+    {
+        return ($this->name && $this->lastName && $this->nif);
+    }
 }

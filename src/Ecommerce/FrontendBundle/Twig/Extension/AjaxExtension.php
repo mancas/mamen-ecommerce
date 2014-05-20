@@ -59,13 +59,11 @@ class AjaxExtension extends CustomTwigExtension
 
         if ($notificationSelector != null) {
             $script .= "if (res.ok == false) {
-                        notifications.addClass('alert-error');
+                        notifications.find('.error-notification').fadeIn(400).delay(1000).fadeOut(800);
                     }
                     else {
-                        notifications.addClass('alert-info');
-                    }
-                    notifications.children('span').html(res.message);
-                    notifications.slideDown();";
+                        notifications.find('.ok-notification').fadeIn(400).delay(1000).fadeOut(800);
+                    }";
         }
 
         $script .= "var callbacks = form.attr('data-callback');

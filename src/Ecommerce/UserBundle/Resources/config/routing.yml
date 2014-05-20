@@ -22,6 +22,10 @@ user_orders:
     pattern: /mis-pedidos
     defaults: { _controller: UserBundle:User:orders }
 
+edit_profile:
+    pattern: /editar-perfil/informacion-personal
+    defaults: { _controller: UserBundle:User:editProfile }
+
 new_address:
     pattern: /nueva-direccion
     defaults: { _controller: UserBundle:User:newAddress }

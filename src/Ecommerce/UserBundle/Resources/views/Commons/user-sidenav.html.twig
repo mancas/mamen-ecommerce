@@ -1,8 +1,5 @@
 {% set action = app.request.attributes.get('_route') %}
-<div class="stack stack-sidenav">
-    <ul class="list-unstyled">
-        <li {% if action == 'user_profile' %}class="active"{% endif %}><a title="{{ 'Mi cuenta' | trans }}" href="{{ path('user_profile') }}"><i class="fa fa-angle-right"></i>{{ 'Mi cuenta' | trans }}</a></li>
-        <li {% if action == 'user_orders' %}class="active"{% endif %}><a title="{{ 'Gestiona tus pedidos' | trans }}" href="{{ path('user_orders') }}"><i class="fa fa-angle-right"></i>{{ 'Mis pedidos' | trans }}</a></li>
-        <li><a href="{{ path('logout') }}"><i class="fa fa-angle-right"></i>{{ 'Cerrar sesión' | trans }}</a></li>
-    </ul>
+<div class="user-nav">
+    <a title="{{ 'Mi cuenta' | trans }}" href="{{ path('user_profile') }}" {% if action == 'user_profile' %}class="active"{% endif %}>{{ 'Mi cuenta' | trans }}</a>
+    <a title="{{ 'Gestiona tus pedidos' | trans }}" href="{{ path('user_orders') }}" {% if action == 'user_orders' %}class="active"{% endif %}>{{ 'Mis pedidos' | trans }}</a>
 </div>
