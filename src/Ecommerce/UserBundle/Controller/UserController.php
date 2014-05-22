@@ -31,6 +31,19 @@ class UserController extends CustomController
                                                                         'provinces' => $provinces));
     }
 
+    public function ordersAction()
+    {
+        $em = $this->getEntityManager();
+        $user = $this->getCurrentUser();
+        $orders = $em->getRepository('OrderBundle:Order')->findOrdersByUserEmail($user->getEmail());
+
+        if (!$user->isProfileComplete()) {
+            $this->setTranslatedFlashMessage('Recuerda rellenar tus datos personales para poder realizar compras');
+        }
+
+        return $this->render('UserBundle:User:orders.html.twig', array('user' => $user, 'orders' => $orders));
+    }
+
     public function editProfileAction(Request $request)
     {
         $jsonResponse = json_encode(array('ok' => false));

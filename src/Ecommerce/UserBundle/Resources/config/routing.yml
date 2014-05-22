@@ -37,3 +37,7 @@ change_main_address:
 delete_address:
     pattern: /eliminar-direccion/{slug}
     defaults: { _controller: UserBundle:User:deleteAddress }
+
+view_order_details:
+    pattern: /mis-pedidos/pedido-{id}
+    defaults: { _controller: UserBundle:User:viewOrderDetails }

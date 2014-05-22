@@ -41,6 +41,11 @@ class OrderItem
     protected $quantity = 1;
 
     /**
+     * @ORM\Column(name="price", type="float")
+     */
+    protected $price;
+
+    /**
      * @param mixed $id
      */
     public function setId($id)
@@ -102,6 +107,22 @@ class OrderItem
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return ($this->price * $this->quantity);
     }
 
 }
