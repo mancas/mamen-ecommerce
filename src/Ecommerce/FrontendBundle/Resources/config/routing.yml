@@ -1,3 +1,15 @@
 frontend_homepage:
     pattern:  /
     defaults: { _controller: FrontendBundle:Frontend:index }
+
+add_to_cart:
+    pattern: /anadir-al-carrito/{slug}
+    defaults: { _controller: FrontendBundle:Cart:addItem }
+
+empty_cart:
+    pattern: /vaciar-carrito
+    defaults: { _controller: FrontendBundle:Cart:emptyCart }
+
+cart_template:
+    pattern: /carrito
+    defaults: { _controller: FrontendBundle:Cart:cartTemplate }

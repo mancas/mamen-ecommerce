@@ -27,21 +27,7 @@
                 {% endif  %}
                 {#<li><a href="" {% if action == 'contact' %}class="current"{% endif %}>{{"Contacto" | trans}}</a></li>#}
                 <li class="shopping-cart">
-                    <a class="dropdown-toggle" href="">
-                        <span class="badge badge-info cart-items">3</span>
-                        <i class="fa fa-shopping-cart"></i>
-                    </a>
-
-                    <div class="sub-menu sub-menu-cart dropdown-menu">
-                        <div class="sub-menu-cart-items">
-                            <span>3 productos <a class="empty-cart" href="" title="{{ 'Vaciar cesta' | trans }}"><i class="fa fa-times-circle"></i></a></span>
-                            <span class="pull-right">123€</span>
-                        </div>
-                        <div class="cart-buttons">
-                            <a class="btn btn-success" href="" title="{{ 'Pagar' | trans }}">{{ 'Pagar' | trans }}</a>
-                            <a class="btn btn-blue" href="" title="{{ 'Ver cesta' | trans }}">{{ 'Ver cesta' | trans }}</a>
-                        </div>
-                    </div>
+                    {{ render(controller("FrontendBundle:Cart:cart")) }}
                 </li>
             </ul>
         </div>

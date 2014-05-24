@@ -87,6 +87,8 @@ a {
     padding: 20px 0px;
     margin: 0 15px;
     border-bottom: solid 1px #eeeeee; }
+    .main-nav .sub-menu-cart .sub-menu-cart-items i {
+      font-size: 14px; }
   .main-nav .sub-menu-cart .cart-buttons {
     padding: 20px 0px 10px 0px;
     margin: 0 15px;
@@ -474,4 +476,4 @@ span.error {
   .intro h2 {
     color: #4cb1ca;
     margin: 0px;
-    font-size: 32; }
+    font-size: 32px; }

@@ -48,4 +48,9 @@ class CustomController extends Controller
     {
         return $this->get('security.context')->getToken()->getUser();
     }
+
+    protected function getCartStorageManager()
+    {
+        return $this->get('cart.cart_storage_manager');
+    }
 }

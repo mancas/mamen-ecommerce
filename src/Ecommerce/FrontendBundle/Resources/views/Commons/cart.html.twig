@@ -1,0 +1,15 @@
+<a class="dropdown-toggle" href="">
+    <span class="badge badge-info cart-items">{{ cart.cartItems | length }}</span>
+    <i class="fa fa-shopping-cart"></i>
+</a>
+
+<div class="sub-menu sub-menu-cart dropdown-menu">
+    <div class="sub-menu-cart-items">
+        <span>{{ cart.cartItems | length }} {% if cart.cartItems | length == 1 %}{{ 'producto' | trans }}{% else %}{{ 'productos' | trans }}{% endif %} <a class="empty-cart" href="{{ path('empty_cart') }}" title="{{ 'Vaciar cesta' | trans }}"><i class="fa fa-times-circle"></i></a></span>
+        <span class="pull-right">{{ cart.cartTotal }} <i class="fa fa-euro text-12"></i></span>
+    </div>
+    <div class="cart-buttons">
+        <a class="btn btn-success" href="" title="{{ 'Pagar' | trans }}">{{ 'Pagar' | trans }}</a>
+        <a class="btn btn-blue" href="" title="{{ 'Ver cesta' | trans }}">{{ 'Ver cesta' | trans }}</a>
+    </div>
+</div>

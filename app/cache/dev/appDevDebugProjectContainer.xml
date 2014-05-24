@@ -114,7 +114,9 @@
     <parameter key="session.handler.native_file.class">Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler</parameter>
     <parameter key="session.handler.write_check.class">Symfony\Component\HttpFoundation\Session\Storage\Handler\WriteCheckSessionHandler</parameter>
     <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
-    <parameter key="session.storage.options" type="collection"/>
+    <parameter key="session.storage.options" type="collection">
+      <parameter key="cookie_lifetime">60</parameter>
+    </parameter>
     <parameter key="session.save_path">/home/manu/projects/mamen-ecommerce/app/cache/dev/sessions</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
     <parameter key="security.secure_random.class">Symfony\Component\Security\Core\Util\SecureRandom</parameter>
@@ -581,6 +583,8 @@
     <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
     <parameter key="manufacturer.manufacturer_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler</parameter>
     <parameter key="category.categoryformhandler.class">Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler</parameter>
+    <parameter key="cart.cart_storage_manager">Ecommerce\FrontendBundle\Storage\CartStorageManager</parameter>
+    <parameter key="cart.cart_event_listener">Ecommerce\FrontendBundle\EventListener\CartEventSubscriber</parameter>
     <parameter key="image.image_manager.class">Ecommerce\ImageBundle\Form\Handler\ImageManager</parameter>
     <parameter key="image.create_image_form.class">Ecommerce\ImageBundle\Form\Handler\CreateImageFormHandler</parameter>
     <parameter key="image.createasynchronousformhandler.class">Ecommerce\ImageBundle\Form\Handler\CreateImageAsynchronousFormHandler</parameter>
@@ -1112,6 +1116,10 @@
         <argument>Ecommerce\UserBundle\EventListener\AutoLoginUserListener</argument>
       </call>
       <call method="addSubscriberService">
+        <argument>cart.cart_event_listener</argument>
+        <argument>Ecommerce\FrontendBundle\EventListener\CartEventSubscriber</argument>
+      </call>
+      <call method="addSubscriberService">
         <argument>web_profiler.debug_toolbar</argument>
         <argument>Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</argument>
       </call>
@@ -1147,7 +1155,9 @@
       <argument>0</argument>
     </service>
     <service id="session.storage.native" class="Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage">
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="cookie_lifetime">60</argument>
+      </argument>
       <argument>null</argument>
       <argument type="service" id="session.storage.metadata_bag"/>
     </service>
@@ -1742,7 +1752,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>537e2fa29df30</argument>
+            <argument>53805f28ac5a8</argument>
           </service>
         </argument>
       </argument>
@@ -2092,7 +2102,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>537e2fa29df30</argument>
+            <argument>53805f28ac5a8</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -3499,6 +3509,13 @@
     </service>
     <service id="category.category_form_handler" class="Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="cart.cart_storage_manager" class="Ecommerce\FrontendBundle\Storage\CartStorageManager">
+      <argument type="service" id="session"/>
+    </service>
+    <service id="cart.cart_event_listener" class="Ecommerce\FrontendBundle\EventListener\CartEventSubscriber">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="cart.cart_storage_manager"/>
     </service>
     <service id="image.manager" class="Ecommerce\ImageBundle\Form\Handler\ImageManager">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
