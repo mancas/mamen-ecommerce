@@ -115,7 +115,7 @@
     <parameter key="session.handler.write_check.class">Symfony\Component\HttpFoundation\Session\Storage\Handler\WriteCheckSessionHandler</parameter>
     <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
     <parameter key="session.storage.options" type="collection">
-      <parameter key="cookie_lifetime">60</parameter>
+      <parameter key="cookie_lifetime">604800</parameter>
     </parameter>
     <parameter key="session.save_path">/home/manu/projects/mamen-ecommerce/app/cache/dev/sessions</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
@@ -1156,7 +1156,7 @@
     </service>
     <service id="session.storage.native" class="Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage">
       <argument type="collection">
-        <argument key="cookie_lifetime">60</argument>
+        <argument key="cookie_lifetime">604800</argument>
       </argument>
       <argument>null</argument>
       <argument type="service" id="session.storage.metadata_bag"/>
@@ -1752,7 +1752,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>53805f28ac5a8</argument>
+            <argument>5381c64cc5777</argument>
           </service>
         </argument>
       </argument>
@@ -2102,7 +2102,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>53805f28ac5a8</argument>
+            <argument>5381c64cc5777</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>

@@ -22,16 +22,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        $(document).ready(function() {
-            $('.dropdown-toggle, .dropdown-menu').hover(function (e) {
-                        $(this).parent().addClass('open');
-                    },
-                    function (e) {
-                        $(this).parent().removeClass('open');
-                    });
-        });
-    </script>
 {% endblock %}
 
 {% block footer %}

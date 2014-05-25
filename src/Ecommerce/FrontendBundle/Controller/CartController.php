@@ -52,6 +52,24 @@ class CartController extends CustomController
         return $this->render("FrontendBundle:Commons:cart.html.twig", array('cart' => $cart));
     }
 
+    public function viewAction()
+    {
+        $cartStorageManager = $this->getCartStorageManager();
+        $cart = $cartStorageManager->getCurrentCart();
+
+        return $this->render("FrontendBundle:Pages:cart.html.twig", array('cart' => $cart));
+    }
+
+    public function deleteItemAction($id)
+    {
+        $cartStorageManager = $this->getCartStorageManager();
+        $cart = $cartStorageManager->getCurrentCart();
+        $cartItem = $cart->getCartItemById($id);
+        $cart->removeCartItem($cartItem);
+
+        return $this->redirect($this->generateUrl('cart_details'));
+    }
+
     /**
      * @Template("FrontendBundle:Commons:cart.html.twig")
      *

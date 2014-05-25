@@ -13,3 +13,11 @@ empty_cart:
 cart_template:
     pattern: /carrito
     defaults: { _controller: FrontendBundle:Cart:cartTemplate }
+
+cart_details:
+    pattern: /tu-carrito
+    defaults: { _controller: FrontendBundle:Cart:view }
+
+delete_item_from_cart:
+    pattern: /eliminar-articulo/{id}
+    defaults: { _controller: FrontendBundle:Cart:deleteItem }

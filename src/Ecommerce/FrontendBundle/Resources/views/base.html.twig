@@ -32,39 +32,7 @@
     {% block footer %}{% endblock %}
 </div>
 {% block javascripts %}
-    <script>
-        $(document).ready(function(){
-            $('body').delegate('.add-to-cart', 'click', function(e) {
-                e.preventDefault();
-                $.post($(this).attr('href'), function (response) {
-                   console.info(response);
-                    updateCart();
-                });
-            });
-
-            $('body').delegate('.empty-cart', 'click', function(e) {
-                e.preventDefault();
-                $.post($(this).attr('href'), function (response) {
-                    console.info(response);
-                });
-            });
-
-            $('body').delegate('.dropdown-toggle, .dropdown-menu', 'mouseover mouseout', function(e) {
-                if (e.type == 'mouseover') {
-                    $(this).parent().addClass('open');
-                } else {
-                    $(this).parent().removeClass('open');
-                }
-            });
-
-            function updateCart()
-            {
-                $.get('{{ path('cart_template') }}', function(response) {
-                    $('.shopping-cart').html(response);
-                });
-            }
-        });
-    </script>
+    {% include 'FrontendBundle:Commons:cartScript.html.twig' %}
 {% endblock %}
 </body>
 </html>

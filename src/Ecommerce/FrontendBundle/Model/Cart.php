@@ -56,6 +56,22 @@ class Cart implements \Serializable
         }
     }
 
+    public function removeCartItem(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
+    {
+        if ($this->contains($cartItem)) {
+            $this->cartItems->removeElement($cartItem);
+        }
+    }
+
+    public function getCartItemById($id)
+    {
+        foreach ($this->cartItems as $item) {
+            if ($item->getId() == $id) {
+                return $item;
+            }
+        }
+    }
+
     public function contains(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
     {
         foreach ($this->cartItems as $item) {
