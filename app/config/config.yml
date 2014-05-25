@@ -30,6 +30,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        url_for_image: http://www.clop.com
 
 # Assetic Configuration
 assetic:

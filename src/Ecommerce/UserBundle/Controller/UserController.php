@@ -17,6 +17,9 @@ class UserController extends CustomController
     {
         $em = $this->getEntityManager();
         $user = $this->getCurrentUser();
+        if (!$user->getValidated()) {
+            return $this->redirect($this->generateUrl('validate_user'));
+        }
         $form = $this->createForm(new UserProfileType(), $user);
         $addressForm = $this->createForm(new AddressType());
         $provinces = $em->getRepository('LocationBundle:Province')->findAll();
@@ -35,6 +38,9 @@ class UserController extends CustomController
     {
         $em = $this->getEntityManager();
         $user = $this->getCurrentUser();
+        if (!$user->getValidated()) {
+            return $this->redirect($this->generateUrl('validate_user'));
+        }
         $orders = $em->getRepository('OrderBundle:Order')->findOrdersByUserEmail($user->getEmail());
 
         if (!$user->isProfileComplete()) {

@@ -45,6 +45,7 @@
     <parameter key="mailer_password">null</parameter>
     <parameter key="locale">en</parameter>
     <parameter key="secret">7a6d5e633cddaead7bd4b4e075c2818c</parameter>
+    <parameter key="noreply_email">noreply@clop.com</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
     <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
@@ -579,6 +580,7 @@
     <parameter key="user.register_user_form_handler.class">Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler</parameter>
     <parameter key="user.create_salt.class">Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber</parameter>
     <parameter key="user.auto_login_user.class">Ecommerce\UserBundle\EventListener\AutoLoginUserListener</parameter>
+    <parameter key="user.send_activation_email.class">Ecommerce\UserBundle\EventListener\SendActivationEmailListener</parameter>
     <parameter key="subcategory.subcategory_form_handler.class">Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler</parameter>
     <parameter key="item.item_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ItemFormHandler</parameter>
     <parameter key="manufacturer.manufacturer_form_handler.class">Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler</parameter>
@@ -1114,6 +1116,10 @@
       <call method="addSubscriberService">
         <argument>user.auto_login_user</argument>
         <argument>Ecommerce\UserBundle\EventListener\AutoLoginUserListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>user.send_activation_email_listener</argument>
+        <argument>Ecommerce\UserBundle\EventListener\SendActivationEmailListener</argument>
       </call>
       <call method="addSubscriberService">
         <argument>cart.cart_event_listener</argument>
@@ -1752,7 +1758,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5381f1e502fe2</argument>
+            <argument>53820c6901628</argument>
           </service>
         </argument>
       </argument>
@@ -2102,7 +2108,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5381f1e502fe2</argument>
+            <argument>53820c6901628</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -2364,6 +2370,10 @@
       <call method="addGlobal">
         <argument>app</argument>
         <argument type="service" id="templating.globals"/>
+      </call>
+      <call method="addGlobal">
+        <argument>url_for_image</argument>
+        <argument>http://www.clop.com</argument>
       </call>
     </service>
     <service id="twig.translation.extractor" class="Symfony\Bridge\Twig\Translation\TwigExtractor">
@@ -3497,6 +3507,13 @@
     <service id="user.auto_login_user" class="Ecommerce\UserBundle\EventListener\AutoLoginUserListener">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="security.context"/>
+    </service>
+    <service id="user.send_activation_email_listener" class="Ecommerce\UserBundle\EventListener\SendActivationEmailListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="swiftmailer.mailer.default"/>
+      <argument type="service" id="templating"/>
+      <argument type="service" id="router"/>
+      <argument>noreply@clop.com</argument>
     </service>
     <service id="subcategory.subcategory_form_handler" class="Ecommerce\CategoryBundle\Form\Handler\SubcategoryFormHandler">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>

@@ -4,6 +4,7 @@ parameters:
     user.register_user_form_handler.class: Ecommerce\UserBundle\Form\Handler\RegisterUserFormHandler
     user.create_salt.class: Ecommerce\UserBundle\EventListener\RegisterUserEventSubscriber
     user.auto_login_user.class: Ecommerce\UserBundle\EventListener\AutoLoginUserListener
+    user.send_activation_email.class: Ecommerce\UserBundle\EventListener\SendActivationEmailListener
 
 services:
     user.manager:
@@ -25,3 +26,8 @@ services:
         arguments: [@security.context]
         tags:
             - { name: kernel.event_subscriber }
+    user.send_activation_email_listener:
+            class: %user.send_activation_email.class%
+            arguments: [@mailer, @templating, @router, %noreply_email%]
+            tags:
+                - { name: kernel.event_subscriber }
