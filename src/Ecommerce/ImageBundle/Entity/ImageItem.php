@@ -78,6 +78,16 @@ class ImageItem extends Image
         return $thumb;
     }
 
+    public function createImageItemCart()
+    {
+        $thumb = $this->getImageItemCart();
+        if (!$thumb) {
+            $thumb = new ImageItemCart();
+        }
+
+        return $thumb;
+    }
+
     public function createCopies()
     {
         list($oldRoute, $copies) = parent::createCopies();
@@ -95,6 +105,10 @@ class ImageItem extends Image
 
         if ($boxw = $this->createImageItemCarouselThumbnail()) {
             $copies[] = $boxw;
+        }
+
+        if ($cart = $this->createImageItemCart()) {
+            $copies[] = $cart;
         }
 
         return array($oldRoute, $copies);

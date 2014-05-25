@@ -70,6 +70,21 @@ class CartController extends CustomController
         return $this->redirect($this->generateUrl('cart_details'));
     }
 
+    public function updateItemQuantityAction($id, Request $request)
+    {
+        $jsonResponse = json_encode(array('ok' => false));
+        if ($request->isXmlHttpRequest()) {
+            $quantity = $request->request->get('quantity');
+            $cartStorageManager = $this->getCartStorageManager();
+            $cart = $cartStorageManager->getCurrentCart();
+            $cartItem = $cart->getCartItemById($id);
+            $cartItem->setQuantity($quantity);
+            $jsonResponse = json_encode(array('ok' => true, 'path' => $this->generateUrl('cart_details')));
+        }
+
+        return $this->getHttpJsonResponse($jsonResponse);
+    }
+
     /**
      * @Template("FrontendBundle:Commons:cart.html.twig")
      *
@@ -81,5 +96,19 @@ class CartController extends CustomController
         $cart = $cartStorageManager->getCurrentCart();
 
         return array('cart' => $cart);
+    }
+
+    /**
+     * @param $id
+     * @Template("FrontendBundle:Commons:cart-item-details.html.twig")
+     *
+     * @return array
+     */
+    public function cartItemDetailsAction($id)
+    {
+        $em = $this->getEntityManager();
+        $item = $em->getRepository('ItemBundle:Item')->findOneById($id);
+
+        return array('item' => $item);
     }
 }

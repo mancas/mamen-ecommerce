@@ -27,6 +27,9 @@ a {
 .mr8 {
   margin-right: 8px; }
 
+.mr15 {
+  margin-right: 15px; }
+
 .mb20 {
   margin-bottom: 20px !important; }
 
@@ -59,6 +62,11 @@ a {
 /** MAIN NAV **/
 .navbar-nav > li > a {
   line-height: 33px; }
+
+.navbar-brand {
+  height: 63px;
+  padding: 0px;
+  padding-left: 15px; }
 
 .nav > li > a:hover, .nav > li > a:focus {
   background-color: white;
@@ -477,3 +485,23 @@ span.error {
     color: #4cb1ca;
     margin: 0px;
     font-size: 32px; }
+
+.cart-table thead > tr > th, .cart-table > tbody > tr > th, .cart-table > tfoot > tr > th, .cart-table > thead > tr > td, .cart-table > tbody > tr > td, .cart-table > tfoot > tr > td {
+  vertical-align: middle; }
+
+.cart-table {
+  text-align: center; }
+  .cart-table .text-left {
+    text-align: left !important; }
+  .cart-table th {
+    text-align: center; }
+  .cart-table input {
+    max-width: 70px; }
+  .cart-table .no-lines td {
+    border: none !important; }
+  .cart-table .delivery {
+    text-align: right;
+    color: #404040; }
+  .cart-table .total-cart {
+    text-align: right;
+    color: #404040; }

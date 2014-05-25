@@ -21,3 +21,7 @@ cart_details:
 delete_item_from_cart:
     pattern: /eliminar-articulo/{id}
     defaults: { _controller: FrontendBundle:Cart:deleteItem }
+
+update_cart_item_quantity:
+    pattern: /cambiar-cantidad/{id}
+    defaults: { _controller: FrontendBundle:Cart:updateItemQuantity }
