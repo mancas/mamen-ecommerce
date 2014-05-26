@@ -19,7 +19,8 @@ class SendActivationEmailListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            UserEvents::NEW_USER => 'onNewUser'
+            UserEvents::NEW_USER => 'onNewUser',
+            UserEvents::RESEND_ACTIVATION_EMAIL => 'resendActivationEmail'
         );
     }
 
@@ -32,6 +33,11 @@ class SendActivationEmailListener implements EventSubscriberInterface
     }
 
     public function onNewUser(UserEvent $event)
+    {
+        $this->sendActivationEmail($event->getUser());
+    }
+
+    public function resendActivationEmail(UserEvent $event)
     {
         $this->sendActivationEmail($event->getUser());
     }

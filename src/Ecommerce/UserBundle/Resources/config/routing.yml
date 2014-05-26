@@ -41,3 +41,11 @@ delete_address:
 view_order_details:
     pattern: /mis-pedidos/pedido-{id}
     defaults: { _controller: UserBundle:User:viewOrderDetails }
+
+resend_activation_email:
+    pattern: /reenviar-correo-de-activacion
+    defaults: { _controller: UserBundle:Access:resendActivationEmail }
+
+forgot_password:
+    pattern: /recuperar-contrasena
+    defaults: { _controller: UserBundle:Access:forgotPassword }

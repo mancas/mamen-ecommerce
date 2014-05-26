@@ -28,7 +28,7 @@
             </p>
             <p class="mb20">
                 {{ 'Recuerda revisar la carpeta de ' | trans }}<strong>{{ 'SPAM' |trans }}</strong>. {{ 'Si no lo has recibido, puedes pedir que te lo reenviemos haciendo click ' | trans }}
-                <a title="{{ 'Reenviar correo' | trans }}" href="">{{ 'aquí' | trans }}</a>.
+                <a title="{{ 'Reenviar correo' | trans }}" href="{{ path('resend_activation_email') }}">{{ 'aquí' | trans }}</a>.
             </p>
 
             <div class="row">

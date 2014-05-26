@@ -66,6 +66,17 @@ class AccessController extends CustomController
         return $this->render('UserBundle:Access:validate-code.html.twig', array('form' => $form->createView(), 'user' => $user));
     }
 
+    public function resendActivationEmailAction()
+    {
+        $user = $this->getCurrentUser();
+        $userEvent = new UserEvent($user);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(UserEvents::RESEND_ACTIVATION_EMAIL, $userEvent);
+        $this->setTranslatedFlashMessage('El correo de activación ha sido reenviado a tu cuenta.');
+
+        return $this->redirect($this->generateUrl('validate_user'));
+    }
+
     public function checkIfEmailIsAvailableAction(Request $request)
     {
         $jsonResponse = json_encode(array('available' => 'false'));
@@ -88,5 +99,17 @@ class AccessController extends CustomController
         $user = $em->getRepository('UserBundle:User')->findOneByEmail($email);
 
         return !($user instanceof User);
+    }
+
+    public function forgotPasswordAction(Request $request)
+    {
+        $form = $this->createFormBuilder()->add('email', 'email', array('required' => true, 'attr' => array('placeholder' => 'Introduzca su e-mail')))->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+        }
+
+        return $this->render('UserBundle:Access:forgot-password.html.twig', array('form' => $form->createView()));
     }
 }

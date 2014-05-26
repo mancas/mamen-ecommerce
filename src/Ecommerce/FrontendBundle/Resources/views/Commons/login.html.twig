@@ -44,8 +44,8 @@
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-large btn-blue" type="submit">{{ 'Entrar!' | trans }}</button> &nbsp; &nbsp;
-                                        <a class="text-12 ml-10" href="">
-                                            He olvidado mi password
+                                        <a class="text-12 ml-10" href="{{ path('forgot_password') }}">
+                                            {{ 'He olvidado mi contraseña' | trans }}
                                         </a>
                                     </div>
                                 </fieldset>
@@ -54,7 +54,7 @@
                         <div class="col-md-6">
                             <div class="register">
                                 <p>{{ '¿Eres un nuevo cliente?' | trans }}</p>
-                                <a class="btn btn-success" title="{{ 'Regístrate gratis en Ecommerce' | trans }}" href="{{ path('register') }}">{{ 'Regístrate gratis' | trans }}</a>
+                                <a class="btn btn-success" title="{{ 'Regístrate gratis en Clop' | trans }}" href="{{ path('register') }}">{{ 'Regístrate gratis' | trans }}</a>
                             </div>
                         </div><!-- .col-md-6 -->
                     </div>

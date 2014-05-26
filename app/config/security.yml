@@ -35,4 +35,5 @@ security:
     access_control:
         - { path: ^/u/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/u/email-disponible, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/u/recuperar-contrasena, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/u/*, roles: ROLE_USER }
