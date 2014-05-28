@@ -47,5 +47,9 @@ resend_activation_email:
     defaults: { _controller: UserBundle:Access:resendActivationEmail }
 
 forgot_password:
-    pattern: /recuperar-contrasena
+    pattern: /recuperar-password
     defaults: { _controller: UserBundle:Access:forgotPassword }
+
+new_password:
+    pattern: /cambiar-password/{salt}
+    defaults: { _controller: UserBundle:Access:changePassword }

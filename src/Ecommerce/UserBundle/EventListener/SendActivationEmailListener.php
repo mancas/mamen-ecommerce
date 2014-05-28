@@ -20,7 +20,8 @@ class SendActivationEmailListener implements EventSubscriberInterface
     {
         return array(
             UserEvents::NEW_USER => 'onNewUser',
-            UserEvents::RESEND_ACTIVATION_EMAIL => 'resendActivationEmail'
+            UserEvents::RESEND_ACTIVATION_EMAIL => 'resendActivationEmail',
+            UserEvents::RECOVER_PASSWORD => 'onRecoverPassword'
         );
     }
 
@@ -67,23 +68,23 @@ class SendActivationEmailListener implements EventSubscriberInterface
         }
     }
 
-    /*private function sendRecoveryPassEmail(User $user)
+    private function sendRecoveryPassEmail(User $user)
     {
         $url = $this->router->generate('new_password',
-            array('data' => $user->getSalt()), true);
+            array('salt' => $user->getSalt()), true);
         $from = $this->noreply;
         $to = $user->getEmail();
         $messageBody = $this->templating->render(
-            'UserBundle:Email:emailForgetPassword.html.twig',
+            'UserBundle:Email:recover-password.html.twig',
             array('url' => $url));
         $message = \Swift_Message::newInstance()
-            ->setSubject('Restablecer contraseña en CornerFy')
+            ->setSubject('Restablecer contraseña en Clop')
             ->setFrom($from)
             ->setTo($to)
             ->setBody($messageBody, 'text/html');
         if (!$this->mailer->send($message)) {
-            throw new \Exception("Error en el envío del correo para olvido de contraseña");
+            throw new \Exception("Error en el envío del correo para recuperar la contraseña");
         }
-    }*/
+    }
 
 }
