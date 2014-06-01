@@ -75,10 +75,10 @@ class SendActivationEmailListener implements EventSubscriberInterface
         $from = $this->noreply;
         $to = $user->getEmail();
         $messageBody = $this->templating->render(
-            'UserBundle:Email:recover-password.html.twig',
+            'UserBundle:Email:recovery-password.html.twig',
             array('url' => $url));
         $message = \Swift_Message::newInstance()
-            ->setSubject('Restablecer contraseña en Clop')
+            ->setSubject('Restablecer tu contraseña en Clop')
             ->setFrom($from)
             ->setTo($to)
             ->setBody($messageBody, 'text/html');
