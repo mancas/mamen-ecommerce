@@ -32,4 +32,28 @@ class OrderRepository extends CustomEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findOrdersResume($limit = null)
+    {
+        $dateFrom = new \DateTime('now');
+        $dateTo = $dateFrom;
+        $dateFrom->modify('-7 days');
+
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('COUNT(o) as TotalOrders, o.date');
+        $qb->addOrderBy('o.date', 'ASC');
+        $qb->addGroupBy('o.date');
+
+        $and = $qb->expr()->andx();
+        $and->add($qb->expr()->gte('o.date', '\''.$dateFrom->format('Y-m-d H:i:s').'\''));
+        $and->add($qb->expr()->lt('o.date', '\''.$dateTo->format('Y-m-d H:i:s').'\''));
+
+        $qb->where($and);
+
+        if (isset($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

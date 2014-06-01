@@ -1,0 +1,148 @@
+{% extends "FrontendBundle:Layouts:1column-simple.html.twig" %}
+
+{% block title %}{{ "Tu pedido | Clop"|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}user page{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="intro">
+        <div class="intro-wrap">
+            <h2>{{ 'Tu pedido' | trans }}</h2>
+        </div>
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'FrontendBundle:Commons:flashes.html.twig' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered cart-table">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ 'Descripción' | trans }}</th>
+                            <th>{{ 'Cantidad' | trans }}</th>
+                            <th>{{ 'Subtotal' | trans }}</th>
+                            <th>{{ 'Opciones' | trans}} </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if cart and cart.cartItems | length > 0 %}
+                            {% for item in cart.cartItems %}
+                                <tr>
+                                    <td class="text-left">
+                                        {{ render(controller("FrontendBundle:Cart:cartItemDetails", {'id':item.id})) }}
+                                    </td>
+                                    <td>
+                                        <input data-path="{{ path('update_cart_item_quantity', {'id':item.id}) }}" class="item-quantity" type="number" value="{{ item.quantity }}" name="quantity-{{ item.id }}">
+                                    </td>
+                                    <td>{{ item.price }} <i class="fa fa-euro"></i></td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm delete-address" href="{{ path('delete_item_from_cart', {'id':item.id}) }}" title="{{ 'Eliminar dirección' | trans }}"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center">{{ 'Tu carrito está vacio' | trans }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <form action="{{ path('new_order') }}" class="form-inline" novalidate="novalidate" method="POST">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="line-block">
+                        <h2 class="line-title">{{ 'Opciones de envío' | trans }}</h2>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <input id="delivery_options_take_in_place" type="radio" name="delivery_options" value="1">
+                    <label for="delivery_options_take_in_place">{{ 'Recoger en tienda' | trans }}</label>
+                </div>
+                <div class="form-group col-md-3">
+                    <input id="delivery_options_to_home" type="radio" name="delivery_options" value="2">
+                    <label for="delivery_options_to_home">
+                        {{ 'Enviar a casa' | trans }}
+                    </label>
+                    <a href="#" class="clop-tooltip" data-container="body" data-placement="right" data-toggle="tooltio" title="{{ 'Gastos de envío: ' | trans }} {{ delivery_cost }} €"><i class="fa fa-question"></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="line-block">
+                        <h2 class="line-title">{{ 'Dirección de envío' | trans }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered cart-table">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%;">{{ 'Enviar a' }}</th>
+                                <th style="width: 30%" class="text-left">{{ 'Nombre' | trans }}</th>
+                                <th>{{ 'Dirección' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if user.addresses | length > 0 %}
+                                {% for address in user.addresses %}
+                                    <tr>
+                                        <td><input type="radio" name="delivery_address" value="{{ address.id }}"></td>
+                                        <td>{{ address.name }}</td>
+                                        <td>{{ address.address }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">{{ 'No tienes ninguna dirección' | trans }}</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div><!-- .table-responsive -->
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('body').delegate('.item-quantity', 'change', function (e) {
+                var quantity = $(this).val();
+                var path = $(this).attr('data-path');
+
+                $.post(path, {'quantity':quantity}, function(response) {
+                    if (response.ok)  {
+                        window.location = response.path;
+                    }
+                });
+            });
+
+            $('.clop-tooltip').tooltip();
+        });
+    </script>
+{% endblock %}

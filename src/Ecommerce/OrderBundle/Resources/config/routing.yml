@@ -1,3 +1,3 @@
-order_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: OrderBundle:Default:index }
+new_order:
+    pattern:  /tu-pedido
+    defaults: { _controller: OrderBundle:Order:newOrder }

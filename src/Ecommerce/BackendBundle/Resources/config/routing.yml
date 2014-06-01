@@ -1,6 +1,10 @@
 admin_logout:
     pattern: /logout
 
+admin_index:
+    pattern: /
+    defaults: { _controller: BackendBundle:Backend:index }
+
 admin_categories:
     resource: "@BackendBundle/Resources/config/routing/category.yml"
     prefix: /category/

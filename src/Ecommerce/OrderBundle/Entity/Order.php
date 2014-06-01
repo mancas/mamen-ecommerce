@@ -22,6 +22,11 @@ class Order
     const STATUS_READY = "Listo para envío";
     const STATUS_SEND = "Enviado";
 
+    const DELIVERY_HOME = 'Delivery_home';
+    const TAKE_IN_PLACE = 'Take_in_place';
+
+    const DELIVERY_COST = 2.99;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -43,7 +48,6 @@ class Order
 
     /**
      * @ORM\OneToMany(targetEntity="Ecommerce\OrderBundle\Entity\OrderItem", mappedBy="order", cascade={"persist"})
-     * @Assert\NotBlank()
      */
     protected $items;
 
