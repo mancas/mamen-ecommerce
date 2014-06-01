@@ -12,8 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Table(name="`Order`")
+ * @ORM\Entity(repositoryClass="Ecommerce\OrderBundle\Entity\OrderRepository")
  * @DoctrineAssert\UniqueEntity("id")
  * @UniqueEntity("id")
  */
@@ -30,7 +30,7 @@ class Order
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ecommerce\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Ecommerce\UserBundle\Entity\User", inversedBy="orders", cascade={"persist"})
      * @Assert\NotBlank()
      */
     protected $customer;
@@ -127,14 +127,14 @@ class Order
         return $this->items;
     }
 
-    public function addItem(Ecommerce\OrderBundle\Entity\OrderItem $item)
+    public function addItem(\Ecommerce\OrderBundle\Entity\OrderItem $item)
     {
         if (!$this->items->contains($item)) {
             $this->items->remove($item);
         }
     }
 
-    public function removeItem(Ecommerce\OrderBundle\Entity\OrderItem $item)
+    public function removeItem(\Ecommerce\OrderBundle\Entity\OrderItem $item)
     {
         if ($this->items->contains($item)) {
             $this->items->remove($item);
@@ -186,5 +186,15 @@ class Order
         if (!in_array($this->getStatus(), $this->getStatusChoices())) {
             $context->addViolationAt('status', 'This order status is not valid', array(), null);
         }
+    }
+
+    public function getTotalAmount()
+    {
+        $total = 0.0;
+        foreach ($this->items as $orderRow) {
+            $total += $orderRow->getPrice();
+        }
+
+        return $total;
     }
 }

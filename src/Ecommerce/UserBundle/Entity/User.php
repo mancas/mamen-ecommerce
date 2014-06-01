@@ -13,7 +13,7 @@ use Ecommerce\UserBundle\Entity\Address;
 
 /**
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ecommerce\UserBundle\Entity\UserRepository")
  * @DoctrineAssert\UniqueEntity("email")
  * @UniqueEntity("email")
  */
@@ -93,9 +93,20 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     protected $validatedCode;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $nif;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ecommerce\OrderBundle\Entity\Order", mappedBy="customer")
+     */
+    protected $orders;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -350,4 +361,52 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->deletedDate;
     }
 
+    /**
+     * @param mixed $nif
+     */
+    public function setNif($nif)
+    {
+        $this->nif = $nif;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNif()
+    {
+        return $this->nif;
+    }
+
+    public function isProfileComplete()
+    {
+        return ($this->name && $this->lastName && $this->nif);
+    }
+
+    /**
+     * @param mixed $orders
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(\Ecommerce\OrderBundle\Entity\Oreder $order)
+    {
+        if (!$this->orders->contains($order))
+            $this->orders->add($order);
+    }
+
+    public function removeOrder(\Ecommerce\OrderBundle\Entity\Oreder $order)
+    {
+        if ($this->orders->contains($order))
+            $this->orders->remove($order);
+    }
 }

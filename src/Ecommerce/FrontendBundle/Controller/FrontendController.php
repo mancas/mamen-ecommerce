@@ -2,6 +2,10 @@
 
 namespace Ecommerce\FrontendBundle\Controller;
 
+use Ecommerce\FrontendBundle\Event\CartEvent;
+use Ecommerce\FrontendBundle\Event\CartEvents;
+use Ecommerce\FrontendBundle\Model\Cart;
+use Ecommerce\FrontendBundle\Storage\CartStorageManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class FrontendController extends CustomController
@@ -19,6 +23,19 @@ class FrontendController extends CustomController
 
         foreach ($seoCategories as $seoCategory) {
             $indexCategories[$seoCategory->getName()] = $em->getRepository('ItemBundle:Item')->findCategorySEOItemsDQL($seoCategory, self::ITEMS_LIMIT_DQL);
+        }
+
+        $cartStorageManager = $this->getCartStorageManager();
+        if (!$cartStorageManager->getCurrentCart())
+        {
+            ld('not cart');
+            $cart = new Cart();
+            $now = new \DateTime();
+            $now->modify('+ 1day');
+            $cart->setExpiredAt($now);
+            $cartEvent = new CartEvent($cart);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(CartEvents::NEW_CART, $cartEvent);
         }
 
         return $this->render('FrontendBundle:Pages:home.html.twig', array('recentItems' => $recentItems, 'seoCategories' => $indexCategories));

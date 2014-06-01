@@ -1,0 +1,21 @@
+<div id="personal-data" class="content collapse in">
+    <form id="user-profile" action="{{ path('edit_profile') }}" class="form-inline" role="form" method="post" novalidate="novalidate">
+        <h6 class="stack-box-title">{{ 'Nombre y apellidos' | trans }}</h6>
+        <div class="form-group">
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <h6 class="stack-box-title mt30">{{ 'Información adicional' | trans }}</h6>
+        <div class="form-group">
+            {{ form_widget(form.nif, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_rest(form)}}
+        <div class="controls user-profile-notifications">
+            <img id="user-profile-loader" style="display:none;" class="ml15 loader" src="{{ asset('bundles/frontend/img/ajax_loader_blue.gif') }}">
+            <span class="ok-notification" style="display:none;"><i class="fa fa-check mr8"></i>{{ 'Guardado' | trans }}</span>
+            <span class="error-notification" style="display:none;"><i class="fa fa-times mr8"></i>{{ 'Ha ocurrido un error' | trans }}</span>
+            <button id="save-personal-data" type="submit" class="btn btn-blue">{{ "Guardar" | trans }}</button>
+        </div><!-- .form-group -->
+    </form>
+</div>

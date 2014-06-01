@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ecommerce\UserBundle\Entity\AddressRepository")
  * @DoctrineAssert\UniqueEntity("id")
  * @UniqueEntity("id")
  */
@@ -34,6 +34,12 @@ class Address
      * @Assert\NotBlank()
      */
     protected $address;
+
+    /**
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    protected $slug;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ecommerce\UserBundle\Entity\User", inversedBy="addresses")
@@ -65,6 +71,16 @@ class Address
      * @Assert\Date()
      */
     protected $created;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Ecommerce\LocationBundle\Entity\City")
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="integer", length=5)
+     */
+    protected $postalCode;
 
     /**
      * @param mixed $address
@@ -193,4 +209,58 @@ class Address
     {
         return $this->main;
     }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $postalCode
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    public function __toString()
+    {
+        return $this->getAddress();
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
 }

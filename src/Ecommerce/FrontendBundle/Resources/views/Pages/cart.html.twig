@@ -1,0 +1,109 @@
+{% extends "FrontendBundle:Layouts:1column-simple.html.twig" %}
+
+{% block title %}{{ "Tu carrito | Ecommerce "|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}user page{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="intro">
+        <div class="intro-wrap">
+            <h2>{{ 'Tu carrito' | trans }}</h2>
+        </div>
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'FrontendBundle:Commons:flashes.html.twig' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered cart-table">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ 'Descripción' | trans }}</th>
+                            <th>{{ 'Cantidad' | trans }}</th>
+                            <th>{{ 'Subtotal' | trans }}</th>
+                            <th>{{ 'Opciones' | trans}} </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if cart and cart.cartItems | length > 0 %}
+                        {% for item in cart.cartItems %}
+                            <tr>
+                                <td class="text-left">
+                                    {{ render(controller("FrontendBundle:Cart:cartItemDetails", {'id':item.id})) }}
+                                </td>
+                                <td>
+                                    <input data-path="{{ path('update_cart_item_quantity', {'id':item.id}) }}" class="item-quantity" type="number" value="{{ item.quantity }}" name="quantity-{{ item.id }}">
+                                </td>
+                                <td>{{ item.price }} <i class="fa fa-euro"></i></td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm delete-address" href="{{ path('delete_item_from_cart', {'id':item.id}) }}" title="{{ 'Eliminar dirección' | trans }}"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                            <tr class="no-lines">
+                                <td colspan="2" class="delivery">
+                                    {{ 'Gastos de envío' | trans }}
+                                </td>
+                                <td>
+                                    2.99€
+                                </td>
+                            </tr>
+                            <tr class="no-lines">
+                                <td colspan="2" class="total-cart">
+                                    {{ 'Total' | trans }}
+                                </td>
+                                <td>
+                                    {{ cart.cartTotal }} <i class="fa fa-euro"></i>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center">{{ 'Tu carrito está vacio' | trans }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pull-right">
+                    <a href="" title="{{ 'Pagar ahora' | trans }}" class="btn btn-success">{{ 'Pagar' }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('body').delegate('.item-quantity', 'change', function (e) {
+                var quantity = $(this).val();
+                var path = $(this).attr('data-path');
+
+                $.post(path, {'quantity':quantity}, function(response) {
+                    if (response.ok)  {
+                        window.location = response.path;
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

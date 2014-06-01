@@ -31,6 +31,8 @@
     <div class="push"></div>
     {% block footer %}{% endblock %}
 </div>
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {% include 'FrontendBundle:Commons:cartScript.html.twig' %}
+{% endblock %}
 </body>
 </html>

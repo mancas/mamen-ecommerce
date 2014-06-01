@@ -20,7 +20,7 @@
                     </li>
                     <li>
                         {% if item.stock > 0 %}
-                            <a class="btn btn-blue add-to-cart" title="{{ 'Añadir al carrito' | trans }}" href=""><i class="fa fa-shopping-cart"></i>{{ 'Añadir' | trans }}</a>
+                            <a class="btn btn-blue add-to-cart" title="{{ 'Añadir al carrito' | trans }}" href="{{ path('add_to_cart', {'slug':item.slug}) }}"><i class="fa fa-shopping-cart"></i>{{ 'Añadir' | trans }}</a>
                         {% else %}
                             <a class="btn btn-disabled" title="{{ 'Agotado' | trans }}" href="">{{ 'Agotado' | trans }}</a>
                         {% endif %}

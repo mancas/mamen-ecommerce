@@ -9,7 +9,7 @@
         {% block error %}
             <div class="row">
                 <div class="col-md-12">
-                    {# include 'FrontendBundle:Commons:flashes.html.twig' #}
+                    {% include 'FrontendBundle:Commons:flashes.html.twig' %}
                 </div>
             </div>
         {% endblock %}
@@ -24,16 +24,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        $(document).ready(function() {
-            $('.dropdown-toggle, .dropdown-menu').hover(function (e) {
-                        $(this).parent().addClass('open');
-                    },
-                    function (e) {
-                        $(this).parent().removeClass('open');
-                    });
-        });
-    </script>
 {% endblock %}
 
 {% block footer %}

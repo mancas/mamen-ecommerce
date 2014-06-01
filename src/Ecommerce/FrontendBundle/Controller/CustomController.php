@@ -43,4 +43,14 @@ class CustomController extends Controller
 
         return $criteria;
     }
+
+    protected function getCurrentUser()
+    {
+        return $this->get('security.context')->getToken()->getUser();
+    }
+
+    protected function getCartStorageManager()
+    {
+        return $this->get('cart.cart_storage_manager');
+    }
 }

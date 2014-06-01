@@ -260,6 +260,16 @@ abstract class Image
         $this->setUniqueImageCopy($thumbnail);
     }
 
+    public function getImageItemCart()
+    {
+        return $this->getImageCopyFromType('ImageItemCart');
+    }
+
+    public function setImageItemCart(\Ecommerce\ImageBundle\Entity\ImageItemCart $thumbnail)
+    {
+        $this->setUniqueImageCopy($thumbnail);
+    }
+
 
     public function setUniqueImageCopy($imageCopy)
     {

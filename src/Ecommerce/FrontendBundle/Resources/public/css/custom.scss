@@ -11,6 +11,8 @@ $gray: #404040;
 $footer-gray: #888888;
 $footer-background: #F3F3F3;
 $disabled-gray: #DDDDDD;
+$red: #FF0000;
+$light-pink: #F9AAC1;
 
 body {
   background: url(../img/texture.png) repeat;
@@ -26,11 +28,29 @@ a {
 /** HELPER CLASSES **/
 .mt50 { margin-top: 50px; }
 
+.mt30 { margin-top: 30px; }
+
+.mt20 { margin-top: 20px; }
+
 .text-12 { font-size: 12px; }
 
 .ml-10 { margin-left: -10px; }
 
+.mr8 { margin-right: 8px; }
+
+.mr15 { margin-right: 15px; }
+
 .mb20 { margin-bottom: 20px !important; }
+
+.block {
+  display: block !important;
+}
+
+.w100 { width: 100% !important; }
+
+.alert {
+  padding: 10px 15px !important;
+}
 
 /** COLOR CLASSES **/
 .blue {
@@ -55,6 +75,12 @@ a {
 /** MAIN NAV **/
 .navbar-nav > li > a {
   line-height: 33px;
+}
+
+.navbar-brand {
+  height: 63px;
+  padding: 0px;
+  padding-left: 15px;
 }
 
 .nav > li > a:hover, .nav > li > a:focus {
@@ -100,6 +126,10 @@ a {
       padding: 20px 0px;
       margin: 0 15px;
       border-bottom: solid 1px $light-gray;
+
+      i {
+        font-size : 14px;
+      }
     }
 
     .cart-buttons {
@@ -390,8 +420,9 @@ a {
   color: $white;
   transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease;
+  outline: none;
 
-  &:hover {
+  &:hover, &:focus, &:active {
     background-color: $blue-hover;
     color: $white;
   }
@@ -402,6 +433,18 @@ a {
   color: $gray;
   transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease;
+}
+
+.btn-main {
+  background-color: $pink;
+  border-color: $pink;
+  color: #FFFFFF;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+
+  &:hover {
+    background-color: $light-pink;
+  }
 }
 
 /** PAGINATION **/
@@ -419,6 +462,13 @@ a {
       }
     }
   }
+}
+
+/** VALIDATION ERRORS **/
+span.error {
+  font-size: 12px;
+  color: $red;
+  display: block;
 }
 
 /** ITEM DETAILS **/
@@ -493,7 +543,6 @@ a {
 /** LOGIN **/
 .small-box {
   display: block;
-  max-width: 600px;
   border-radius: 4px;
   min-height: 200px;
   margin: auto;
@@ -518,11 +567,176 @@ a {
   }
 }
 
-.small-box-xs {
+/** STACKS **/
+.stack {
   border-radius: 4px;
-  min-height: 200px;
   margin: auto;
   background-color: $footer-background;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
+  color: $blue;
+
+  i {
+    margin-right: 8px;
+  }
+
+  ul {
+    line-height: 35px;
+  }
+
+  a {
+    &:hover {
+      text-decoration: none;
+      color: $pink;
+    }
+  }
+
+  .active {
+    color: $pink;
+
+    a {
+      color: $pink;
+    }
+  }
+}
+
+.stack-sidenav {
+  background-color: $white;
+  margin-top: 50px;
+}
+
+/** USER PROFILE **/
+.box {
+  h5 {
+    display: block;
+    background-color: $footer-background;
+    padding: 8px 10px;
+    box-shadow: 0 0 1px rgba(50, 50, 50, 0.2);
+    -moz-box-shadow: 0 0 1px rgba(50, 50, 50, 0.2);
+    -webkit-box-shadow: 0 0 1px rgba(50, 50, 50, 0.2);
+    border: solid 1px $light-gray;
+
+    a {
+      display: block;
+      color: $gray;
+      outline: none !important;
+
+      &:hover, &:active, &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .stack-box {
+    display: block;
+    background-color: $white;
+    box-shadow: 0 1px 3px rgba(50, 50, 50, 0.2);
+    margin-top: -10px;
+    padding-top: 15px;
+
+    .content {
+      padding: 0px 10px 15px 10px;
+    }
+
+    .stack-box-title {
+      font-size: 14px;
+      color: $blue-hover;
+    }
+
+    .controls {
+      display: block;
+      text-align: right;
+    }
+  }
+}
+
+.user-nav {
+  background-color: $blue;
+  color: $white;
+  height: 32px;
+  text-align: center;
+  margin-bottom: 15px;
+
+  .active {
+    border-bottom: solid 1px $white;
+  }
+
+  a {
+    color: $white;
+    line-height: 30px;
+    margin-right: 20px;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+#addresses {
+  padding-top: 50px;
+  font-size: 12px;
+
+  .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
+  }
+
+  .main {
+    background-color: #FCF8E3;
+    &:hover {
+      background-color: #FAF2CC !important;
+    }
+  }
+}
+
+.intro {
+  background: url(../img/intro_texture.png) no-repeat center center;
+  background-color: $background-blue;
+  width: 100%;
+  margin-bottom: 40px;
+
+  .intro-wrap {
+    background: url("../img/intro.png") repeat-x scroll left bottom rgba(0, 0, 0, 0);
+    padding: 20px;
+  }
+
+  h2 {
+    color: $blue;
+    margin: 0px;
+    font-size: 32px;
+  }
+}
+
+.cart-table thead > tr > th, .cart-table > tbody > tr > th, .cart-table > tfoot > tr > th, .cart-table > thead > tr > td, .cart-table > tbody > tr > td, .cart-table > tfoot > tr > td {
+  vertical-align: middle;
+}
+
+.cart-table {
+  text-align: center;
+
+  .text-left {
+    text-align: left !important;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  input {
+    max-width: 70px;
+  }
+
+  .no-lines {
+    td {
+      border: none !important;
+    }
+  }
+
+  .delivery {
+    text-align: right;
+    color: $gray;
+  }
+
+  .total-cart {
+    text-align: right;
+    color: $gray;
+  }
 }

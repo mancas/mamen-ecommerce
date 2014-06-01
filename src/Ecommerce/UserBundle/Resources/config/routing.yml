@@ -1,6 +1,55 @@
 register:
     pattern: /registro
     defaults: { _controller: UserBundle:Access:register }
+
 success_register:
     pattern: /registro-completado
     defaults: { _controller: UserBundle:Access:successRegister }
+
+validate_user:
+    pattern: /valida-tu-cuenta
+    defaults: { _controller: UserBundle:Access:validateUser }
+
+check_if_email_is_available:
+    pattern: /email-disponible
+    defaults: { _controller: UserBundle:Access:checkIfEmailIsAvailable }
+
+user_profile:
+    pattern: /mi-cuenta
+    defaults: { _controller: UserBundle:User:profile }
+
+user_orders:
+    pattern: /mis-pedidos
+    defaults: { _controller: UserBundle:User:orders }
+
+edit_profile:
+    pattern: /editar-perfil/informacion-personal
+    defaults: { _controller: UserBundle:User:editProfile }
+
+new_address:
+    pattern: /nueva-direccion
+    defaults: { _controller: UserBundle:User:newAddress }
+
+change_main_address:
+    pattern: /direccion-principal/{slug}
+    defaults: { _controller: UserBundle:User:changeMainAddress }
+
+delete_address:
+    pattern: /eliminar-direccion/{slug}
+    defaults: { _controller: UserBundle:User:deleteAddress }
+
+view_order_details:
+    pattern: /mis-pedidos/pedido-{id}
+    defaults: { _controller: UserBundle:User:viewOrderDetails }
+
+resend_activation_email:
+    pattern: /reenviar-correo-de-activacion
+    defaults: { _controller: UserBundle:Access:resendActivationEmail }
+
+forgot_password:
+    pattern: /recuperar-password
+    defaults: { _controller: UserBundle:Access:forgotPassword }
+
+new_password:
+    pattern: /cambiar-password/{salt}
+    defaults: { _controller: UserBundle:Access:changePassword }

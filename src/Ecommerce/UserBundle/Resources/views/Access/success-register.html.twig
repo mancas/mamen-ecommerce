@@ -33,7 +33,7 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <form id="validated-code" action="" role="form" method="post" novalidate="novalidate">
+                    <form id="validated-code" action="{{ path('validate_user') }}" role="form" method="post" novalidate="novalidate">
                         <div class="form-group">
                             {{ form_widget(form.code, {'attr': {'class': 'form-control', 'autocomplete' : 'off'}}) }}
                         </div>

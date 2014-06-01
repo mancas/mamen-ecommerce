@@ -26,7 +26,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="small-box-xs">
+                <div class="small-box">
                     <form id="register-user" action="{{ path('register') }}" role="form" method="post" novalidate="novalidate">
                         <div class="form-group">
                             {{ form_widget(form.user.name, {'attr': {'class': 'form-control', 'autocomplete' : 'off'}}) }}
@@ -87,6 +87,70 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/frontend/js/jquery.validate.min.js') }}"></script>
+    <script>
+        /** VALIDATION **/
+        $(function(){
+            var validator = $('#register-user').validate({
+                rules: {
+                    'registration[user][name]': {
+                        required: true
+                    },
+                    'registration[user][lastname]': {
+                        required: true
+                    },
+                    'registration[user][email][first]': {
+                        required: true,
+                        email: true,
+                        remote: {
+                            type: "GET",
+                            url: "{{ path('check_if_email_is_available') }}",
+                            dataFilter: function(response) {
+                                var data = $.parseJSON(response);
+                                return data.available;
+                            }
+                        }
+                    },
+                    'registration[user][email][second]': {
+                        required: true,
+                        email: true,
+                        equalTo: "#registration_user_email_first"
+                    },
+                    'registration[user][password][first]': {
+                        required: true,
+                        minlength: 6
+                    },
+                    'registration[user][password][second]': {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#registration_user_password_first"
+                    },
+                    'registration[terms]': {
+                        required: true
+                    },
+                    'registration[policy]': {
+                        required: true
+                    }
+                },
+                errorElement: 'span',
+                messages: {
+                    'registration[user][name]': {required: '{{"El nombre es obligatorio"|trans}}'},
+                    'registration[user][lastname]': {required: '{{"Los apellidos son obligatorios"|trans}}'},
+                    'registration[user][email][first]': {required: '{{"El email es obligatorio"|trans}}', email: '{{"Por favor, introduzca una dirección de correo electrónico correcta "|trans}}', remote: '{{ "Lo sentimos, parece que este correo electrónico ya esta siendo utilizado en otra cuenta"|trans }}'},
+                    'registration[user][email][second]': {required: '{{"El email es obligatorio"|trans}}', email: '{{"Por favor, introduzca una dirección de correo electrónico correcta "|trans}}', equalTo:'{{"Los emails deben coincidir"|trans}}'},
+                    'registration[user][password][first]': {required: '{{ "La contraseña es obligatoria"|trans }}',minlength:'{{"La contraseña debe tener al menos 6 caracteres"|trans}}'},
+                    'registration[user][password][second]': {required: '{{ "La contraseña es obligatoria"|trans }}',minlength:'{{"La contraseña debe tener al menos 6 caracteres"|trans}}',equalTo:'{{"Las contraseñas deben coincidir"|trans}}'},
+                    'registration[terms]': {required: '{{ "Debes aceptar nuestras condiciones de uso"|trans }}'},
+                    'registration[policy]': {required: '{{ "Debes aceptar nuestra política de privacidad"|trans }}'}
+                },
+                submitHandler: function(form) {
+                    $('#register').hide();
+                    $('.loader').show();
+                    form.submit();
+                }
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block footer %}
