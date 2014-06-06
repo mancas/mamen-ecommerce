@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  */
-class PaypalPayment extends Paymentt
+class PaypalPayment extends Payment
 {
     /**
      * @ORM\Column(name="tokenPayPal", type="string", length=255, nullable=true)

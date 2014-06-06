@@ -60,9 +60,13 @@ class Order
 
     /**
      * @ORM\ManyToOne(targetEntity="Ecommerce\LocationBundle\Entity\Address")
-     * @Assert\NotBlank()
      */
     protected $address;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default" = 0})
+     */
+    protected $isPresent = false;
 
     public function __construct()
     {
@@ -136,14 +140,14 @@ class Order
     public function addItem(\Ecommerce\OrderBundle\Entity\OrderItem $item)
     {
         if (!$this->items->contains($item)) {
-            $this->items->remove($item);
+            $this->items->add($item);
         }
     }
 
     public function removeItem(\Ecommerce\OrderBundle\Entity\OrderItem $item)
     {
         if ($this->items->contains($item)) {
-            $this->items->remove($item);
+            $this->items->removeElement($item);
         }
     }
 
@@ -203,4 +207,22 @@ class Order
 
         return $total;
     }
+
+    /**
+     * @param mixed $isPresent
+     */
+    public function setIsPresent($isPresent)
+    {
+        $this->isPresent = $isPresent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPresent()
+    {
+        return $this->isPresent;
+    }
+
+
 }

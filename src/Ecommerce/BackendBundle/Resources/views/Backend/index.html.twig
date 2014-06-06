@@ -9,5 +9,34 @@
 {% endblock %}
 
 {% block content %}
+    <div class="bars"></div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/backend/js/excanvas.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/flot.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/flot.resize.min.js') }}"></script>
+    <script>
+        $('document').ready(function() {
+            $.get('{{ path('admin_recent_orders') }}', function (response) {
+                var data = [];
+                for (key in response) {
+                    console.info(key);
+                    data.push([getDate(key), parseInt(response[key])]);
+                }
+console.info(data);
+                var bar = $.plot($(".bars"), data, {
+                    legend: true,
+                    grid: { borderColor: "#eeeeee", borderWidth: 1, color: "#AAAAAA" }
+                });
+            });
+        });
+
+        function getDate(date)
+        {
+            split = date.split("-");
+            return new Date(split[2], split[1] - 1, split[0]);
+        }
+    </script>
 {% endblock %}

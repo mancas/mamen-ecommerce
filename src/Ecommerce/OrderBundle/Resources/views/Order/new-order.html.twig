@@ -70,19 +70,19 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id="delivery_options_take_in_place" type="radio" name="delivery_options" value="1">
+                    <input id="delivery_options_take_in_place" type="radio" name="delivery_options" value="{{ take_in_place }}">
                     <label for="delivery_options_take_in_place">{{ 'Recoger en tienda' | trans }}</label>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id="delivery_options_to_home" type="radio" name="delivery_options" value="2">
+                    <input id="delivery_options_to_home" type="radio" name="delivery_options" value="{{ delivery_home }}">
                     <label for="delivery_options_to_home">
                         {{ 'Envio a domicilio' | trans }}
                     </label>
-                    <a href="#" class="clop-tooltip" data-container="body" data-placement="right" data-toggle="tooltio" title="{{ 'Gastos de envío: ' | trans }} {{ delivery_cost }} €"><i class="fa fa-question"></i></a>
+                    <a href="#" class="clop-tooltip" data-container="body" data-placement="right" data-toggle="tooltip" title="{{ 'Gastos de envío: ' | trans }} {{ delivery_cost }} €"><i class="fa fa-question"></i></a>
                 </div>
             </div>
 
-            <div id="address_delivery_block" class="row collapse">
+            <div id="address_delivery_block" data-toggle="false" class="row collapse">
                 <div class="col-md-12">
                     <div class="line-block">
                         <h2 class="line-title">{{ 'Dirección de envío' | trans }}</h2>
@@ -157,7 +157,7 @@
             $('body').on('change', 'input[name="delivery_options"]', function() {
                 var value = $(this).val();
 
-                if (value == 2) {
+                if (value == '{{ delivery_home }}') {
                     $('#address_delivery_block').collapse('show');
                 } else {
                     $('#address_delivery_block').collapse('hide');

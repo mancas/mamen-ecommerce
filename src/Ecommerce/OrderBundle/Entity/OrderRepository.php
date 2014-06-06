@@ -36,7 +36,7 @@ class OrderRepository extends CustomEntityRepository
     public function findOrdersResume($limit = null)
     {
         $dateFrom = new \DateTime('now');
-        $dateTo = $dateFrom;
+        $dateTo = new \DateTime('now');
         $dateFrom->modify('-7 days');
 
         $qb = $this->createQueryBuilder('o');
@@ -46,7 +46,7 @@ class OrderRepository extends CustomEntityRepository
 
         $and = $qb->expr()->andx();
         $and->add($qb->expr()->gte('o.date', '\''.$dateFrom->format('Y-m-d H:i:s').'\''));
-        $and->add($qb->expr()->lt('o.date', '\''.$dateTo->format('Y-m-d H:i:s').'\''));
+        $and->add($qb->expr()->lte('o.date', '\''.$dateTo->format('Y-m-d H:i:s').'\''));
 
         $qb->where($and);
 
