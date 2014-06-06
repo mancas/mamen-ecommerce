@@ -25,7 +25,7 @@ class LocationController extends CustomController
     {
         $em = $this->getEntityManager();
         $user = $this->getCurrentUser();
-        $addresses = $em->getRepository('UserBundle:Address')->findAddressesByUser($user);
+        $addresses = $em->getRepository('LocationBundle:Address')->findAddressesByUser($user);
 
         return $this->render('UserBundle:Commons:addressList.html.twig', array('addresses' => $addresses));
     }

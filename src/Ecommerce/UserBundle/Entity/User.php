@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
-use Ecommerce\UserBundle\Entity\Address;
+use Ecommerce\LocationBundle\Entity\Address;
 
 /**
  * @ORM\Table()
@@ -47,7 +47,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     protected $lastName;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ecommerce\UserBundle\Entity\Address", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Ecommerce\LocationBundle\Entity\Address", mappedBy="user")
      */
     protected $addresses;
 
@@ -157,17 +157,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->password;
     }
 
-    /**
-     * @param \Ecommerce\UserBundle\Entity\date $registeredDate
-     */
     public function setRegisteredDate($registeredDate)
     {
         $this->registeredDate = $registeredDate;
     }
 
-    /**
-     * @return \Ecommerce\UserBundle\Entity\date
-     */
     public function getRegisteredDate()
     {
         return $this->registeredDate;
@@ -271,13 +265,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->addresses;
     }
 
-    public function addAddress(\Ecommerce\UserBundle\Entity\Address $address)
+    public function addAddress(\Ecommerce\LocationBundle\Entity\Address $address)
     {
         if (!$this->addresses->contains($address))
             $this->addresses->add($address);
     }
 
-    public function removeAddress(\Ecommerce\UserBundle\Entity\Address $address)
+    public function removeAddress(\Ecommerce\LocationBundle\Entity\Address $address)
     {
         if ($this->addresses->contains($address))
             $this->addresses->remove($address);

@@ -1,0 +1,11 @@
+pay_paypal:
+    pattern: /pago-paypal/{id}
+    defaults: { _controller: PayPalBundle:PayPal:payWithPayPal }
+
+paypal_pay_correct:
+    pattern: /pago-correcto/{id}
+    defaults: { _controller: PayPalBundle:PayPal:payCorrect }
+
+paypal_pay_denied:
+    pattern: /pago-rechazado/{id}
+    defaults: { _controller: PayPalBundle:PayPal:payDenied }

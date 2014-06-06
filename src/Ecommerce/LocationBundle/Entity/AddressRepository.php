@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecommerce\UserBundle\Entity;
+namespace Ecommerce\LocationBundle\Entity;
 
 use Ecommerce\FrontendBundle\Entity\CustomEntityRepository;
 use Doctrine\ORM\Query\Expr;

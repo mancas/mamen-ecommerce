@@ -1,0 +1,8 @@
+parameters:
+    pay_pal.class: Cornerfy\PayPalBundle\PayPal\Paypal
+
+services:
+    paypal:
+        class: %pay_pal.class%
+        arguments: [%paypal.api_name%, %paypal.api_key%, %paypal.api_certificate%, %paypal.environment%, %paypal.moneda%, %paypal.tipo_pago%, %paypal.envio%, %paypal.version%, %paypal.pago_tarjeta%, %paypal.locale_code%, @service_container]
+

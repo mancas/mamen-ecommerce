@@ -3,7 +3,7 @@
 namespace Ecommerce\LocationBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManager;
-use Ecommerce\UserBundle\Entity\Address;
+use Ecommerce\LocationBundle\Entity\Address;
 use Ecommerce\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;

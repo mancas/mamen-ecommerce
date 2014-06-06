@@ -4,7 +4,7 @@ namespace Ecommerce\UserBundle\Controller;
 
 use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\LocationBundle\Form\Type\AddressType;
-use Ecommerce\UserBundle\Entity\Address;
+use Ecommerce\LocationBundle\Entity\Address;
 use Ecommerce\UserBundle\Entity\User;
 use Ecommerce\UserBundle\Form\Type\UserProfileType;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,7 +81,7 @@ class UserController extends CustomController
     }
 
     /**
-     * @ParamConverter("address", class="UserBundle:Address")
+     * @ParamConverter("address", class="LocationBundle:Address")
      */
     public function changeMainAddressAction(Address $address, Request $request)
     {
@@ -105,7 +105,7 @@ class UserController extends CustomController
     }
 
     /**
-     * @ParamConverter("address", class="UserBundle:Address")
+     * @ParamConverter("address", class="LocationBundle:Address")
      */
     public function deleteAddressAction(Address $address, Request $request)
     {
@@ -130,7 +130,7 @@ class UserController extends CustomController
     public function adressListAction(User $user)
     {
         $em = $this->getEntityManager();
-        $addresses = $em->getRepository('UserBundle:Address')->findAddressesByUser($user);
+        $addresses = $em->getRepository('LocationBundle:Address')->findAddressesByUser($user);
         return array('addresses' => $addresses);
     }
 }

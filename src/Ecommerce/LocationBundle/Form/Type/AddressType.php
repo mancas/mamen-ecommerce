@@ -17,14 +17,14 @@ class AddressType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Ecommerce\UserBundle\Entity\Address',
+            'data_class' => 'Ecommerce\LocationBundle\Entity\Address',
         );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Ecommerce\UserBundle\Entity\Address'
+            'data_class' => 'Ecommerce\LocationBundle\Entity\Address'
         ));
     }
 

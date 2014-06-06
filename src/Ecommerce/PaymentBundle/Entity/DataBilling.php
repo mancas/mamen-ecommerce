@@ -1,0 +1,209 @@
+<?php
+namespace Ecommerce\PaymentBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class DataBilling
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $corporateName;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Ecommerce\LocationBundle\Entity\Address", mappedBy="dataBilling", cascade={"persist", "merge", "remove"})
+     */
+    protected $address;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $fax;
+
+    /**
+     * @ORM\Column(type="string", length=250, unique=true)
+     * @Assert\Email();
+     */
+    protected $email;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="date")
+     */
+    protected $created;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated", type="date", nullable=true)
+     */
+    protected $updated;
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $corporateName
+     */
+    public function setCorporateName($corporateName)
+    {
+        $this->corporateName = $corporateName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCorporateName()
+    {
+        return $this->corporateName;
+    }
+
+    /**
+     * @param mixed $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $fax
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+
+}

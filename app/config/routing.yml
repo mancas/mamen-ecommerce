@@ -1,3 +1,7 @@
+pay_pal:
+    resource: "@PayPalBundle/Resources/config/routing.yml"
+    prefix:   /
+
 location:
     resource: "@LocationBundle/Resources/config/routing.yml"
     prefix:   /

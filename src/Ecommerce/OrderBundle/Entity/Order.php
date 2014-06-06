@@ -27,6 +27,8 @@ class Order
 
     const DELIVERY_COST = 2.99;
 
+    const PAYPAL_DESC = 'Pedido realizado en Clop';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -57,7 +59,7 @@ class Order
     protected $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ecommerce\UserBundle\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="Ecommerce\LocationBundle\Entity\Address")
      * @Assert\NotBlank()
      */
     protected $address;

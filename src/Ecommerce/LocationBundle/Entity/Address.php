@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecommerce\UserBundle\Entity;
+namespace Ecommerce\LocationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Ecommerce\UserBundle\Entity\AddressRepository")
+ * @ORM\Entity(repositoryClass="Ecommerce\LocationBundle\Entity\AddressRepository")
  * @DoctrineAssert\UniqueEntity("id")
  * @UniqueEntity("id")
  */
@@ -81,6 +81,11 @@ class Address
      * @ORM\Column(type="integer", length=5)
      */
     protected $postalCode;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Ecommerce\PaymentBundle\Entity\DataBilling", inversedBy="address")
+     */
+    protected $dataBilling;
 
     /**
      * @param mixed $address
@@ -261,6 +266,22 @@ class Address
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * @param mixed $dataBilling
+     */
+    public function setDataBilling($dataBilling)
+    {
+        $this->dataBilling = $dataBilling;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDataBilling()
+    {
+        return $this->dataBilling;
     }
 
 }

@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Ecommerce\ImageBundle\ImageBundle(),
             new Ecommerce\PaymentBundle\PaymentBundle(),
             new Ecommerce\LocationBundle\LocationBundle(),
+            new Ecommerce\PayPalBundle\PayPalBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
