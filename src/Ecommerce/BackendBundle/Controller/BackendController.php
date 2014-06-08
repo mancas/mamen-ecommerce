@@ -15,7 +15,7 @@ class BackendController extends CustomController
         $em = $this->getEntityManager();
         $orders = $em->getRepository('OrderBundle:Order')->findOrdersResume();
 
-        return $this->render('BackendBundle:Backend:index.html.twig', array('data' => $orders));
+        return $this->render('BackendBundle:Backend:index.html.twig', array('orders' => $orders));
     }
 
     public function getRecentOrdersAction()

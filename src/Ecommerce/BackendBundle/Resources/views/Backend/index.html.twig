@@ -14,10 +14,35 @@
             <span class="icon">
                 <i class="fa fa-bar-chart-o"></i>
             </span>
-            <h5>{{ 'Resumen de pedidos en los últimos 7 días' }}</h5>
+            <h5>{{ 'Resumen del sitio' }}</h5>
         </div>
-        <div class="widget-content nopadding">
-            <div class="orders-resume chart"></div>
+        <div class="widget-content">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="site-stats">
+                        <li>
+                            <div class="cc">
+                                <i class="fa fa-user"></i>
+                                <strong>1234</strong>
+                                <small>{{ 'usuarios' | trans }}</small>
+                            </div>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="cc">
+                                <i class="fa fa-tag"></i>
+                                <strong>{{ orders | length }}</strong>
+                                <small>{% if orders | length > 1 %}{{ 'pedidos' | trans }}{% else %}{{ 'pedido' | trans }}{% endif %}</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    <div class="orders-resume chart"></div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -53,8 +78,14 @@
                     }
                 })
 
-                var bar = $.plot($(".orders-resume"), columns, {
-                    legend: true,
+                var bar = $.plot($(".orders-resume"), [{label: '{{ 'Pedidos en los últimos 7 días' | trans }}' , data: data}], {
+                    series: {
+                        bars :{
+                            show : true,
+                            barWidth: 0.4,
+                            align: "center"
+                        }
+                    },
                     grid: { borderColor: "#eeeeee", borderWidth: 1, color: "#AAAAAA" },
                     xaxis: {
                         ticks: ticks
