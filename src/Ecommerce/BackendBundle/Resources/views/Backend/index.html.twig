@@ -18,7 +18,7 @@
         </div>
         <div class="widget-content">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <ul class="site-stats">
                         <li>
                             <div class="cc">
@@ -34,7 +34,7 @@
                             <div class="cc">
                                 <i class="fa fa-tag"></i>
                                 <strong>{{ orders }}</strong>
-                                <small>{% if orders == 1 %}{{ 'pedidos' | trans }}{% else %}{{ 'pedido' | trans }}{% endif %}</small>
+                                <small>{% if orders == 1 %}{{ 'pedido' | trans }}{% else %}{{ 'pedidos' | trans }}{% endif %}</small>
                             </div>
                         </li>
                         <li>
@@ -46,7 +46,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="orders-resume chart"></div>
                 </div>
             </div>
