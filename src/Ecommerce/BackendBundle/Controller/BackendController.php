@@ -36,10 +36,10 @@ class BackendController extends CustomController
 
     private function getArrayWithSevenDays()
     {
-        $date = new \DateTime('now');
         $response = array();
 
         for ($i = 7; $i >= 0; $i--) {
+            $date = new \DateTime('now');
             $date->modify('-' . $i . ' days');
             $response[$date->format('d-m-Y')] = 0;
         }

@@ -9,26 +9,56 @@
 {% endblock %}
 
 {% block content %}
-    <div class="bars"></div>
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="fa fa-bar-chart-o"></i>
+            </span>
+            <h5>{{ 'Resumen de pedidos en los últimos 7 días' }}</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <div class="orders-resume chart"></div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/backend/js/excanvas.min.js') }}"></script>
-    <script src="{{ asset('bundles/backend/js/flot.min.js') }}"></script>
-    <script src="{{ asset('bundles/backend/js/flot.resize.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/jquery.flot.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/jquery.flot.resize.min.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/jquery.flot.canvas.js') }}"></script>
+    <script src="{{ asset('bundles/backend/js/jquery.flot.time.min.js') }}"></script>
     <script>
         $('document').ready(function() {
             $.get('{{ path('admin_recent_orders') }}', function (response) {
                 var data = [];
+                var columns = new Array(),
+                    ticks = new Array();
+
+                var i = 0;
+
                 for (key in response) {
-                    console.info(key);
-                    data.push([getDate(key), parseInt(response[key])]);
+                    ticks.push([i, key]);
+                    data.push([i, parseInt(response[key])]);
+                    i++;
                 }
-console.info(data);
-                var bar = $.plot($(".bars"), data, {
+
+                columns.push({
+                    data: data,
+                    bars: {
+                        show: true,
+                        barWidth: 0.4,
+                        align: "center"
+                    }
+                })
+
+                var bar = $.plot($(".orders-resume"), columns, {
                     legend: true,
-                    grid: { borderColor: "#eeeeee", borderWidth: 1, color: "#AAAAAA" }
+                    grid: { borderColor: "#eeeeee", borderWidth: 1, color: "#AAAAAA" },
+                    xaxis: {
+                        ticks: ticks
+                    }
                 });
             });
         });
@@ -36,7 +66,7 @@ console.info(data);
         function getDate(date)
         {
             split = date.split("-");
-            return new Date(split[2], split[1] - 1, split[0]);
+            return new Date(split[2], split[1] - 1, split[0]).getTime();
         }
     </script>
 {% endblock %}
