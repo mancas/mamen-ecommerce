@@ -1,5 +1,5 @@
 <?php
-namespace Ecommerce\FrontendBundle\Model;
+namespace Ecommerce\CartBundle\Model;
 
 class CartItem implements \Serializable
 {

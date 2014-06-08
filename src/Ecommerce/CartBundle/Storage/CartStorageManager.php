@@ -1,16 +1,16 @@
 <?php
-namespace Ecommerce\FrontendBundle\Storage;
+namespace Ecommerce\CartBundle\Storage;
 
-use Ecommerce\FrontendBundle\Model\Cart;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Ecommerce\CartBundle\Model\Cart;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartStorageManager
 {
-    const KEY = '_cart_session_ecommerce';
+    const KEY = '_cart_session_clop';
 
     protected $session;
 
-    public function __construct(Session $session)
+    public function __construct(SessionInterface $session)
     {
         $this->session = $session;
     }

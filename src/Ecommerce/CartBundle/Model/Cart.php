@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecommerce\FrontendBundle\Model;
+namespace Ecommerce\CartBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -47,7 +47,7 @@ class Cart implements \Serializable
         return $this->cartItems;
     }
 
-    public function addCartItem(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
+    public function addCartItem(\Ecommerce\CartBundle\Model\CartItem $cartItem)
     {
         if ($this->contains($cartItem)) {
             $this->incrementQuantity($cartItem);
@@ -56,7 +56,7 @@ class Cart implements \Serializable
         }
     }
 
-    public function removeCartItem(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
+    public function removeCartItem(\Ecommerce\CartBundle\Model\CartItem $cartItem)
     {
         if ($this->contains($cartItem)) {
             $this->cartItems->removeElement($cartItem);
@@ -72,7 +72,7 @@ class Cart implements \Serializable
         }
     }
 
-    public function contains(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
+    public function contains(\Ecommerce\CartBundle\Model\CartItem $cartItem)
     {
         foreach ($this->cartItems as $item) {
             if ($item->getId() == $cartItem->getId()) {
@@ -83,13 +83,13 @@ class Cart implements \Serializable
         return false;
     }
 
-    public function incrementQuantity(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
+    public function incrementQuantity(\Ecommerce\CartBundle\Model\CartItem $cartItem)
     {
         $item = $this->getCartItem($cartItem);
         $item->setQuantity($item->getQuantity() + $cartItem->getQuantity());
     }
 
-    public function getCartItem(\Ecommerce\FrontendBundle\Model\CartItem $cartItem)
+    public function getCartItem(\Ecommerce\CartBundle\Model\CartItem $cartItem)
     {
         foreach ($this->cartItems as $item) {
             if ($item->getId() == $cartItem->getId()) {

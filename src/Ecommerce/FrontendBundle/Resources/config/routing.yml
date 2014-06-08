@@ -1,27 +1,3 @@
 frontend_homepage:
     pattern:  /
     defaults: { _controller: FrontendBundle:Frontend:index }
-
-add_to_cart:
-    pattern: /anadir-al-carrito/{slug}
-    defaults: { _controller: FrontendBundle:Cart:addItem }
-
-empty_cart:
-    pattern: /vaciar-carrito
-    defaults: { _controller: FrontendBundle:Cart:emptyCart }
-
-cart_template:
-    pattern: /carrito
-    defaults: { _controller: FrontendBundle:Cart:cartTemplate }
-
-cart_details:
-    pattern: /tu-carrito
-    defaults: { _controller: FrontendBundle:Cart:view }
-
-delete_item_from_cart:
-    pattern: /eliminar-articulo/{id}
-    defaults: { _controller: FrontendBundle:Cart:deleteItem }
-
-update_cart_item_quantity:
-    pattern: /cambiar-cantidad/{id}
-    defaults: { _controller: FrontendBundle:Cart:updateItemQuantity }

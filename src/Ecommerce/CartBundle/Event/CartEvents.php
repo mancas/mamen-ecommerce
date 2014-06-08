@@ -1,5 +1,5 @@
 <?php
-namespace Ecommerce\FrontendBundle\Event;
+namespace Ecommerce\CartBundle\Event;
 
 class CartEvents
 {

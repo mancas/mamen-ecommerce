@@ -1,18 +1,8 @@
 parameters:
     security.authentication.success_handler.class: Ecommerce\FrontendBundle\Component\Security\AuthenticationSuccessHandler
-    cart.cart_storage_manager: Ecommerce\FrontendBundle\Storage\CartStorageManager
-    cart.cart_event_listener: Ecommerce\FrontendBundle\EventListener\CartEventSubscriber
 
 services:
     security.authentication.success_handler:
         class: %security.authentication.success_handler.class%
         public: false
         arguments:  ['@router']
-    cart.cart_storage_manager:
-        class: %cart.cart_storage_manager%
-        arguments: [@session]
-    cart.cart_event_listener:
-        class: %cart.cart_event_listener%
-        arguments: [@cart.cart_storage_manager]
-        tags:
-            - { name: kernel.event_subscriber }

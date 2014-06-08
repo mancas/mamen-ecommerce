@@ -1,0 +1,13 @@
+parameters:
+    cart.cart_storage_manager: Ecommerce\CartBundle\Storage\CartStorageManager
+    cart.cart_event_listener: Ecommerce\CartBundle\EventListener\CartEventSubscriber
+
+services:
+      cart.cart_storage_manager:
+          class: %cart.cart_storage_manager%
+          arguments: [@session]
+      cart.cart_event_listener:
+          class: %cart.cart_event_listener%
+          arguments: [@cart.cart_storage_manager]
+          tags:
+              - { name: kernel.event_subscriber }

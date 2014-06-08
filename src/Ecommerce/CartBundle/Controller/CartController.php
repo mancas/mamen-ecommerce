@@ -1,12 +1,13 @@
 <?php
 
-namespace Ecommerce\FrontendBundle\Controller;
+namespace Ecommerce\CartBundle\Controller;
 
-use Ecommerce\FrontendBundle\Event\CartEvent;
-use Ecommerce\FrontendBundle\Event\CartEvents;
-use Ecommerce\FrontendBundle\Model\Cart;
-use Ecommerce\FrontendBundle\Model\CartItem;
-use Ecommerce\FrontendBundle\Storage\CartStorageManager;
+use Ecommerce\CartBundle\Event\CartEvent;
+use Ecommerce\CartBundle\Event\CartEvents;
+use Ecommerce\CartBundle\Model\Cart;
+use Ecommerce\CartBundle\Model\CartItem;
+use Ecommerce\CartBundle\Storage\CartStorageManager;
+use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\ItemBundle\Entity\Item;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,0 +1,23 @@
+add_to_cart:
+    pattern: /anadir-al-carrito/{slug}
+    defaults: { _controller: CartBundle:Cart:addItem }
+
+empty_cart:
+    pattern: /vaciar-carrito
+    defaults: { _controller: CartBundle:Cart:emptyCart }
+
+cart_template:
+    pattern: /carrito
+    defaults: { _controller: CartBundle:Cart:cartTemplate }
+
+cart_details:
+    pattern: /tu-carrito
+    defaults: { _controller: CartBundle:Cart:view }
+
+delete_item_from_cart:
+    pattern: /eliminar-articulo/{id}
+    defaults: { _controller: CartBundle:Cart:deleteItem }
+
+update_cart_item_quantity:
+    pattern: /cambiar-cantidad/{id}
+    defaults: { _controller: CartBundle:Cart:updateItemQuantity }

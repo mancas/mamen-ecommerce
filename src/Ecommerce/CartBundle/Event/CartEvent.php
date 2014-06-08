@@ -1,7 +1,7 @@
 <?php
-namespace Ecommerce\FrontendBundle\Event;
+namespace Ecommerce\CartBundle\Event;
 
-use Ecommerce\FrontendBundle\Model\Cart;
+use Ecommerce\CartBundle\Model\Cart;
 use Symfony\Component\EventDispatcher\Event;
 
 class CartEvent extends Event implements \Serializable

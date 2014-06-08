@@ -42,7 +42,7 @@
                         {% for item in cart.cartItems %}
                             <tr>
                                 <td class="text-left">
-                                    {{ render(controller("FrontendBundle:Cart:cartItemDetails", {'id':item.id})) }}
+                                    {{ render(controller("CartBundle:Cart:cartItemDetails", {'id':item.id})) }}
                                 </td>
                                 <td>
                                     <input data-path="{{ path('update_cart_item_quantity', {'id':item.id}) }}" class="item-quantity" type="number" value="{{ item.quantity }}" name="quantity-{{ item.id }}">

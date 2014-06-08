@@ -1,10 +1,10 @@
 <?php
 
-namespace Ecommerce\FrontendBundle\EventListener;
+namespace Ecommerce\CartBundle\EventListener;
 
-use Ecommerce\FrontendBundle\Event\CartEvent;
-use Ecommerce\FrontendBundle\Event\CartEvents;
-use Ecommerce\FrontendBundle\Storage\CartStorageManager;
+use Ecommerce\CartBundle\Event\CartEvent;
+use Ecommerce\CartBundle\Event\CartEvents;
+use Ecommerce\CartBundle\Storage\CartStorageManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Routing\Router;
