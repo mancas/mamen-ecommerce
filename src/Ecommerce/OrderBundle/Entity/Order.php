@@ -20,6 +20,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
 class Order
 {
     const STATUS_READY = "Listo para envío";
+    const STATUS_OUT_OF_STOCK = "Posible rotura de stock";
     const STATUS_SEND = "Enviado";
 
     const DELIVERY_HOME = 'Delivery_home';
@@ -185,7 +186,7 @@ class Order
 
     public function getStatusChoices()
     {
-        return array(self::STATUS_READY => self::STATUS_READY, self::STATUS_SEND => self::STATUS_SEND);
+        return array(self::STATUS_READY => self::STATUS_READY, self::STATUS_OUT_OF_STOCK => self::STATUS_OUT_OF_STOCK, self::STATUS_SEND => self::STATUS_SEND);
     }
 
     /**
@@ -223,6 +224,4 @@ class Order
     {
         return $this->isPresent;
     }
-
-
 }

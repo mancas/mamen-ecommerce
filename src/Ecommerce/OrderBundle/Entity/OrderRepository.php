@@ -56,4 +56,18 @@ class OrderRepository extends CustomEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findOrdersReadyToSend()
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o');
+        $qb->addOrderBy('o.date', 'ASC');
+
+        $and = $qb->expr()->andx();
+        $and->add($qb->expr()->eq('o.status', '\''.Order::STATUS_READY.'\''));
+
+        $qb->where($and);
+
+        return $qb->getQuery()->getResult();
+    }
 }

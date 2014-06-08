@@ -23,8 +23,8 @@
                         <li>
                             <div class="cc">
                                 <i class="fa fa-user"></i>
-                                <strong>1234</strong>
-                                <small>{{ 'usuarios' | trans }}</small>
+                                <strong>{{ users }}</strong>
+                                <small>{% if users == 1 %}{{ 'usuario' | trans }}{% else %}{{ 'usuarios' | trans }}{% endif %}</small>
                             </div>
                         </li>
 
@@ -33,8 +33,15 @@
                         <li>
                             <div class="cc">
                                 <i class="fa fa-tag"></i>
-                                <strong>{{ orders | length }}</strong>
-                                <small>{% if orders | length > 1 %}{{ 'pedidos' | trans }}{% else %}{{ 'pedido' | trans }}{% endif %}</small>
+                                <strong>{{ orders }}</strong>
+                                <small>{% if orders == 1 %}{{ 'pedidos' | trans }}{% else %}{{ 'pedido' | trans }}{% endif %}</small>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cc">
+                                <i class="fa fa-tag"></i>
+                                <strong>{{ ordersReadyToSend }}</strong>
+                                <small>{% if ordersReadyToSend == 1 %}{{ 'pedido pendiente de envío' | trans }}{% else %}{{ 'pedidos pendientes de envío' | trans }}{% endif %}</small>
                             </div>
                         </li>
                     </ul>

@@ -47,6 +47,7 @@ class OrderController extends CustomController
 
             $order->setCustomer($user);
             $order->setDate(new \DateTime('now'));
+            $order->setStatus(Order::STATUS_READY);
 
             $em->persist($order);
             $em->flush();

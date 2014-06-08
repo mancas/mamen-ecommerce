@@ -13,9 +13,11 @@ class BackendController extends CustomController
     public function indexAction()
     {
         $em = $this->getEntityManager();
-        $orders = $em->getRepository('OrderBundle:Order')->findOrdersResume();
+        list($orders, $ordersReadyToSend, $users) = $this->getSiteStatistics();
 
-        return $this->render('BackendBundle:Backend:index.html.twig', array('orders' => $orders));
+        return $this->render('BackendBundle:Backend:index.html.twig', array('orders' => $orders,
+                                                                            'ordersReadyToSend' => $ordersReadyToSend,
+                                                                            'users' => $users));
     }
 
     public function getRecentOrdersAction()
@@ -45,5 +47,15 @@ class BackendController extends CustomController
         }
 
         return $response;
+    }
+
+    private function getSiteStatistics()
+    {
+        $em = $this->getEntityManager();
+        $orders = $em->getRepository('OrderBundle:Order')->findAll();
+        $ordersReadyToSend = $em->getRepository('OrderBundle:Order')->findOrdersReadyToSend();
+        $user = $em->getRepository('UserBundle:User')->findAll();
+
+        return array(count($orders), count($ordersReadyToSend), count($user));
     }
 }
