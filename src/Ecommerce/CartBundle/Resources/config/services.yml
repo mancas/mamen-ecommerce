@@ -8,6 +8,6 @@ services:
           arguments: [@session]
       cart.cart_event_listener:
           class: %cart.cart_event_listener%
-          arguments: [@cart.cart_storage_manager]
+          arguments: [@cart.cart_storage_manager, @doctrine.orm.default_entity_manager]
           tags:
               - { name: kernel.event_subscriber }

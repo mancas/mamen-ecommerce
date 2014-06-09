@@ -3,9 +3,12 @@
 namespace Ecommerce\CartBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Ecommerce\FrontendBundle\Util\StringHelper;
 
 class Cart implements \Serializable
 {
+    protected $identifier;
+
     protected $expiredAt;
 
     protected $cartItems;
@@ -13,6 +16,23 @@ class Cart implements \Serializable
     public function __construct()
     {
         $this->cartItems = new ArrayCollection();
+        $this->identifier = StringHelper::getUniqueIdentifier();
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     /**
