@@ -22,6 +22,8 @@ class Order
     const STATUS_READY = "Listo para envío";
     const STATUS_OUT_OF_STOCK = "Posible rotura de stock";
     const STATUS_SEND = "Enviado";
+    const STATUS_READY_TO_TAKE = "Listo para recoger";
+    const STATUS_IN_PROCESS = "En proceso";
 
     const DELIVERY_HOME = 'Delivery_home';
     const TAKE_IN_PLACE = 'Take_in_place';
@@ -68,6 +70,11 @@ class Order
      * @ORM\Column(type="boolean", nullable=true, options={"default" = 0})
      */
     protected $isPresent = false;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Ecommerce\PaymentBundle\Entity\Payment", inversedBy="order")
+     */
+    protected $payment;
 
     public function __construct()
     {
@@ -186,7 +193,11 @@ class Order
 
     public function getStatusChoices()
     {
-        return array(self::STATUS_READY => self::STATUS_READY, self::STATUS_OUT_OF_STOCK => self::STATUS_OUT_OF_STOCK, self::STATUS_SEND => self::STATUS_SEND);
+        return array(self::STATUS_READY => self::STATUS_READY,
+            self::STATUS_OUT_OF_STOCK => self::STATUS_OUT_OF_STOCK,
+            self::STATUS_SEND => self::STATUS_SEND,
+            self::STATUS_READY_TO_TAKE => self::STATUS_READY_TO_TAKE,
+            self::STATUS_IN_PROCESS => self::STATUS_IN_PROCESS);
     }
 
     /**
@@ -223,5 +234,21 @@ class Order
     public function getIsPresent()
     {
         return $this->isPresent;
+    }
+
+    /**
+     * @param mixed $payment
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

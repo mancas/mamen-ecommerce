@@ -13,3 +13,7 @@ admin_user_edit:
 admin_user_delete:
     pattern: /delete/{id}
     defaults: { _controller: BackendBundle:User:delete }
+
+admin_user_validate:
+    pattern: /validate/{id}
+    defaults: { _controller: BackendBundle:User:validate }

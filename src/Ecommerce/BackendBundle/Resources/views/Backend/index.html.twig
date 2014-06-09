@@ -39,9 +39,16 @@
                         </li>
                         <li>
                             <div class="cc">
-                                <i class="fa fa-tag"></i>
+                                <i class="fa fa-truck"></i>
                                 <strong>{{ ordersReadyToSend }}</strong>
                                 <small>{% if ordersReadyToSend == 1 %}{{ 'pedido pendiente de envío' | trans }}{% else %}{{ 'pedidos pendientes de envío' | trans }}{% endif %}</small>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cc">
+                                <i class="fa fa-home"></i>
+                                <strong>{{ ordersReadyToTake }}</strong>
+                                <small>{% if ordersReadyToTake == 1 %}{{ 'pedido pendiente de recoger' | trans }}{% else %}{{ 'pedidos pendientes de recoger' | trans }}{% endif %}</small>
                             </div>
                         </li>
                     </ul>
@@ -96,6 +103,10 @@
                     grid: { borderColor: "#eeeeee", borderWidth: 1, color: "#AAAAAA" },
                     xaxis: {
                         ticks: ticks
+                    },
+                    yaxis: {
+                        tickDecimals: 0,
+                        minTickSize: 1
                     }
                 });
             });

@@ -39,10 +39,9 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'Identificador' | trans }}</th>
+                                    <th>{{ 'Fecha del pedido' | trans}} </th>
                                     <th>{{ 'Dirección de envío' | trans }}</th>
                                     <th>{{ 'Estado' | trans}} </th>
-                                    <th>{{ 'Fecha del pedido' | trans}} </th>
                                     <th>{{ 'Total' | trans }}</th>
                                     <th>{{ 'Opciones' | trans }}</th>
                                 </tr>
@@ -50,13 +49,13 @@
                                 <tbody>
                                 {% for order in orders %}
                                     <tr>
-                                        <td>{{ order.id }}</td>
-                                        <td>{{ order.address.name }}</td>
+                                        <td>{{ order.date | date('d-m-Y') }}</td>
+                                        <td>{% if order.address is not null %}{{ order.address.name }}{% else %}{{ 'Recogida en tienda' }}{% endif %}</td>
                                         <td>{{ order.status }}</td>
-                                        <td>{{ order.date | format('m-d-Y') }}</td>
-                                        <td>{{ order.totalAmount }}</td>
+                                        <td>{{ order.totalAmount }} <i class="fa fa-euro"></i></td>
                                         <td>
                                             <a class="btn btn-blue btn-sm" href="{{ path('view_order_details', {'id' : order.id}) }}" title="{{ 'Ver detalles' | trans }}"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-yellow btn-sm" href="{{ path('view_order_details', {'id' : order.id}) }}" title="{{ 'Descargar factura' | trans }}"><i class="fa fa-file-pdf-o"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}

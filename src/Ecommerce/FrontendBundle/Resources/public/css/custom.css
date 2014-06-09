@@ -300,6 +300,26 @@ a {
     background-color: #4099ad;
     color: white; }
 
+.btn-pink {
+  background-color: #f12b63;
+  color: white;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  outline: none; }
+  .btn-pink:hover, .btn-pink:focus, .btn-pink:active {
+    background-color: #f9aac1;
+    color: white; }
+
+.btn-yellow {
+  background-color: #f0ad4e;
+  color: white;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  outline: none; }
+  .btn-yellow:hover, .btn-yellow:focus, .btn-yellow:active {
+    background-color: #ed9c28;
+    color: white; }
+
 .btn-disabled {
   background-color: #dddddd;
   color: #404040;

@@ -2,6 +2,8 @@
 
 namespace Ecommerce\OrderBundle\Controller;
 
+use Ecommerce\CartBundle\Event\CartEvent;
+use Ecommerce\CartBundle\Event\CartEvents;
 use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\OrderBundle\Entity\Order;
 use Ecommerce\OrderBundle\Entity\OrderItem;
@@ -47,10 +49,16 @@ class OrderController extends CustomController
 
             $order->setCustomer($user);
             $order->setDate(new \DateTime('now'));
-            $order->setStatus(Order::STATUS_READY);
+            $order->setStatus(Order::STATUS_IN_PROCESS);
 
             $em->persist($order);
             $em->flush();
+
+            $cartEvent = new CartEvent($this->getCartStorageManager()->getCurrentCart());
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(CartEvents::CLEAR_CART, $cartEvent);
+
+            return $this->redirect($this->generateUrl('user_orders'));
         }
         return $this->render('OrderBundle:Order:new-order.html.twig', array('cart' => $cart,
                                                                             'user' => $user,

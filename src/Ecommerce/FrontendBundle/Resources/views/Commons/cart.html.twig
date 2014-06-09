@@ -9,7 +9,7 @@
         <span class="pull-right">{{ cart.cartTotal }} <i class="fa fa-euro text-12"></i></span>
     </div>
     <div class="cart-buttons">
-        <a class="btn btn-success" href="" title="{{ 'Pagar' | trans }}">{{ 'Pagar' | trans }}</a>
+        <a class="btn btn-success" href="{{ path('new_order') }}" title="{{ 'Pagar' | trans }}">{{ 'Pagar' | trans }}</a>
         <a class="btn btn-blue" href="{{ path('cart_details') }}" title="{{ 'Ver cesta' | trans }}">{{ 'Ver cesta' | trans }}</a>
     </div>
 </div>

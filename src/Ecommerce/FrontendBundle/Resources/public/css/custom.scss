@@ -13,6 +13,8 @@ $footer-background: #F3F3F3;
 $disabled-gray: #DDDDDD;
 $red: #FF0000;
 $light-pink: #F9AAC1;
+$yellow: #F0AD4E;
+$yellow-hover: #ED9C28;
 
 body {
   background: url(../img/texture.png) repeat;
@@ -424,6 +426,32 @@ a {
 
   &:hover, &:focus, &:active {
     background-color: $blue-hover;
+    color: $white;
+  }
+}
+
+.btn-pink {
+  background-color: $pink;
+  color: $white;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  outline: none;
+
+  &:hover, &:focus, &:active {
+    background-color: $light-pink;
+    color: $white;
+  }
+}
+
+.btn-yellow {
+  background-color: $yellow;
+  color: $white;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  outline: none;
+
+  &:hover, &:focus, &:active {
+    background-color: $yellow-hover;
     color: $white;
   }
 }

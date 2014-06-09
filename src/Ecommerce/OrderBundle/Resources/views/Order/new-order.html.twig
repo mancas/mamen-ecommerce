@@ -42,7 +42,7 @@
                             {% for item in cart.cartItems %}
                                 <tr>
                                     <td class="text-left">
-                                        {{ render(controller("FrontendBundle:Cart:cartItemDetails", {'id':item.id})) }}
+                                        {{ render(controller("CartBundle:Cart:cartItemDetails", {'id':item.id})) }}
                                     </td>
                                     <td>
                                         {{ item.quantity }}

@@ -23,6 +23,7 @@
                 <tr>
                     <th>{{ "Nombre"|trans }}</th>
                     <th>{{ "Apellidos"|trans }}</th>
+                    <th>{{ "Nif"|trans }}</th>
                     <th>{{ "Email"|trans }}</th>
                     <th>{{ "Acciones"|trans }}</th>
                 </tr>
@@ -32,14 +33,18 @@
                     <tr {% if user.deletedDate %} style="background-color: #A8A8A8 "{% endif %}>
                         <td><a title="Modificar" href="{{ path('admin_user_edit', { 'id': user.id }) }}">{{ user.name }}</a></td>
                         <td>{{ user.lastName }}</td>
+                        <td>{{ user.nif }}</td>
                         <td>{{ user.email }}</td>
                         <td class="text-center">
                             {% if user.deletedDate %}
                                 {{ "Eliminado"|trans }}
                             {% else %}
-                                <a title="Ver detalles" class="btn btn-primary btn-xs" href="{{ path('admin_user_view', { 'id': user.id }) }}"><i class="fa fa-eye"></i>{{ 'Ver' | trans }}</a>
-                                <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
-                                <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_user_delete', { 'id': user.id }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
+                                {% if not user.validated %}
+                                    <a title="{{ 'Validar' | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_user_validate', { 'id': user.id }) }}"><i class="fa fa-check"></i>{{ 'Validar' | trans }}</a>
+                                {% endif %}
+                                <a title="{{ 'Ver detalles' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_user_view', { 'id': user.id }) }}"><i class="fa fa-eye"></i>{{ 'Ver' | trans }}</a>
+                                <a title="{{ 'Modificar' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
+                                <a title="{{ 'Eliminar' | trans }}" class="delete btn btn-danger btn-xs" href="{{ path('admin_user_delete', { 'id': user.id }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             {% endif %}
                         </td>
                     </tr>

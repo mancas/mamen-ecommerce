@@ -56,4 +56,19 @@ class UserController extends CustomController
 
         return $this->redirect($this->generateUrl('admin_user_index'));
     }
+
+    /**
+     * @ParamConverter("user", class="UserBundle:User")
+     */
+    public function validateAction(User $user)
+    {
+        $em = $this->getEntityManager();
+        $user->setValidated(true);
+        $em->persist($user);
+        $em->flush();
+
+        $this->setTranslatedFlashMessage('Se ha validado al usuario');
+
+        return $this->redirect($this->generateUrl('admin_user_index'));
+    }
 }

@@ -15,16 +15,16 @@ class OrderRepository extends CustomEntityRepository
     public function findOrdersByUserEmail($userEmail, $limit = null)
     {
         $qb = $this->createQueryBuilder('o');
-        $qb->select('o.id');
+        $qb->select('o');
 
-        //$qb->leftJoin('o.customer', 'u');
-        //$qb->addOrderBy('o.date','DESC');
+        $qb->leftJoin('o.customer', 'u');
+        $qb->addOrderBy('o.date','DESC');
 
         $and = $qb->expr()->andx();
 
-        //$and->add($qb->expr()->eq('u.email', '\''. $userEmail .'\''));
+        $and->add($qb->expr()->eq('u.email', '\''. $userEmail .'\''));
 
-        //$qb->where($and);
+        $qb->where($and);
 
         if (isset($limit)) {
             $qb->setMaxResults($limit);
@@ -64,7 +64,23 @@ class OrderRepository extends CustomEntityRepository
         $qb->addOrderBy('o.date', 'ASC');
 
         $and = $qb->expr()->andx();
-        $and->add($qb->expr()->eq('o.status', '\''.Order::STATUS_READY.'\''));
+        $and->add($qb->expr()->eq('o.status', '\''.Order::STATUS_IN_PROCESS.'\''));
+        $and->add($qb->expr()->isNotNull('o.address'));
+
+        $qb->where($and);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findOrdersReadyToTake()
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o');
+        $qb->addOrderBy('o.date', 'ASC');
+
+        $and = $qb->expr()->andx();
+        $and->add($qb->expr()->eq('o.status', '\''.Order::STATUS_IN_PROCESS.'\''));
+        $and->add($qb->expr()->isNull('o.address'));
 
         $qb->where($and);
 

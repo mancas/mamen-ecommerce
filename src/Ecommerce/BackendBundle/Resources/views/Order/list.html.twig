@@ -1,0 +1,85 @@
+{% extends "BackendBundle:Layouts:2columns.html.twig" %}
+
+{% block title_section %}
+    {{ "Listado de pedidos" | trans }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <h5>{{ "Buscador"|trans }}</h5>
+        </div>
+        <div class="widget-content nopadding">
+        </div>
+    </div>
+
+    {% if orders | length > 0 %}
+        <div class="widget-box">
+            <div class="widget-title">
+            <span class="icon">
+                <i class="fa fa-th"></i>
+            </span>
+                <h5>{{ "Listado de pedidos"|trans }}</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ "Nº de pedido"|trans }}</th>
+                        <th>{{ "Fecha"|trans }}</th>
+                        <th>{{ "Cliente"|trans }}</th>
+                        <th>{{ "Nº de articulos"|trans }}</th>
+                        <th>{{ "Es un regalo"|trans }}</th>
+                        <th>{{ "Envío"|trans }}</th>
+                        <th>{{ "Estado"|trans }}</th>
+                        <th>{{ 'Pagado'|trans }}</th>
+                        <th>{{ "Total"|trans }}</th>
+                        <th>{{ "Acciones"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td><a title="Ver" href="">{{ order.id }}</a></td>
+                            <td>{{ order.date | date('d-m-Y') }}</td>
+                            <td><a href="{{ path('admin_user_view', {'id':order.customer.id}) }}" title="{{ 'Ver cliente' | trans }}">{{ order.customer.name }}</a></td>
+                            <td>{{ order.items | length }}</td>
+                            <td>{% if order.isPresent %}{{ 'Sí' | trans }}{% else %}{{ 'No' | trans }}{% endif %}</td>
+                            <td>{% if order.address is not null %}{{ 'Envío a domicilio' | trans }}{% else %}{{ 'Recogida en tienda' | trans }}{% endif %}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{% if order.payment is not null %}{{ 'Sí' | trans }}{% else %}{{ 'No' | trans }}{% endif %}</td>
+                            <td>{{ order.totalAmount }} <i class="fa fa-euro"></i></td>
+                            <td class="text-center">
+                                {% if order.payment is not null %}
+                                    {% if order.address is not null and order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
+                                        <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
+                                        <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}" class="btn btn-dark-red btn-xs" href=""><i class="fa fa-warning"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}</a>
+                                    {% else %}
+                                        {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
+                                            <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-archive"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                                <a title="{{ 'Ver detalles' | trans }}" class="btn btn-primary btn-xs" href=""><i class="fa fa-eye"></i>{{ 'Detalles' | trans }}</a>
+                                <a title="{{ 'Eliminar' | trans }}" class="delete btn btn-danger btn-xs" href=""><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info mt">
+            <strong>{{"Información!" | trans }}</strong>
+            {{"No se ha encontrado ningún registro" | trans }}
+        </div>
+    {% endif %}
+{% endblock %}

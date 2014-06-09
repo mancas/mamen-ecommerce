@@ -79,7 +79,11 @@ class CartController extends CustomController
             $cartStorageManager = $this->getCartStorageManager();
             $cart = $cartStorageManager->getCurrentCart();
             $cartItem = $cart->getCartItemById($id);
-            $cartItem->setQuantity($quantity);
+            if ($quantity == 0) {
+                $cart->removeCartItem($cartItem);
+            } else {
+                $cartItem->setQuantity($quantity);
+            }
             $jsonResponse = json_encode(array('ok' => true, 'path' => $this->generateUrl('cart_details')));
         }
 
