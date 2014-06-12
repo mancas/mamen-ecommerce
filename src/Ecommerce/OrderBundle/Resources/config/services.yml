@@ -1,7 +1,9 @@
 parameters:
-#    order.example.class: Ecommerce\OrderBundle\Example
+    order.order_event_listener.class: Ecommerce\OrderBundle\EventListener\OrderEventListener
 
 services:
-#    order.example:
-#        class: %order.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    order.order_event_listener:
+        class: %order.order_event_listener.class%
+        arguments: [@mailer, @templating, @router, %noreply_email%]
+        tags:
+            - { name: kernel.event_subscriber }

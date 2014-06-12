@@ -1,0 +1,114 @@
+{% extends "BackendBundle:Layouts:2columns.html.twig" %}
+
+{% block title_section %}
+    {{ "Detalles del pedido nº" | trans }} {{ order.id }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="widget-box">
+        <div class="widget-title">
+        <span class="icon">
+            <i class="fa fa-th"></i>
+        </span>
+            <h5>{{ "Detalles del pedido"|trans }} {{ order.id }} {{ 'con fecha' | trans }} {{ order.date | date('d-m-Y') }}</h5>
+        </div>
+        <div class="widget-content">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="fa fa-cubes"></i>
+                            </span>
+                            <h5>{{ "Productos del pedido"|trans }}</h5>
+                        </div>
+
+                        <div class="widget-content nopadding">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left">{{ 'Producto' | trans }}</th>
+                                    <th>{{ 'Cantidad' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for orderItem in order.items %}
+                                        <tr>
+                                            <td>
+                                                <img class="img-responsive pull-left mr15" src="{{ asset(orderItem.item.imageMain.imageItemCart.getWebFilePath) }}">
+                                                {{ orderItem.item.name }}
+                                            </td>
+                                            <td>{{ orderItem.quantity }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- .widget-box -->
+                </div><!-- .col-sm-6 -->
+                <div class="col-sm-6">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="fa fa-map-marker"></i>
+                            </span>
+                            <h5>{{ "Dirección de envío"|trans }}</h5>
+                        </div>
+
+                        <div class="widget-content nopadding">
+                            {% if order.address is not null %}
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'Dirección' | trans }}</th>
+                                    <th>{{ 'Localidad' | trans }}</th>
+                                    <th>{{ 'Provincia' | trans }}</th>
+                                    <th>{{ 'Código Postal' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ address.address }}</td>
+                                    <td>{{ address.city }}</td>
+                                    <td>{{ address.city.province.name }}</td>
+                                    <td>{{ address.postalCode }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            {% else %}
+                                <div class="row mt mb">
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-block alert-info">
+                                            <p>{{ 'El usuario ha solicitado la Recogida en tienda' | trans }}</p>
+                                        </div>
+                                    </div><!-- .col-sm-12 -->
+
+                                    <div class="col-sm-12">
+                                        {% if order.payment is not null %}
+                                            {% if order.address is not null and order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
+                                                <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
+                                                <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}" class="btn btn-dark-red btn-xs" href=""><i class="fa fa-warning"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}</a>
+                                            {% else %}
+                                                {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
+                                                    <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-archive"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}</a>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="alert alert-block alert-warning" style="margin-bottom: 0">
+                                                <p>{{ 'Este usuario aún no ha procedido a realizar el pago del pedido' | trans }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div><!-- .widget-box -->
+                </div><!-- .col-sm-6 -->
+            </div><!-- .row -->
+        </div>
+    </div>
+{% endblock %}

@@ -12,6 +12,32 @@ class OrderRepository extends CustomEntityRepository
 {
     protected $specialFields = array();
 
+    public function findBySearchCriteria($criteria)
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o');
+
+        if (isset($criteria['from'])) {
+            $qb->andWhere($qb->expr()->gte('o.date', '\''.$criteria['from']->format('Y-m-d H:i:s').'\''));
+        }
+
+        if (isset($criteria['to'])) {
+            $dateTo = $criteria['to'];
+            $dateTo->modify('+1 day');
+            $qb->andWhere($qb->expr()->lte('o.date', '\''.$criteria['to']->format('Y-m-d H:i:s').'\''));
+        }
+
+        if (isset($criteria['payment']) && $criteria['payment']) {
+            $qb->andWhere($qb->expr()->isNotNull('o.payment'));
+        }
+
+        if (isset($criteria['status'])) {
+            $qb->andWhere($qb->expr()->eq('o.status', '\''.$criteria['status'].'\''));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findOrdersByUserEmail($userEmail, $limit = null)
     {
         $qb = $this->createQueryBuilder('o');

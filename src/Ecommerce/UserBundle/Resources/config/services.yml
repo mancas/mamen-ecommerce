@@ -27,7 +27,7 @@ services:
         tags:
             - { name: kernel.event_subscriber }
     user.send_activation_email_listener:
-            class: %user.send_activation_email.class%
-            arguments: [@mailer, @templating, @router, %noreply_email%]
-            tags:
-                - { name: kernel.event_subscriber }
+        class: %user.send_activation_email.class%
+        arguments: [@mailer, @templating, @router, %noreply_email%]
+        tags:
+            - { name: kernel.event_subscriber }

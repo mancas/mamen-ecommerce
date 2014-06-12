@@ -4,6 +4,11 @@
     {{ "Listado de pedidos" | trans }}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/backend/css/datepicker.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block breadcrumb %}
     {{ parent() }}
 {% endblock %}
@@ -17,6 +22,29 @@
             <h5>{{ "Buscador"|trans }}</h5>
         </div>
         <div class="widget-content nopadding">
+            <form class="form-inline" role="form" action="{{ path('admin_order_index') }}" method="get">
+                <div class="form-group">
+                    <div class="input-group">
+                        {{ form_widget(form.from, { 'attr': { 'class': 'form-control', 'placeholder' : 'Desde' | trans} }) }}
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        {{ form_widget(form.to, { 'attr': { 'class': 'form-control', 'placeholder' : 'Hasta' | trans} }) }}
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.status, { 'attr': { 'class': 'form-control'} }) }}
+                </div>
+                <div class="checkbox mr15">
+                    {{ form_widget(form.payment, { 'attr': { 'class': 'form-control'} }) }}
+                    <label for="form_search_order_payment">{{ 'Pagado' | trans }}</label>
+                </div>
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-default">{{ 'Buscar' | trans }}</button>
+            </form>
         </div>
     </div>
 
@@ -57,17 +85,15 @@
                             <td>{% if order.payment is not null %}{{ 'Sí' | trans }}{% else %}{{ 'No' | trans }}{% endif %}</td>
                             <td>{{ order.totalAmount }} <i class="fa fa-euro"></i></td>
                             <td class="text-center">
-                                {% if order.payment is not null %}
                                     {% if order.address is not null and order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
-                                        <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
+                                        <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_send', {'id':order.id}) }}"><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
                                         <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}" class="btn btn-dark-red btn-xs" href=""><i class="fa fa-warning"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}</a>
                                     {% else %}
                                         {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
                                             <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-archive"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}</a>
                                         {% endif %}
                                     {% endif %}
-                                {% endif %}
-                                <a title="{{ 'Ver detalles' | trans }}" class="btn btn-primary btn-xs" href=""><i class="fa fa-eye"></i>{{ 'Detalles' | trans }}</a>
+                                <a title="{{ 'Ver detalles' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_order_view', {'id':order.id}) }}"><i class="fa fa-eye"></i>{{ 'Detalles' | trans }}</a>
                                 <a title="{{ 'Eliminar' | trans }}" class="delete btn btn-danger btn-xs" href=""><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             </td>
                         </tr>
@@ -82,4 +108,21 @@
             {{"No se ha encontrado ningún registro" | trans }}
         </div>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/backend/js/bootstrap-datepicker.js') }}"></script>
+    <script>
+        $('document').ready(function(){
+           $('#form_search_order_from').datepicker({
+               format: 'dd-mm-yyyy',
+               weekStart: 1
+           });
+           $('#form_search_order_to').datepicker({
+               format: 'dd-mm-yyyy',
+               weekStart: 1
+           });
+        });
+    </script>
 {% endblock %}

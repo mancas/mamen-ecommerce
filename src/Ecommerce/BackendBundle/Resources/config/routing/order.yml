@@ -12,4 +12,12 @@ admin_order_delete_item:
 
 admin_order_send:
     pattern: /send-item/{id}
-    defaults: { _controller: BackendBundle:Order:deleteItem }
+    defaults: { _controller: BackendBundle:Order:markAsSent }
+
+admin_order_ready_to_take:
+    pattern: /ready-to-take/{id}
+    defaults: { _controller: BackendBundle:Order:markAsReadyToTake }
+
+admin_order_out_of_stock:
+    pattern: /out-of-stock/{id}
+    defaults: { _controller: BackendBundle:Order:markAsOutOfStock }

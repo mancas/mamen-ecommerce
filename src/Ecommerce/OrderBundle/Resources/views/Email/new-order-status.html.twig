@@ -1,0 +1,63 @@
+{% extends 'FrontendBundle:Layouts:email.html.twig' %}
+{% block content_mail %}
+    <table cellpadding="0" cellspacing="0" border="0" style="color: #717171; font: normal 11px Helvetica, Arial, sans-serif; margin: 0; padding: 0 20px 0 20px;" width="690">
+        <tr>
+            <td style="padding: 10px 0 0;" align="left">
+
+                <h2 style="color:#555; font-weight: bold; margin: 0 0 10px 0; padding: 0; line-height: 26px; font-size: 14px; font-family: Helvetica, Arial, sans-serif; ">
+                    {{ "Hola"|trans }} {{ order.customer.name }}
+                </h2>
+
+                <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
+                    {{ "Su pedido ha sido marcado como " |trans }}<strong>{{ order.status }}</strong>
+                </p>
+
+                {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') %}
+                    <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
+                        {{ 'Esto es debido a una alta demanda del producto. Sin embargo, procederemos a enviarte todos los articulos en cuanto volvamos a tener stock. Disculpa las molestias.' | trans }}
+                    </p>
+                {% endif %}
+
+                {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') %}
+                    <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
+                        {{ 'Ya puedes venir a recoger tu compra en nuestra tienda situada en' | trans }}<i>C\Madre Rafols 15, Local C, Sevilla</i>
+                    </p>
+                {% endif %}
+
+                {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') %}
+                    <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
+                        {{ 'Tu pedido llegará a la dirección especificada en los próximos días. Muchas gracias por confiar en' | trans }} <a style="text-decoration: none; color:#4cb1ca" title="{{ 'Visita Clop' | trans }}" href="http://www.clop.com">clop.com</a>
+                    </p>
+                {% endif %}
+
+                <h2 style="color:#555; font-weight: bold; margin: 0 0 10px 0; padding: 0; line-height: 26px; font-size: 14px; font-family: Helvetica, Arial, sans-serif; ">
+                    {{ "Detalles de tu pedido"|trans }}
+                </h2>
+
+                <table border="0" width="680" style="margin-bottom: 20px">
+                    {% for orderItem in order.items %}
+                        <tr>
+                            <td style="width: 120px"><img src="{{ asset(orderItem.item.imageMain.imageItemCart.getWebFilePath) }}"></td>
+                            <td><a style="text-decoration: none;font-size: 14px; color:#4cb1ca" title="{{ 'Ver producto' | trans }}" href="{{ path('item_details', {'slug':orderItem.item.slug}) }}">{{ orderItem.item.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <h2 style="color:#555; font-weight: bold; margin: 0 0 10px 0; padding: 0; line-height: 26px; font-size: 14px; font-family: Helvetica, Arial, sans-serif; ">
+                    {{ "Dirección de envío"|trans }}
+                </h2>
+
+                {% if order.address is not null %}
+                    <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
+                        {{ order.address.address }}, {{ order.address.postalCode }}, {{ order.address.city }}, {{ order.address.city.province.name }}
+                    </p>
+                {% else %}
+                    <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
+                        {{ 'Recogida en tienda' | trans }}
+                    </p>
+                {% endif %}
+
+            </td>
+        </tr>
+    </table>
+{% endblock %}

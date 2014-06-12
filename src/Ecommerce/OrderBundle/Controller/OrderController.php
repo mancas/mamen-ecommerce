@@ -7,6 +7,8 @@ use Ecommerce\CartBundle\Event\CartEvents;
 use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\OrderBundle\Entity\Order;
 use Ecommerce\OrderBundle\Entity\OrderItem;
+use Ecommerce\OrderBundle\Event\OrderEvent;
+use Ecommerce\OrderBundle\Event\OrderEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -57,6 +59,9 @@ class OrderController extends CustomController
             $cartEvent = new CartEvent($this->getCartStorageManager()->getCurrentCart());
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(CartEvents::CLEAR_CART, $cartEvent);
+
+            $orderEvent = new OrderEvent($order);
+            $dispatcher->dispatch(OrderEvents::NEW_ORDER, $orderEvent);
 
             return $this->redirect($this->generateUrl('user_orders'));
         }

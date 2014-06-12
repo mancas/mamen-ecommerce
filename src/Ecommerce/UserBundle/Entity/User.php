@@ -392,13 +392,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->orders;
     }
 
-    public function addOrder(\Ecommerce\OrderBundle\Entity\Oreder $order)
+    public function addOrder(\Ecommerce\OrderBundle\Entity\Order $order)
     {
         if (!$this->orders->contains($order))
             $this->orders->add($order);
     }
 
-    public function removeOrder(\Ecommerce\OrderBundle\Entity\Oreder $order)
+    public function removeOrder(\Ecommerce\OrderBundle\Entity\Order $order)
     {
         if ($this->orders->contains($order))
             $this->orders->remove($order);
