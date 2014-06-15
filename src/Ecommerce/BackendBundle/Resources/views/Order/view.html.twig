@@ -95,6 +95,8 @@
                                             {% else %}
                                                 {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
                                                     <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}" class="btn btn-dark-green btn-xs" href=""><i class="fa fa-archive"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}</a>
+                                                {% else %}
+                                                    <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_send', {'id':order.id}) }}"><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}

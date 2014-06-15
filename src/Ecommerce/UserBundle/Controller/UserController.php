@@ -5,6 +5,7 @@ namespace Ecommerce\UserBundle\Controller;
 use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\LocationBundle\Form\Type\AddressType;
 use Ecommerce\LocationBundle\Entity\Address;
+use Ecommerce\OrderBundle\Entity\Order;
 use Ecommerce\UserBundle\Entity\User;
 use Ecommerce\UserBundle\Form\Type\UserProfileType;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,6 +49,16 @@ class UserController extends CustomController
         }
 
         return $this->render('UserBundle:User:orders.html.twig', array('user' => $user, 'orders' => $orders));
+    }
+
+    /**
+     * @ParamConverter("order", class="OrderBundle:Order")
+     */
+    public function viewOrderAction(Order $order)
+    {
+        $user = $this->getCurrentUser();
+
+        return $this->render('UserBundle:User:view-order.html.twig', array('order' => $order, 'user'=> $user));
     }
 
     public function editProfileAction(Request $request)

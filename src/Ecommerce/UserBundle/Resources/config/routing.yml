@@ -22,6 +22,10 @@ user_orders:
     pattern: /mis-pedidos
     defaults: { _controller: UserBundle:User:orders }
 
+view_order_details:
+    pattern: /mis-pedidos/p/{id}
+    defaults: { _controller: UserBundle:User:viewOrder }
+
 edit_profile:
     pattern: /editar-perfil/informacion-personal
     defaults: { _controller: UserBundle:User:editProfile }
@@ -37,10 +41,6 @@ change_main_address:
 delete_address:
     pattern: /eliminar-direccion/{slug}
     defaults: { _controller: UserBundle:User:deleteAddress }
-
-view_order_details:
-    pattern: /mis-pedidos/pedido-{id}
-    defaults: { _controller: UserBundle:User:viewOrderDetails }
 
 resend_activation_email:
     pattern: /reenviar-correo-de-activacion

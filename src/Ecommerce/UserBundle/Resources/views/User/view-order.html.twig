@@ -1,0 +1,167 @@
+{% extends "FrontendBundle:Layouts:1column-simple.html.twig" %}
+
+{% block title %}{{ "Mi pedido nº"|trans }} {{ order.id }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}user page{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block error %}{% endblock %}
+
+{% block content %}
+    <div class="intro">
+        <div class="intro-wrap">
+            <h2>{{ 'Mi Pedido' | trans }} {{ order.id }}</h2>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'UserBundle:Commons:user-sidenav.html.twig' %}
+            </div>
+
+            <div class="col-md-12">
+                {% include 'FrontendBundle:Commons:flashes.html.twig' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="line-block mt20 mb20">
+                    <h3 class="line-title">{{ 'Pedido realizado el' | trans }} {{ order.date | date('d-m-Y') }}</h3>
+                </div>
+                <div class="box">
+                    {% if order.items | length > 0 %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered cart-table">
+                                <thead>
+                                <tr>
+                                    <th class="text-left">{{ 'Descripción' | trans }}</th>
+                                    <th>{{ 'Cantidad' | trans }}</th>
+                                    <th>{{ 'Precio' | trans }}</th>
+                                    <th>{{ 'Subtotal' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for orderItem in order.items %}
+                                    <tr>
+                                        <td class="text-left">
+                                            {{ render(controller("CartBundle:Cart:cartItemDetails", {'id':orderItem.item.id})) }}
+                                        </td>
+                                        <td>
+                                            {{ orderItem.quantity }}
+                                        </td>
+                                        <td>{{ orderItem.price / orderItem.quantity }} <i class="fa fa-euro"></i></td>
+                                        <td>{{ orderItem.price }} <i class="fa fa-euro"></i></td>
+                                    </tr>
+                                {% endfor %}
+                                <tr class="no-lines">
+                                    <td colspan="3" class="delivery">
+                                        {{ 'Gastos de envío' | trans }}
+                                    </td>
+                                    <td>
+                                        2.99 <i class="fa fa-euro"></i>
+                                    </td>
+                                </tr>
+                                <tr class="no-lines">
+                                    <td colspan="3" class="total-cart">
+                                        {{ 'Total' | trans }}
+                                    </td>
+                                    <td>
+                                        {{ order.totalAmount }} <i class="fa fa-euro"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <span>{{ 'Este pedido está vacio' | trans }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="line-block mt20 mb20">
+                    <h3 class="line-title">{{ 'Dirección de envío' | trans }}</h3>
+                </div>
+
+                <div class="box">
+                    {% if order.address is not null %}
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Nombre' | trans }}</th>
+                                <th>{{ 'Dirección' | trans }}</th>
+                                <th>{{ 'Localidad' | trans }}</th>
+                                <th>{{ 'Provincia' | trans }}</th>
+                                <th>{{ 'Código Postal' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{ order.address.name }}</td>
+                                <td>{{ order.address.address }}</td>
+                                <td>{{ order.address.city }}</td>
+                                <td>{{ order.address.city.province.name }}</td>
+                                <td>{{ order.address.postalCode }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>{{ 'Este pedido se recogerá en nuestra tienda en la calle' | trans }} <i>{{ 'C/Madre Rafols 15, Local C, Sevilla' | trans }}</i></p>
+                        <div id="map"></div>
+                    {% endif %}
+                </div>
+
+                <div class="line-block mt20 mb20">
+                    <h3 class="line-title">{{ 'Método de pago' | trans }}</h3>
+                </div>
+
+                <div class="box">
+                    {% if order.payment is not null %}
+
+                    {% else %}
+                        <p>{{ 'Este pedido aún no ha sido pagado.' | trans }}</p>
+                        <a href="" class="btn btn-success" title="{{ 'Pagar' | trans }}">{{ 'Pagar ahora' | trans }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAU4NbOtqT3neY6QiGAQIBLxzRpbAdCTSA&sensor=FALSE">
+    </script>
+    <script type="text/javascript">
+        function initialize() {
+            var latLng = new google.maps.LatLng(37.375066, -6.000138);
+            var mapOptions = {
+                center: latLng,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map"),
+                    mapOptions);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+        }
+
+        $('document').ready(function() {
+            initialize();
+        });
+    </script>
+{% endblock %}

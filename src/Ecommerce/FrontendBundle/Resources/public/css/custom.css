@@ -525,3 +525,6 @@ span.error {
   .cart-table .total-cart {
     text-align: right;
     color: #404040; }
+
+#map {
+  min-height: 300px; }
