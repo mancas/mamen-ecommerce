@@ -24,8 +24,7 @@ class Address
     protected  $id;
 
     /**
-     * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=250, nullable=true)
      */
     protected $name;
 

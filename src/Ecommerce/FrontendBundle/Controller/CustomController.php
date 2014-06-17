@@ -53,4 +53,14 @@ class CustomController extends Controller
     {
         return $this->get('cart.cart_storage_manager');
     }
+
+    protected function renderLoginTemplate($template, Request $request)
+    {
+        $session = $request->getSession();
+        $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR, $session->get(SecurityContext::AUTHENTICATION_ERROR));
+
+        return $this->render($template, array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error' => $error));
+    }
 }

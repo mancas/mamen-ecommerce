@@ -123,8 +123,9 @@ class UserController extends CustomController
         $jsonResponse = json_encode(array('ok' => false));
         if ($request->isXmlHttpRequest()) {
             $em = $this->getEntityManager();
+            $address->setDeleted(new \DateTime('now'));
 
-            $em->remove($address);
+            $em->persist($address);
             $em->flush();
             $jsonResponse = json_encode(array('ok' => true));
         }

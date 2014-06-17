@@ -12,7 +12,7 @@ class DataBillingType extends AbstractType
         $builder->add('name', 'text', array('required' => true))
                 ->add('corporateName', 'text', array('required' => true))
                 ->add('phone', 'text', array('required' => true))
-                ->add('fax', 'text', array('required' => true))
+                ->add('fax', 'text', array('required' => false))
                 ->add('email', 'email', array('required' => true));
     }
 

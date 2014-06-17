@@ -262,7 +262,15 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     public function getAddresses()
     {
-        return $this->addresses;
+        $addresses = array();
+
+        foreach ($this->addresses as $address) {
+            if ($address->getDeleted() == null) {
+                $addresses[] = $address;
+            }
+        }
+
+        return addresses;
     }
 
     public function addAddress(\Ecommerce\LocationBundle\Entity\Address $address)

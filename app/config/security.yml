@@ -1,6 +1,7 @@
 security:
     encoders:
         Ecommerce\UserBundle\Entity\User: { algorithm: sha512, iterations: 10 }
+        Ecommerce\BackendBundle\Entity\AdminUser: { algorithm: sha512, iterations: 10 }
         Symfony\Component\Security\Core\User\User: plaintext
 
     role_hierarchy:
@@ -10,13 +11,26 @@ security:
     providers:
         user:
             entity: { class: Ecommerce\UserBundle\Entity\User, property: email }
+        admin_user:
+            entity: { class: Ecommerce\BackendBundle\Entity\AdminUser, property: username }
         in_memory:
             memory:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    admin: { password: adminpass, roles: [ 'ROLE_SUPER_ADMIN' ] }
 
     firewalls:
+        #admin:
+        #    pattern: ^/bo
+        #    provider: admin_user
+        #    anonymous: ~
+        #    form_login: ~
+        #        login_path: admin_login
+        #        check_path: admin_login_check
+        #        default_target_path: /bo
+        #        always_use_default_target_path: true
+        #    logout:
+        #        path: /bo/logout
         user:
             pattern: ^/
             provider: user
@@ -33,6 +47,11 @@ security:
                lifetime: 5184000
 
     access_control:
+        - { path: ^/bo/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/bo/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/bo/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/bo/login_check, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/bo/.*, role: ROLE_SUPER_ADMIN }
         - { path: ^/u/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/u/email-disponible, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/u/recuperar-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }

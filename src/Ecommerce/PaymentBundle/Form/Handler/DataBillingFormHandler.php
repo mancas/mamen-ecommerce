@@ -23,6 +23,7 @@ class DataBillingFormHandler
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             $addressForm->handleRequest($request);
+
             if ($form->isValid() && $addressForm->isValid()) {
                 $dataBilling = $form->getData();
                 $address = $addressForm->getData();
@@ -31,6 +32,8 @@ class DataBillingFormHandler
                     $city = $this->em->getRepository('LocationBundle:City')->findOneById($city);
                     $address->setCity($city);
                 }
+                $dataBilling->setAddress($address);
+                $address->setDataBilling($dataBilling);
                 $this->dataBillingManager->saveDataBilling($dataBilling, $address);
                 return true;
             }

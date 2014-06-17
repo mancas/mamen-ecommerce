@@ -3,8 +3,16 @@ imports:
 
 parameters:
     category.categoryformhandler.class: Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler
+    admin.adminformhandler.class: Ecommerce\BackendBundle\Form\Handler\AdminUserFormHandler
+    admin.adminmanager.class: Ecommerce\BackendBundle\Form\Handler\AdminUserManager
 
 services:
     category.category_form_handler:
             class: %category.categoryformhandler.class%
             arguments: [@doctrine.orm.entity_manager]
+    admin.admin_user_manager:
+            class: %admin.adminmanager.class%
+            arguments: [@doctrine.orm.entity_manager]
+    admin.admin_user_form_handler:
+            class: %admin.adminformhandler.class%
+            arguments: [@admin.admin_user_manager]

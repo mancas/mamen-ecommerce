@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ecommerce\PaymentBundle\Entity\DataBillingRepository")
  */
 class DataBilling
 {
@@ -39,7 +39,7 @@ class DataBilling
     protected $phone;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $fax;
 
