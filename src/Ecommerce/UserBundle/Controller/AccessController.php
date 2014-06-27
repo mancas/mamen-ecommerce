@@ -60,6 +60,8 @@ class AccessController extends CustomController
                 $em->flush();
                 $this->setTranslatedFlashMessage('Tu cuenta ha sido validada, ya puedes acceder a tu perfil y configurar tus datos.');
 
+                $this->resetToken($user);
+
                 return $this->redirect($this->generateUrl('frontend_homepage'));
             } else {
                 $this->setTranslatedFlashMessage('El código introducido no coincide con el que te hemos mandado.', 'error');

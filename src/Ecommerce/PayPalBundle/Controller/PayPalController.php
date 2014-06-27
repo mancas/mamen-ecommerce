@@ -32,17 +32,17 @@ class PayPalController extends CustomController
     }
 
     /**
-     * @ParamConverter("$booking", class="BookingBundle:Booking")
+     * @ParamConverter("$order", class="OrderBundle:Order")
      */
-    public function payCorrectAction(Booking $booking)
+    public function payCorrectAction(Order $order, Request $request)
     {
+        ldd('ok');
         $em = $this->getEntityManager();
         $user = $this->get('security.context')->getToken()->getUser();
-        $req = $this->getRequest();
-        $payerId = $req->query->get('PayerID');
-        $token = $req->query->get('token');
+        $payerId = $request->query->get('PayerID');
+        $token = $request->query->get('token');
         $result = false;
-        if ($user->isEqualTo($booking->getUser())) {
+        /*if ($user->isEqualTo($booking->getUser())) {
             $this->get('booking.manager')->saveBookingPayPal($booking, $payerId, $token);
             $this->get('bill.manager')->createBill($booking->getPayment());
             $this->get('contract.manager')->createContract($booking->getPayment());
@@ -50,16 +50,17 @@ class PayPalController extends CustomController
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(BookingEvents::BOOKING_STATE_CHANGED, $bookingEvent);
             $result = true;
-        }
+        }*/
 
         return $this->render('PayPalBundle:PayPal:success.html.twig', array('result' => $result));
     }
 
     /**
-     * @ParamConverter("$booking", class="BookingBundle:Booking")
+     * @ParamConverter("$order", class="OrderBundle:Order")
      */
-    public function payDeniedAction(Booking $booking)
+    public function payDeniedAction(Order $order)
     {
+        ldd('bad');
         return $this->render('PayPalBundle:PayPal:wrong.html.twig');
     }
 }

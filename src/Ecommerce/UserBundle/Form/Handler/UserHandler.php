@@ -21,6 +21,13 @@ class UserHandler
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $user = $form->getData();
+                $nif = $user->getNif();
+                if (!$user->checkNIF($nif)) {
+                    $user->setNif(null);
+                    $this->userManager->saveUser($user);
+                    return false;
+                }
+
                 $this->userManager->saveUser($user);
                 return true;
             }

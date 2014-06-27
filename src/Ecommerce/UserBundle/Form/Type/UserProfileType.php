@@ -9,9 +9,10 @@ class UserProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array('required' => true, 'attr' => array('placeholder' => 'Nombre')))
-                ->add('lastName', 'text', array('required' => true, 'attr' => array('placeholder' => 'Apellidos')))
-                ->add('nif', 'text', array('required' => true, 'attr' => array('placeholder' => 'Nif')));
+        $builder->add('name', 'text', array('required' => true))
+                ->add('lastName', 'text', array('required' => true))
+                ->add('nif', 'text', array('required' => true))
+                ->add('phone', 'number', array('required' => true));
     }
 
     public function getDefaultOptions(array $options)

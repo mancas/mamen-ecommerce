@@ -34,7 +34,7 @@ class DataBilling
     protected $address;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $phone;
 
@@ -205,5 +205,9 @@ class DataBilling
         return $this->updated;
     }
 
+    public function isComplete()
+    {
+        return ($this->corporateName && $this->name && $this->phone && $this->email && $this->address);
+    }
 
 }

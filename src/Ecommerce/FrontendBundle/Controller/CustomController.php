@@ -4,6 +4,7 @@ namespace Ecommerce\FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class CustomController extends Controller
 {
@@ -62,5 +63,12 @@ class CustomController extends Controller
         return $this->render($template, array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error' => $error));
+    }
+
+    protected function resetToken($user, $provider = 'user')
+    {
+        $token = new UsernamePasswordToken($user, null, $provider, $user->getRoles());
+        $this->container->get('security.context')->setToken($token);
+        $this->container->get('session')->set("_security_private", serialize($token));
     }
 }

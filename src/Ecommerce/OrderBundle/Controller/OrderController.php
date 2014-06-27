@@ -62,8 +62,8 @@ class OrderController extends CustomController
 
             $orderEvent = new OrderEvent($order);
             $dispatcher->dispatch(OrderEvents::NEW_ORDER, $orderEvent);
-
-            return $this->redirect($this->generateUrl('user_orders'));
+ldd($order);
+            return $this->redirect($this->generateUrl('pay_paypal', array('id' => $order->getId())));
         }
         return $this->render('OrderBundle:Order:new-order.html.twig', array('cart' => $cart,
                                                                             'user' => $user,

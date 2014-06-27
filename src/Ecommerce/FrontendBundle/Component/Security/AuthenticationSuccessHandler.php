@@ -35,14 +35,12 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        if (in_array('ROLE_USER', $token->getUser()->getRoles())) {
-            $user = $token->getUser();
+        $user = $token->getUser();
 
-            if ($user->getValidated()) {
-                $uri = $this->router->generate('user_profile');
-            } else {
-                $uri = $this->router->generate('validate_user');
-            }
+        if (!in_array('ROLE_USER_NOT_VALIDATED', $token->getUser()->getRoles())) {
+            $uri = $this->router->generate('user_profile');
+        } else {
+            $uri = $this->router->generate('validate_user');
         }
 
         return new RedirectResponse($uri);

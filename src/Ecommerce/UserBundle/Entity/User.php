@@ -103,6 +103,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     protected $orders;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $phone;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -230,7 +235,10 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        if ($this->validated)
+            return array('ROLE_USER');
+        else
+            return array('ROLE_USER_NOT_VALIDATED');
     }
 
     /**
@@ -257,12 +265,9 @@ class User implements UserInterface, \Serializable, EquatableInterface
         $this->addresses = $addresses;
     }
 
-    /**
-     * @return mixed
-     */
     public function getAddresses()
     {
-        $addresses = array();
+        /*$addresses = array();
 
         foreach ($this->addresses as $address) {
             if ($address->getDeleted() == null) {
@@ -270,7 +275,8 @@ class User implements UserInterface, \Serializable, EquatableInterface
             }
         }
 
-        return addresses;
+        return addresses;*/
+        return $this->addresses;
     }
 
     public function addAddress(\Ecommerce\LocationBundle\Entity\Address $address)
@@ -410,5 +416,44 @@ class User implements UserInterface, \Serializable, EquatableInterface
     {
         if ($this->orders->contains($order))
             $this->orders->remove($order);
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    function checkNIF($nif)
+    {
+        $str = trim($nif);
+        $str = str_replace("-","",$str);
+        $str = str_ireplace(" ","",$str);
+        $n = substr($str,0,strlen($str)-1);
+        $n = intval($n);
+        if (!is_int($n)) {
+            return false;
+        }
+        $l = substr($str,-1);
+        if (!is_string($l)) {
+            return false;
+        }
+        $letter = substr ("TRWAGMYFPDXBNJZSQVHLCKE", $n%23, 1);
+        if ( strtolower($l) == strtolower($letter)) {
+            return $n.$l;
+        }
+        else {
+            return false;
+        }
     }
 }
