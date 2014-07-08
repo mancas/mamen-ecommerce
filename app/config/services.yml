@@ -3,7 +3,7 @@ services:
         class: Ecommerce\FrontendBundle\Twig\Extension\StockBarExtension
         tags:
             - { name: twig.extension }
-    twig.extension.stockbar:
+    twig.extension.javaScript:
         class: Ecommerce\FrontendBundle\Twig\Extension\JavaScriptExtension
         tags:
             - { name: twig.extension }

@@ -76,6 +76,11 @@ class Order
      */
     protected $payment;
 
+    /**
+     *  @ORM\ManyToOne(targetEntity="Ecommerce\ItemBundle\Entity\Delivery")
+     */
+    protected $delivery;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -217,7 +222,14 @@ class Order
             $total += $orderRow->getPrice();
         }
 
-        return $total;
+        return $total + $this->delivery->getCost();
+    }
+
+    public function getTotalAmountWithoutTaxes()
+    {
+        $price = $this->getTotalAmount();
+
+        return $price - ($price * 0.21);
     }
 
     /**
@@ -251,4 +263,21 @@ class Order
     {
         return $this->payment;
     }
+
+    /**
+     * @param mixed $delivery
+     */
+    public function setDelivery($delivery)
+    {
+        $this->delivery = $delivery;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDelivery()
+    {
+        return $this->delivery;
+    }
+
 }

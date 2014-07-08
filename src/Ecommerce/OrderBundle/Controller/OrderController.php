@@ -7,9 +7,6 @@ use Ecommerce\CartBundle\Event\CartEvents;
 use Ecommerce\FrontendBundle\Controller\CustomController;
 use Ecommerce\OrderBundle\Entity\Order;
 use Ecommerce\OrderBundle\Entity\OrderItem;
-use Ecommerce\OrderBundle\Event\OrderEvent;
-use Ecommerce\OrderBundle\Event\OrderEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends CustomController
@@ -46,12 +43,14 @@ class OrderController extends CustomController
                 $orderItem->setQuantity($cartItem->getQuantity());
                 $orderItem->setPrice($item->getPrice());
                 $order->addItem($orderItem);
+                $item->setStock($item->getStock() - $cartItem->getQuantity());
                 $em->persist($orderItem);
             }
 
             $order->setCustomer($user);
             $order->setDate(new \DateTime('now'));
             $order->setStatus(Order::STATUS_IN_PROCESS);
+            $order->setDelivery(Order::DELIVERY_COST);
 
             $em->persist($order);
             $em->flush();
@@ -60,9 +59,6 @@ class OrderController extends CustomController
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(CartEvents::CLEAR_CART, $cartEvent);
 
-            $orderEvent = new OrderEvent($order);
-            $dispatcher->dispatch(OrderEvents::NEW_ORDER, $orderEvent);
-ldd($order);
             return $this->redirect($this->generateUrl('pay_paypal', array('id' => $order->getId())));
         }
         return $this->render('OrderBundle:Order:new-order.html.twig', array('cart' => $cart,

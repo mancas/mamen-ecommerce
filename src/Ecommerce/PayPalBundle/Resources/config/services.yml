@@ -1,5 +1,5 @@
 parameters:
-    pay_pal.class: Cornerfy\PayPalBundle\PayPal\Paypal
+    pay_pal.class: Ecommerce\PayPalBundle\Paypal\Paypal
 
 services:
     paypal:

@@ -1,0 +1,40 @@
+{% extends "FrontendBundle:Layouts:1column.html.twig" %}
+
+{% block title %}{{ "El pago no se ha realizado correctamente"|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}home page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="line-block mb20">
+                <h2 class="line-title">{{ 'No es culpa tuya, es culpa de Internet' | trans }}</h2>
+            </div>
+
+            <p>
+                {{ 'El pago no se ha completado correctamente. Puedes volver a intentarlo haciendo click' | trans }} <a title="{{ 'Ver pedido' | trans }}" href="">{{ 'aquí' | trans }}</a>
+            </p>
+
+            <p>
+                {{ 'Si el problema persiste, no dudes en escribirnos, estaremos encantados de ayudarte.' | trans }}
+            </p>
+        </div><!-- .col-md-12 -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

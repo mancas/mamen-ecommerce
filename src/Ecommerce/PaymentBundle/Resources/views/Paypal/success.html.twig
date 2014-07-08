@@ -1,0 +1,41 @@
+{% extends "FrontendBundle:Layouts:1column.html.twig" %}
+
+{% block title %}{{ "Tu compra ha finalizado"|trans }}{% endblock %}
+{% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
+{% block sectionclass %}home page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="line-block mb20">
+                <h2 class="line-title">{{ 'Has completado tu pedido correctamente' | trans }}</h2>
+            </div>
+
+            <p>
+                {{ 'Estamos procesando tu pedido, te notificaremos por correo electrónico con cualquier novedad en el estado de tu pedido. También puedes
+                ver toda la información en la sección' | trans }} <a title="{{ 'Mis pedidos' | trans }}" href="{{ path('user_orders') }}">{{ 'Mis pedidos' | trans }}</a>.<br>
+            </p>
+
+            <p>
+                {{ 'Gracias por confiar en Clop Sevilla.' | trans }}
+            </p>
+        </div><!-- .col-md-12 -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

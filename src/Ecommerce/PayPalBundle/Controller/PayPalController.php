@@ -2,6 +2,11 @@
 namespace Ecommerce\PayPalBundle\Controller;
 
 use Ecommerce\FrontendBundle\Controller\CustomController;
+use Ecommerce\OrderBundle\Entity\Order;
+use Ecommerce\OrderBundle\Event\OrderEvent;
+use Ecommerce\OrderBundle\Event\OrderEvents;
+use Ecommerce\PaymentBundle\Entity\Bill;
+use Ecommerce\PayPalBundle\Entity\PaypalPayment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -19,7 +24,7 @@ class PayPalController extends CustomController
         $user = $this->getCurrentUser();
         $paypal = $this->get('paypal');
 
-        $paymentAmount = urlencode(round($order->getTotalAmount(), 2));
+        $paymentAmount = urlencode(round($order->getTotalAmountWithoutTaxes(), 2));
         $desc = urlencode($this->get('translator')->trans(Order::PAYPAL_DESC));
 
         $urlAccept = $this->generateUrl('paypal_pay_correct', array('id' => $order->getId()), true);
@@ -36,23 +41,31 @@ class PayPalController extends CustomController
      */
     public function payCorrectAction(Order $order, Request $request)
     {
-        ldd('ok');
         $em = $this->getEntityManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $payerId = $request->query->get('PayerID');
         $token = $request->query->get('token');
-        $result = false;
-        /*if ($user->isEqualTo($booking->getUser())) {
-            $this->get('booking.manager')->saveBookingPayPal($booking, $payerId, $token);
-            $this->get('bill.manager')->createBill($booking->getPayment());
-            $this->get('contract.manager')->createContract($booking->getPayment());
-            $bookingEvent = new BookingEvent($booking, true);
-            $dispatcher = $this->get('event_dispatcher');
-            $dispatcher->dispatch(BookingEvents::BOOKING_STATE_CHANGED, $bookingEvent);
-            $result = true;
-        }*/
+        $result = true;
 
-        return $this->render('PayPalBundle:PayPal:success.html.twig', array('result' => $result));
+        $dispatcher = $this->get('event_dispatcher');
+        $orderEvent = new OrderEvent($order);
+        $dispatcher->dispatch(OrderEvents::NEW_ORDER, $orderEvent);
+        $payment = new PaypalPayment();
+        $payment->setPayerId($payerId);
+        $payment->setTokenPayPal($token);
+
+        $bill = new Bill();
+        $bill->setPayment($payment);
+        $payment->setBill($bill);
+
+        $payment->setOrder($order);
+        $payment->setTotal($order->getTotalAmount());
+
+        $em->persist($payment);
+        $em->persist($bill);
+        $em->flush();
+
+        return $this->render('PaymentBundle:Paypal:success.html.twig', array('result' => $result));
     }
 
     /**
@@ -60,7 +73,6 @@ class PayPalController extends CustomController
      */
     public function payDeniedAction(Order $order)
     {
-        ldd('bad');
-        return $this->render('PayPalBundle:PayPal:wrong.html.twig');
+        return $this->render('PaymentBundle:Paypal:wrong.html.twig', array('order' => $order));
     }
 }

@@ -47,6 +47,10 @@ admin_manufacturers:
     resource: "@BackendBundle/Resources/config/routing/manufacturer.yml"
     prefix: /manufacturer/
 
+admin_delivery_options:
+    resource: "@BackendBundle/Resources/config/routing/delivery.yml"
+    prefix: /delivery/
+
 admin_recent_orders:
     pattern: /recent-orders
     defaults: { _controller: BackendBundle:Backend:getRecentOrders }

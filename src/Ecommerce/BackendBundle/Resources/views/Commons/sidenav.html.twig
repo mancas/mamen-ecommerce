@@ -51,6 +51,9 @@
                 </li>
             </ul>
         </li>
+        <li class="{% if action == 'admin_delivery_index' or action == 'admin_delivery_create' or action == 'admin_delivery_edit' %}active open{% endif %}">
+            <a href="{{ path('admin_delivery_index') }}"><i class="fa fa-truck"></i> <span>{{ "Opciones de envío"|trans }}</span></a>
+        </li>
         <li class="{% if action == 'admin_billing_settings_index' %}active open{% endif %}">
             <a href="{{ path('admin_billing_settings_index') }}"><i class="fa fa-cogs"></i> <span>{{ "Datos de facturación"|trans }}</span></a>
         </li>

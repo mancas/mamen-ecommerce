@@ -1,6 +1,7 @@
 parameters:
     item.item_form_handler.class: Ecommerce\ItemBundle\Form\Handler\ItemFormHandler
     manufacturer.manufacturer_form_handler.class: Ecommerce\ItemBundle\Form\Handler\ManufacturerFormHandler
+    delivery.delivery_form_handler.class: Ecommerce\ItemBundle\Form\Handler\DeliveryFormHandler
 
 services:
     item.item_form_handler:
@@ -8,4 +9,7 @@ services:
         arguments: [@doctrine.orm.entity_manager]
     manufacturer.manufacturer_form_handler:
             class: %manufacturer.manufacturer_form_handler.class%
+            arguments: [@doctrine.orm.entity_manager]
+    delivery.delivery_form_handler:
+            class: %delivery.delivery_form_handler.class%
             arguments: [@doctrine.orm.entity_manager]
