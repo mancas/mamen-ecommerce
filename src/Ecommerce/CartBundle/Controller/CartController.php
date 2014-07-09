@@ -24,9 +24,26 @@ class CartController extends CustomController
         if ($request->isXmlHttpRequest()) {
             $cartStorageManager = $this->getCartStorageManager();
             $currentCart = $cartStorageManager->getCurrentCart();
-            $cartItem = new CartItem($item->getId(), 1, $item->getPrice());
-            $currentCart->addCartItem($cartItem);
-            $jsonResponse = json_encode(array('ok' => true));
+            $currentCartItem = $currentCart->getCartItemById($item->getId());
+            $quantity = $request->request->get('quantity');
+
+            if (!$quantity)
+                $quantity = 1;
+
+            if (!$currentCartItem) {
+                if ($item->getStock() >= $quantity) {
+                    $cartItem = new CartItem($item->getId(), $quantity, $item->getPrice());
+                    $currentCart->addCartItem($cartItem);
+                    $jsonResponse = json_encode(array('ok' => true));
+                }
+            } else {
+                if ($item->getStock() >= ($currentCartItem->getQuantity() + $quantity)) {
+                    $cartItem = new CartItem($item->getId(), $quantity, $item->getPrice());
+                    $currentCart->addCartItem($cartItem);
+                    $jsonResponse = json_encode(array('ok' => true));
+                }
+            }
+
         }
 
         return $this->getHttpJsonResponse($jsonResponse);

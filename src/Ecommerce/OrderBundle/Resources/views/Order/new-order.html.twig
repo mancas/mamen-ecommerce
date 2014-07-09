@@ -78,11 +78,11 @@
                     <label for="delivery_options_to_home">
                         {{ 'Envio a domicilio' | trans }}
                     </label>
-                    <a href="#" class="clop-tooltip" data-container="body" data-placement="right" data-toggle="tooltip" title="{{ 'Gastos de envío: ' | trans }} {{ delivery_cost }} €"><i class="fa fa-question"></i></a>
+                    <a href="#" class="clop-tooltip" data-container="body" data-placement="right" data-toggle="tooltip" title="{{ 'Esta opción tiene un suplemento de Gastos de envío' | trans }}"><i class="fa fa-question"></i></a>
                 </div>
             </div>
 
-            <div id="address_delivery_block" data-toggle="false" class="row collapse">
+            <div id="address_delivery_block" data-toggle="false" class="row collapse mb20">
                 <div class="col-md-12">
                     <div class="line-block">
                         <h2 class="line-title">{{ 'Dirección de envío' | trans }}</h2>
@@ -115,6 +115,20 @@
                             </tbody>
                         </table>
                     </div><!-- .table-responsive -->
+                </div>
+
+                <div class="col-md-12">
+                    <div class="line-block">
+                        <h2 class="line-title">{{ 'Opciones de envío' | trans }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    {% for deliveryOption in deliveryOptions %}
+                        <div class="form-group col-md-3">
+                            <input id="delivery_option_{{ loop.index0 }}" {% if loop.index0 == 0 %}checked="checked"{% endif %} type="radio" name="delivery_option" value="{{ deliveryOption.id }}">
+                            <label for="delivery_option_{{ loop.index0 }}">{{ deliveryOption.type }}</label> <span>({{ deliveryOption.cost }} <i class="fa fa-euro"></i>)</span>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
 

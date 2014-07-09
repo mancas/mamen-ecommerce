@@ -1,7 +1,9 @@
 <?php
 namespace Ecommerce\ItemBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecommerce\OrderBundle\Entity\Order;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -38,6 +40,16 @@ class Delivery
      * @ORM\Column(name="updated", type="date", nullable=true)
      */
     protected $updated;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ecommerce\OrderBundle\Entity\Order", mappedBy="delivery", cascade={"persist"})
+     */
+    protected $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     /**
      * @param mixed $created
@@ -119,5 +131,31 @@ class Delivery
         return $this->updated;
     }
 
+    /**
+     * @param mixed $orders
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order)
+    {
+        if (!$this->orders->contains($order))
+            $this->orders->add($order);
+    }
+
+    public function removeOrder(Order $order)
+    {
+        if ($this->orders->contains($order))
+            $this->orders->removeElement($order);
+    }
 }

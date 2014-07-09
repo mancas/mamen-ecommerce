@@ -24,6 +24,16 @@
             }
         });
 
+        $('body').on('click', '.add-to-cart-quantity', function(event) {
+            event.preventDefault();
+            var quantity = $('#cart-quantity').val();
+
+            $.post($(this).attr('href'), {'quantity' : quantity}, function (response) {
+                console.info(response);
+                updateCart();
+            });
+        });
+
         function updateCart()
         {
             $.get('{{ path('cart_template') }}', function(response) {

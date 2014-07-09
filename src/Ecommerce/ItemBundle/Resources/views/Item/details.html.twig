@@ -44,8 +44,8 @@
                     </div>
                     {% if item.stock > 0 %}
                     <span>{{ 'Cantidad' | trans }}:</span>
-                    <input type="number" id="cart-quantity" name="quantity" value="1">
-                    <a class="btn btn-blue add-to-cart" href="{{ path('add_to_cart', {'slug':item.slug}) }}" title="{{ 'Añadir al carrito' | trans }}">
+                    <input type="number" id="cart-quantity" name="quantity" value="1" min="1">
+                    <a class="btn btn-blue add-to-cart-quantity" href="{{ path('add_to_cart', {'slug':item.slug}) }}" title="{{ 'Añadir al carrito' | trans }}">
                         <i class="fa fa-shopping-cart"></i>
                         {{ 'Comprar' | trans }}
                     </a>

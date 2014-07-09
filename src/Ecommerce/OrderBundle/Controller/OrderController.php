@@ -21,15 +21,20 @@ class OrderController extends CustomController
         $deliveryHome = Order::DELIVERY_HOME;
         $takeInPlace = Order::TAKE_IN_PLACE;
 
+        $deliveryOptions = $em->getRepository('ItemBundle:Delivery')->findAll();
+
         if ($request->isMethod('POST')) {
             $data = $request->request;
             $address = null;
             if ($request->get('delivery_options') == $deliveryHome) {
                 $address = $em->getRepository('LocationBundle:Address')->findOneById($data->get('delivery_address'));
+                $deliveryOption = $em->getRepository('ItemBundle:Delivery')->findOneById($data->get('delivery_option'));
             }
 
             $order = new Order();
             $order->setAddress($address);
+            $order->setDelivery($deliveryOption);
+            $deliveryOption->addOrder($order);
             if ($data->get('present'))
                 $order->setIsPresent(true);
 
@@ -65,6 +70,7 @@ class OrderController extends CustomController
                                                                             'user' => $user,
                                                                             'delivery_cost' => $deliveryCost,
                                                                             'take_in_place' => $takeInPlace,
-                                                                            'delivery_home' => $deliveryHome));
+                                                                            'delivery_home' => $deliveryHome,
+                                                                            'deliveryOptions' => $deliveryOptions));
     }
 }
