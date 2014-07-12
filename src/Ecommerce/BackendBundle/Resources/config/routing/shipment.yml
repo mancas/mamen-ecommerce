@@ -1,0 +1,15 @@
+admin_shipment_index:
+    pattern: /
+    defaults: { _controller: BackendBundle:Shipment:list }
+
+admin_shipment_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: BackendBundle:Shipment:edit }
+
+admin_shipment_delete:
+    pattern: /delete/{id}
+    defaults: { _controller: BackendBundle:Shipment:delete }
+
+admin_shipment_create:
+    pattern: /create
+    defaults: { _controller: BackendBundle:Shipment:create }

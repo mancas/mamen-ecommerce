@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id="delivery_options_take_in_place" type="radio" name="delivery_options" value="{{ take_in_place }}">
+                    <input id="delivery_options_take_in_place" type="radio" name="delivery_options" checked="checked" value="{{ take_in_place }}">
                     <label for="delivery_options_take_in_place">{{ 'Recoger en tienda' | trans }}</label>
                 </div>
                 <div class="form-group col-md-3">
@@ -123,10 +123,10 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    {% for deliveryOption in deliveryOptions %}
-                        <div class="form-group col-md-3">
-                            <input id="delivery_option_{{ loop.index0 }}" {% if loop.index0 == 0 %}checked="checked"{% endif %} type="radio" name="delivery_option" value="{{ deliveryOption.id }}">
-                            <label for="delivery_option_{{ loop.index0 }}">{{ deliveryOption.type }}</label> <span>({{ deliveryOption.cost }} <i class="fa fa-euro"></i>)</span>
+                    {% for shipmentOption in shipmentOptions %}
+                        <div class="form-group mr15">
+                            <input id="shipment_option_{{ loop.index0 }}" data-cost="{{ shipmentOption.cost }}" {% if loop.index0 == 0 %}checked="checked"{% endif %} type="radio" name="shipment_option" value="{{ shipmentOption.id }}">
+                            <label for="shipment_option_{{ loop.index0 }}">{{ shipmentOption.type }}</label> <span>({{ shipmentOption.cost }} <i class="fa fa-euro"></i>)</span>
                         </div>
                     {% endfor %}
                 </div>
@@ -149,9 +149,29 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="pull-right">
-                    <button type="submit" class="btn btn-success">{{ 'Pagar ahora' }}</button>
+            <div class="row mt50">
+                <div class="col-md-4 col-md-offset-8">
+                    <table class="table">
+                        <tr class="no-lines">
+                            <td colspan="2" class="delivery">
+                                {{ 'Gastos de envío' | trans }}
+                            </td>
+                            <td id="shipment_cost" class="text-right">
+                                0.0 <i class="fa fa-euro"></i>
+                            </td>
+                        </tr>
+                        <tr class="no-lines font-xl">
+                            <td colspan="2" class="total-cart">
+                                <b>{{ 'Total' | trans }}</b>
+                            </td>
+                            <td id="order_total" class="text-right">
+                                {{ cart.cartTotal }} <i class="fa fa-euro"></i>
+                            </td>
+                        </tr>
+                    </table>
+                    <input id="cart_total" type="hidden" value="{{ cart.cartTotal }}">
+
+                    <button type="submit" class="btn btn-success pull-right">{{ 'Pagar ahora' }}</button>
                 </div>
             </div>
         </form>
@@ -173,10 +193,32 @@
 
                 if (value == '{{ delivery_home }}') {
                     $('#address_delivery_block').collapse('show');
+                    var selected_shipment = $("input[type='radio'][name='shipment_option']:checked");
+                    calculateTotal(selected_shipment.attr('data-cost'));
                 } else {
                     $('#address_delivery_block').collapse('hide');
+                    calculateTotal(0.0);
                 }
             });
+
+            $('body').on('change', 'input[name="shipment_option"]', function() {
+                var shipment = $(this).attr('data-cost');
+                calculateTotal(shipment);
+            });
+
+            function calculateTotal(shipment)
+            {
+                console.info(shipment);
+                var shipment_cost = $('#shipment_cost');
+                var order_total = $('#order_total');
+                var total = $('#cart_total').val();
+                var euro = "<i class=\"fa fa-euro\"></i>";
+
+                total =  parseFloat(total) + parseFloat(shipment);
+                console.info(total);
+                shipment_cost.html(shipment + ' ' + euro);
+                order_total.html(total + euro);
+            }
         });
     </script>
 {% endblock %}

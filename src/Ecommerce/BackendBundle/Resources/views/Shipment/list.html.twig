@@ -10,12 +10,12 @@
 
 {% block content %}
     <div class="row">
-        <a href="{{ path('admin_delivery_create') }}" class="btn btn-success">
+        <a href="{{ path('admin_shipment_create') }}" class="btn btn-success">
             <i class="fa fa-plus"></i> {{ "Crear nueva opción de envío" | trans }}
         </a>
     </div>
 
-    {% if deliveryOptions | length > 0 %}
+    {% if shipmentOptions | length > 0 %}
         <div class="widget-box">
             <div class="widget-title">
             <span class="icon">
@@ -33,13 +33,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for deliveryOption in deliveryOptions %}
+                    {% for shipmentOption in shipmentOptions %}
                         <tr>
-                            <td><a title="Modificar" href="{{ path('admin_delivery_edit', { 'id': deliveryOption.id }) }}">{{ deliveryOption.type }}</a></td>
-                            <td>{{ deliveryOption.cost }} <i class="fa fa-euro"></i></td>
+                            <td><a title="Modificar" href="{{ path('admin_shipment_edit', { 'id': shipmentOption.id }) }}">{{ shipmentOption.type }}</a></td>
+                            <td>{{ shipmentOption.cost }} <i class="fa fa-euro"></i></td>
                             <td class="text-center">
-                                <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_delivery_edit', { 'id': deliveryOption.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
-                                <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_delivery_delete', { 'id': deliveryOption.id }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
+                                <a title="Modificar" class="btn btn-primary btn-xs" href="{{ path('admin_shipment_edit', { 'id': shipmentOption.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
+                                <a title="Borrar" class="delete btn btn-danger btn-xs" href="{{ path('admin_shipment_delete', { 'id': shipmentOption.id }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

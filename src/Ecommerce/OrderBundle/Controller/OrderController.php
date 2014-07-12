@@ -21,20 +21,23 @@ class OrderController extends CustomController
         $deliveryHome = Order::DELIVERY_HOME;
         $takeInPlace = Order::TAKE_IN_PLACE;
 
-        $deliveryOptions = $em->getRepository('ItemBundle:Delivery')->findAll();
+        $shipmentOptions = $em->getRepository('ItemBundle:Shipment')->findAllShipmentOptions();
 
         if ($request->isMethod('POST')) {
             $data = $request->request;
             $address = null;
             if ($request->get('delivery_options') == $deliveryHome) {
                 $address = $em->getRepository('LocationBundle:Address')->findOneById($data->get('delivery_address'));
-                $deliveryOption = $em->getRepository('ItemBundle:Delivery')->findOneById($data->get('delivery_option'));
+                $shipmentOption = $em->getRepository('ItemBundle:Shipment')->findOneById($data->get('shipment_option'));
+            } else {
+                $shipmentOption = $em->getRepository('ItemBundle:Shipment')->findNotShipment();
+                $shipmentOption = $shipmentOption[0];
             }
 
             $order = new Order();
             $order->setAddress($address);
-            $order->setDelivery($deliveryOption);
-            $deliveryOption->addOrder($order);
+            $order->setShipment($shipmentOption);
+            $shipmentOption->addOrder($order);
             if ($data->get('present'))
                 $order->setIsPresent(true);
 
@@ -50,12 +53,12 @@ class OrderController extends CustomController
                 $order->addItem($orderItem);
                 $item->setStock($item->getStock() - $cartItem->getQuantity());
                 $em->persist($orderItem);
+                $em->persist($item);
             }
 
             $order->setCustomer($user);
             $order->setDate(new \DateTime('now'));
             $order->setStatus(Order::STATUS_IN_PROCESS);
-            $order->setDelivery(Order::DELIVERY_COST);
 
             $em->persist($order);
             $em->flush();
@@ -71,6 +74,6 @@ class OrderController extends CustomController
                                                                             'delivery_cost' => $deliveryCost,
                                                                             'take_in_place' => $takeInPlace,
                                                                             'delivery_home' => $deliveryHome,
-                                                                            'deliveryOptions' => $deliveryOptions));
+                                                                            'shipmentOptions' => $shipmentOptions));
     }
 }

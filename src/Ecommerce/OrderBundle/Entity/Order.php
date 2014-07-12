@@ -77,9 +77,9 @@ class Order
     protected $payment;
 
     /**
-     *  @ORM\ManyToOne(targetEntity="Ecommerce\ItemBundle\Entity\Delivery")
+     *  @ORM\ManyToOne(targetEntity="Ecommerce\ItemBundle\Entity\Shipment")
      */
-    protected $delivery;
+    protected $shipment;
 
     public function __construct()
     {
@@ -222,7 +222,7 @@ class Order
             $total += $orderRow->getPrice();
         }
 
-        return $total + $this->delivery->getCost();
+        return $total + $this->shipment->getCost();
     }
 
     public function getTotalAmountWithoutTaxes()
@@ -265,19 +265,19 @@ class Order
     }
 
     /**
-     * @param mixed $delivery
+     * @param mixed $shipment
      */
-    public function setDelivery($delivery)
+    public function setShipment($shipment)
     {
-        $this->delivery = $delivery;
+        $this->shipment = $shipment;
     }
 
     /**
      * @return mixed
      */
-    public function getDelivery()
+    public function getShipment()
     {
-        return $this->delivery;
+        return $this->shipment;
     }
 
 }

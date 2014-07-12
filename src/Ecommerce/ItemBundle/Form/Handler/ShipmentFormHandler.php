@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Ecommerce\ItemBundle\Entity\Delivery;
 
-class DeliveryFormHandler
+class ShipmentFormHandler
 {
     private $em;
 
@@ -21,8 +21,8 @@ class DeliveryFormHandler
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $delivery = $form->getData();
-                $this->em->persist($delivery);
+                $shipment = $form->getData();
+                $this->em->persist($shipment);
                 $this->em->flush();
                 return true;
             }

@@ -66,7 +66,7 @@
                                         {{ 'Gastos de envío' | trans }}
                                     </td>
                                     <td>
-                                        2.99 <i class="fa fa-euro"></i>
+                                        {{ order.shipment.cost }} <i class="fa fa-euro"></i>
                                     </td>
                                 </tr>
                                 <tr class="no-lines">
@@ -126,7 +126,7 @@
 
                     {% else %}
                         <p>{{ 'Este pedido aún no ha sido pagado.' | trans }}</p>
-                        <a href="" class="btn btn-success" title="{{ 'Pagar' | trans }}">{{ 'Pagar ahora' | trans }}</a>
+                        <a href="{{ path('pay_paypal', {'id' : order.id}) }}" class="btn btn-success" title="{{ 'Pagar' | trans }}">{{ 'Pagar ahora' | trans }}</a>
                     {% endif %}
                 </div>
             </div>

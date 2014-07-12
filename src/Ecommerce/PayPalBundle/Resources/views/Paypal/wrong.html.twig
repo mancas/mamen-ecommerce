@@ -20,7 +20,7 @@
             </div>
 
             <p>
-                {{ 'El pago no se ha completado correctamente. Puedes volver a intentarlo haciendo click' | trans }} <a title="{{ 'Ver pedido' | trans }}" href="">{{ 'aquí' | trans }}</a>
+                {{ 'El pago no se ha completado correctamente. Puedes volver a intentarlo haciendo click' | trans }} <a title="{{ 'Pagar ahora' | trans }}" href="{{ path('pay_paypal', {'id' : order.id}) }}">{{ 'aquí' | trans }}</a>
             </p>
 
             <p>

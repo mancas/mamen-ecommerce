@@ -8,9 +8,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ecommerce\ItemBundle\Entity\ShipmentRepository")
  */
-class Delivery
+class Shipment
 {
     /**
      * @ORM\Id
@@ -42,7 +42,7 @@ class Delivery
     protected $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ecommerce\OrderBundle\Entity\Order", mappedBy="delivery", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Ecommerce\OrderBundle\Entity\Order", mappedBy="shipment", cascade={"persist"})
      */
     protected $orders;
 

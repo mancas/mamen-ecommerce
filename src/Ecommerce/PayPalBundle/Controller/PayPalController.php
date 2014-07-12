@@ -65,7 +65,7 @@ class PayPalController extends CustomController
         $em->persist($bill);
         $em->flush();
 
-        return $this->render('PaymentBundle:Paypal:success.html.twig', array('result' => $result));
+        return $this->render('PayPalBundle:Paypal:success.html.twig', array('result' => $result));
     }
 
     /**
@@ -73,6 +73,6 @@ class PayPalController extends CustomController
      */
     public function payDeniedAction(Order $order)
     {
-        return $this->render('PaymentBundle:Paypal:wrong.html.twig', array('order' => $order));
+        return $this->render('PayPalBundle:Paypal:wrong.html.twig', array('order' => $order));
     }
 }

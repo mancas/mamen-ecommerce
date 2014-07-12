@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DeliveryType extends AbstractType
+class ShipmentType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ class DeliveryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'        => 'Ecommerce\ItemBundle\Entity\Delivery',
+            'data_class'        => 'Ecommerce\ItemBundle\Entity\Shipment',
         ));
     }
 
@@ -33,6 +33,6 @@ class DeliveryType extends AbstractType
      */
     public function getName()
     {
-        return 'delivery';
+        return 'shipment';
     }
 }
