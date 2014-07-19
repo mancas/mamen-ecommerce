@@ -5,14 +5,20 @@ parameters:
     category.categoryformhandler.class: Ecommerce\BackendBundle\Form\Handler\CategoryFormHandler
     admin.adminformhandler.class: Ecommerce\BackendBundle\Form\Handler\AdminUserFormHandler
     admin.adminmanager.class: Ecommerce\BackendBundle\Form\Handler\AdminUserManager
+    admin.create_salt.class: Ecommerce\BackendBundle\EventListener\RegisterAdminEventSubscriber
 
 services:
     category.category_form_handler:
-            class: %category.categoryformhandler.class%
-            arguments: [@doctrine.orm.entity_manager]
+        class: %category.categoryformhandler.class%
+        arguments: [@doctrine.orm.entity_manager]
     admin.admin_user_manager:
-            class: %admin.adminmanager.class%
-            arguments: [@doctrine.orm.entity_manager]
+        class: %admin.adminmanager.class%
+        arguments: [@doctrine.orm.entity_manager]
     admin.admin_user_form_handler:
-            class: %admin.adminformhandler.class%
-            arguments: [@admin.admin_user_manager]
+        class: %admin.adminformhandler.class%
+        arguments: [@admin.admin_user_manager]
+    admin.create_salt_listener:
+        class: %admin.create_salt.class%
+        arguments: [@security.encoder_factory]
+        tags:
+            - { name: doctrine.event_subscriber }

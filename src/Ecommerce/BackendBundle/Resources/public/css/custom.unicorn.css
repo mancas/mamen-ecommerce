@@ -148,3 +148,8 @@ i {
     border-radius: 4px;
     text-shadow: none;
 }
+
+.alert-inline {
+    margin-bottom: 0px;
+    display: inline-block;
+}

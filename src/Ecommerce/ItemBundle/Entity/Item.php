@@ -22,6 +22,7 @@ class Item
     const LOW_STOCK = 10;
     const MEDIUM_STOCK = 50;
     const HIGH_STOCK = 100;
+    const TAX_ES = 21;
 
     /**
      * @ORM\Id
@@ -42,7 +43,7 @@ class Item
     protected $description;
 
     /**
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
      */
     protected $price;
 
@@ -90,6 +91,11 @@ class Item
      * @ORM\Column(type="integer")
      */
     protected $stock = 1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Ecommerce\ItemBundle\Entity\Tax", inversedBy="items")
+     */
+    protected $tax;
 
     public function __construct()
     {
@@ -222,7 +228,7 @@ class Item
      */
     public function getPrice()
     {
-        return $this->price;
+        return round($this->price + $this->price * (self::TAX_ES/100), 2);
     }
 
     /**

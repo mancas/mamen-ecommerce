@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\Collection;
  */
 class AdminUser implements UserInterface, \Serializable, EquatableInterface
 {
+    const AUTH_SALT = "R4y0d3Lu24b1sMa7";
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

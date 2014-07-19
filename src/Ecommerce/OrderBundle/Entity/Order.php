@@ -4,6 +4,7 @@ namespace Ecommerce\OrderBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecommerce\ItemBundle\Entity\Item;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -228,8 +229,9 @@ class Order
     public function getTotalAmountWithoutTaxes()
     {
         $price = $this->getTotalAmount();
+        $price = $price - ($price * Item::TAX_ES/100);
 
-        return $price - ($price * 0.21);
+        return round($price, 2);
     }
 
     /**

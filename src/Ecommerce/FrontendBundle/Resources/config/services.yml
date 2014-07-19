@@ -1,8 +1,8 @@
 parameters:
-    security.authentication.success_handler.class: Ecommerce\FrontendBundle\Component\Security\AuthenticationSuccessHandler
+    clop.security.authentication.success_handler.class: Ecommerce\FrontendBundle\Component\Security\AuthenticationSuccessHandler
 
 services:
-    security.authentication.success_handler:
-        class: %security.authentication.success_handler.class%
+    clop.security.authentication.success_handler:
+        class: %clop.security.authentication.success_handler.class%
         public: false
         arguments:  ['@router']

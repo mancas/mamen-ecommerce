@@ -24,7 +24,7 @@ class PayPalController extends CustomController
         $user = $this->getCurrentUser();
         $paypal = $this->get('paypal');
 
-        $paymentAmount = urlencode(round($order->getTotalAmountWithoutTaxes(), 2));
+        $paymentAmount = urlencode(round($order->getTotalAmount(), 2));
         $desc = urlencode($this->get('translator')->trans(Order::PAYPAL_DESC));
 
         $urlAccept = $this->generateUrl('paypal_pay_correct', array('id' => $order->getId()), true);

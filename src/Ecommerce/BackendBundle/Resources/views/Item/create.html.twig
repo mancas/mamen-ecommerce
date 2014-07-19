@@ -110,6 +110,9 @@
 
     <script>
         $(document).ready(function() {
+            var taxNotIncluded = '{{ 'IVA no incluido' | trans }}';
+            var taxIncluded = '{{ 'IVA incluido' | trans }}';
+
             $('body').delegate('.upload-image', 'click', function (event) {
                 event.preventDefault();
                 $('input[type=file]').click();
@@ -145,6 +148,18 @@
             });
 
             $('.select2').select2();
+
+            $('#item_price').on('keyup', function(evt) {
+                var price = parseFloat($(this).val());
+                var tax = 0.21;
+                var info_element = $('#tax-price');
+
+                if (isNaN(price)) {
+                    info_element.text(taxNotIncluded);
+                } else {
+                    info_element.html((price + (price * tax)).toFixed(2) + '<i class="fa fa-euro"></i> ' + taxIncluded);
+                }
+            });
         });
     </script>
 {% endblock %}
