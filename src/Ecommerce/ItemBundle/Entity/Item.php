@@ -228,7 +228,13 @@ class Item
      */
     public function getPrice()
     {
-        return round($this->price + $this->price * (self::TAX_ES/100), 2);
+        return $this->price;
+        //return round($this->price + $this->price * (self::TAX_ES/100), 2);
+    }
+
+    public function getPriceWithoutTaxes()
+    {
+        return $this->price;
     }
 
     /**

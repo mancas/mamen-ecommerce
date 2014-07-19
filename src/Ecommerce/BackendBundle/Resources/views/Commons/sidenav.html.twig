@@ -44,7 +44,7 @@
                     <a href="{{ path('admin_order_index') }}"><i class="fa fa-shopping-cart"></i><span>{{ "Pedidos"|trans }}</span></a>
                 </li>
                 <li {% if action == 'admin_payment_index' %}class="active"{% endif %}>
-                    <a href=""><i class="fa fa-credit-card"></i><span>{{ "Pagos"|trans }}</span></a>
+                    <a href="{{ path('admin_payment_index') }}"><i class="fa fa-credit-card"></i><span>{{ "Pagos"|trans }}</span></a>
                 </li>
                 <li {% if action == 'admin_bill_index' %}class="active"{% endif %}>
                     <a href=""><i class="fa fa-file-text-o"></i><span>{{ "Facturas"|trans }}</span></a>

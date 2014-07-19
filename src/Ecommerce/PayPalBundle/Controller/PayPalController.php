@@ -25,12 +25,14 @@ class PayPalController extends CustomController
         $paypal = $this->get('paypal');
 
         $paymentAmount = urlencode(round($order->getTotalAmount(), 2));
+
+        $deliveryAmount = urlencode($order->getShipment()->getCost());
         $desc = urlencode($this->get('translator')->trans(Order::PAYPAL_DESC));
 
         $urlAccept = $this->generateUrl('paypal_pay_correct', array('id' => $order->getId()), true);
         $urlCancel = $this->generateUrl('paypal_pay_denied', array('id' => $order->getId()), true);
 
-        $response = $paypal->pay($paymentAmount, $desc, $urlAccept, $urlCancel);
+        $response = $paypal->pay($paymentAmount, $deliveryAmount, $desc, $urlAccept, $urlCancel);
         $url = $response['url'];
 
         return $this->redirect($url);
@@ -60,7 +62,9 @@ class PayPalController extends CustomController
 
         $payment->setOrder($order);
         $payment->setTotal($order->getTotalAmount());
+        $order->setPayment($payment);
 
+        $em->persist($order);
         $em->persist($payment);
         $em->persist($bill);
         $em->flush();

@@ -1,0 +1,63 @@
+{% extends "BackendBundle:Layouts:2columns.html.twig" %}
+
+{% block title_section %}
+    {{ "Listado de pagos" | trans }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% if payments | length > 0 %}
+        <div class="widget-box">
+            <div class="widget-title">
+            <span class="icon">
+                <i class="fa fa-th"></i>
+            </span>
+                <h5>{{ "Listado de pagos"|trans }}</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ "Identificador del pago"|trans }}</th>
+                        <th>{{ "Fecha"|trans }}</th>
+                        <th>{{ "Cliente"|trans }}</th>
+                        <th>{{ "Nº de pedido"|trans }}</th>
+                        <th>{{ "Cantidad"|trans }}</th>
+                        <th>{{ "Acciones"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.id }}</td>
+                            <td>{{ payment.created | date('d-m-Y') }}</td>
+                            <td><a href="{{ path('admin_user_view', {'id':payment.order.customer.id}) }}" title="{{ 'Ver cliente' | trans }}">{{ payment.order.customer.name }}</a></td>
+                            <td><a title="Ver" href="{{ path('admin_order_view', {'id':payment.order.id}) }}">{{ payment.order.id }}</a></td>
+                            <td>{{ payment.total }} <i class="fa fa-euro"></i></td>
+                            <td class="text-center">
+                                <a title="{{ 'Ver pedido completo' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_order_view', {'id':payment.order.id}) }}"><i class="fa fa-eye"></i>{{ 'Ver pedido' | trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info mt">
+            <strong>{{"Información!" | trans }}</strong>
+            {{"No se ha encontrado ningún registro" | trans }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

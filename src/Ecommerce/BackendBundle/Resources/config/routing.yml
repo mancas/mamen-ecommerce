@@ -51,6 +51,10 @@ admin_shipment_options:
     resource: "@BackendBundle/Resources/config/routing/shipment.yml"
     prefix: /shipment/
 
+admin_payments:
+    resource: "@BackendBundle/Resources/config/routing/payment.yml"
+    prefix: /payment/
+
 admin_recent_orders:
     pattern: /recent-orders
     defaults: { _controller: BackendBundle:Backend:getRecentOrders }

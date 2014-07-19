@@ -75,7 +75,7 @@
                     <tbody>
                     {% for order in orders %}
                         <tr>
-                            <td><a title="Ver" href="">{{ order.id }}</a></td>
+                            <td><a title="Ver" href="{{ path('admin_order_view', {'id':order.id}) }}">{{ order.id }}</a></td>
                             <td>{{ order.date | date('d-m-Y') }}</td>
                             <td><a href="{{ path('admin_user_view', {'id':order.customer.id}) }}" title="{{ 'Ver cliente' | trans }}">{{ order.customer.name }}</a></td>
                             <td>{{ order.items | length }}</td>
@@ -85,6 +85,7 @@
                             <td>{% if order.payment is not null %}{{ 'Sí' | trans }}{% else %}{{ 'No' | trans }}{% endif %}</td>
                             <td>{{ order.totalAmount }} <i class="fa fa-euro"></i></td>
                             <td class="text-center">
+                                {% if order.payment is not null %}
                                     {% if order.address is not null and order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
                                         <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_send', {'id':order.id}) }}"><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
                                         <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}" class="btn btn-dark-red btn-xs" href="{{ path('admin_order_out_of_stock', {'id':order.id}) }}"><i class="fa fa-warning"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') | trans }}</a>
@@ -95,6 +96,7 @@
                                             <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_send', {'id':order.id}) }}"><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
                                         {% endif %}
                                     {% endif %}
+                                {% endif %}
                                 <a title="{{ 'Ver detalles' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_order_view', {'id':order.id}) }}"><i class="fa fa-eye"></i>{{ 'Detalles' | trans }}</a>
                                 <a title="{{ 'Eliminar' | trans }}" class="delete btn btn-danger btn-xs" href=""><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             </td>

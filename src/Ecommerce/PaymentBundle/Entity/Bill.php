@@ -18,7 +18,7 @@ class Bill
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Ecommerce\PaymentBundle\Entity\Payment", mappedBy="bill")
+     * @ORM\OneToOne(targetEntity="Ecommerce\PaymentBundle\Entity\Payment", inversedBy="bill")
      */
     protected $payment;
 

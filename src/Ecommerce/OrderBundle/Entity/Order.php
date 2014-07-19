@@ -78,7 +78,7 @@ class Order
     protected $payment;
 
     /**
-     *  @ORM\ManyToOne(targetEntity="Ecommerce\ItemBundle\Entity\Shipment")
+     *  @ORM\ManyToOne(targetEntity="Ecommerce\ItemBundle\Entity\Shipment", inversedBy="orders")
      */
     protected $shipment;
 
@@ -223,7 +223,7 @@ class Order
             $total += $orderRow->getPrice();
         }
 
-        return $total + $this->shipment->getCost();
+        return $total;
     }
 
     public function getTotalAmountWithoutTaxes()

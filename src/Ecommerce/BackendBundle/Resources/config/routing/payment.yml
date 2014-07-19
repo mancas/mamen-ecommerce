@@ -1,0 +1,3 @@
+admin_payment_index:
+    pattern: /
+    defaults: { _controller: BackendBundle:Payment:list }
