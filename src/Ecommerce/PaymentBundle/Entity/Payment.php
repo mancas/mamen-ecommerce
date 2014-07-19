@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Payment
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ecommerce\PaymentBundle\Entity\PaymentRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"transfer"="Ecommerce\PaymentBundle\Entity\Transfer", "paypal"="Ecommerce\PayPalBundle\Entity\PaypalPayment"})

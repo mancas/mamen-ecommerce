@@ -15,7 +15,7 @@ class ShipmentController extends CustomController
     public function listAction(Request $request)
     {
         $em = $this->getEntityManager();
-        $shipmentOptions = $em->getRepository("ItemBundle:Shipment")->findAll();
+        $shipmentOptions = $em->getRepository("ItemBundle:Shipment")->findAllShipmentOptions();
 
         return $this->render('BackendBundle:Shipment:list.html.twig', array('shipmentOptions' => $shipmentOptions));
     }

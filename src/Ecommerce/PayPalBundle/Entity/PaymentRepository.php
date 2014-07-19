@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecommerce\ItemBundle\Entity;
+namespace Ecommerce\PaymentBundle\Entity;
 
 use Ecommerce\FrontendBundle\Entity\CustomEntityRepository;
 use Doctrine\ORM\Query\Expr;
@@ -8,20 +8,29 @@ use Doctrine\ORM\Query;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 
-class ShipmentRepository extends CustomEntityRepository
+class PaymentRepository extends CustomEntityRepository
 {
     protected $specialFields = array();
 
-    public function findAllShipmentOptions($limit = null)
+    public function findPaymentsByMonth($date, $limit = null)
     {
-        $qb = $this->createQueryBuilder('s');
-        $qb->select('s');
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p');
 
-        $qb->addOrderBy('s.cost','ASC');
+        if (is_string($date)) {
+            $date = new \DateTime($date);
+        }
+
+        $dateFrom = $date;
+        $dateTo = $date;
+        $dateFrom->modify('first day of this month');
+        $dateTo->modify('last day of this month');
+ldd($dateFrom, $dateTo);
+        $qb->addOrderBy('p.created','ASC');
 
         $and = $qb->expr()->andx();
 
-        $and->add($qb->expr()->neq('s.cost', 0.0));
+        $and->add($qb->expr()->gte('p.created', '\''.$date->format('Y-m-d H:i:s').'\''));
 
         $qb->andWhere($and);
 
