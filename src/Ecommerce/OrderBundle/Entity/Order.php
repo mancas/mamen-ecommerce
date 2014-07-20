@@ -53,6 +53,12 @@ class Order
     protected $date;
 
     /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated", type="datetime", nullable=true)
+     */
+    protected $updated;
+
+    /**
      * @ORM\OneToMany(targetEntity="Ecommerce\OrderBundle\Entity\OrderItem", mappedBy="order", cascade={"persist"})
      */
     protected $items;
@@ -282,4 +288,19 @@ class Order
         return $this->shipment;
     }
 
+    /**
+     * @param mixed $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 }

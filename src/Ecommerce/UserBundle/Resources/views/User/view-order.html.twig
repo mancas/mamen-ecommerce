@@ -123,11 +123,47 @@
 
                 <div class="box">
                     {% if order.payment is not null %}
-
+                        <p>{{ 'Este pedido fue pagado el' | trans }} <b>{{ order.payment.created | date('d-m-y') }}</b> {{ 'mediante PayPal.'  | trans }}</p>
                     {% else %}
                         <p>{{ 'Este pedido aún no ha sido pagado.' | trans }}</p>
                         <a href="{{ path('pay_paypal', {'id' : order.id}) }}" class="btn btn-success" title="{{ 'Pagar' | trans }}">{{ 'Pagar ahora' | trans }}</a>
                     {% endif %}
+                </div>
+
+                <div class="line-block mt20 mb20">
+                    <h3 class="line-title">{{ 'Detalles del pedido' | trans }}</h3>
+                </div>
+                <div class="box">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Acción' | trans }}</th>
+                            <th>{{ 'Fecha' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                            {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
+                                {{ 'El pedido se esta procesando' | trans }}
+                            {% else %}
+                                {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') %}
+                                    {{ 'Ya puedes recoger el pedido en nuestra tienda' | trans }}
+                                {% else %}
+                                    {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') %}
+                                        {{ 'Nos hemos quedado sin stock de este producto, te lo enviaremos tan pronto como nos sea posible. Disculpa las molestias' | trans }}
+                                    {% else %}
+                                        {{ 'Ya hemos enviado tu pedido. Esperamos que lo disfrutes' | trans }}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            </td>
+                            <td>
+                                {{ order.updated | date('d-m-y') }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

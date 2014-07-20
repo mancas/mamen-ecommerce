@@ -38,6 +38,9 @@
                 <div class="form-group">
                     {{ form_widget(form.status, { 'attr': { 'class': 'form-control'} }) }}
                 </div>
+                <div class="form-group">
+                    {{ form_widget(form.shipment, { 'attr': { 'class': 'form-control'} }) }}
+                </div>
                 <div class="checkbox mr15">
                     {{ form_widget(form.payment, { 'attr': { 'class': 'form-control'} }) }}
                     <label for="form_search_order_payment">{{ 'Pagado' | trans }}</label>
@@ -93,7 +96,9 @@
                                         {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_IN_PROCESS') %}
                                             <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_ready_to_take', {'id':order.id}) }}"><i class="fa fa-archive"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_READY_TO_TAKE') | trans }}</a>
                                         {% else %}
-                                            <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_send', {'id':order.id}) }}"><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
+                                            {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_OUT_OF_STOCK') %}
+                                                <a title="{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_order_send', {'id':order.id}) }}"><i class="fa fa-truck"></i>{{ constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') | trans }}</a>
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}

@@ -43,7 +43,7 @@
                                     <a title="{{ 'Validar' | trans }}" class="btn btn-dark-green btn-xs" href="{{ path('admin_user_validate', { 'id': user.id }) }}"><i class="fa fa-check"></i>{{ 'Validar' | trans }}</a>
                                 {% endif %}
                                 <a title="{{ 'Ver detalles' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_user_view', { 'id': user.id }) }}"><i class="fa fa-eye"></i>{{ 'Ver' | trans }}</a>
-                                <a title="{{ 'Modificar' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>
+                                {#<a title="{{ 'Modificar' | trans }}" class="btn btn-primary btn-xs" href="{{ path('admin_user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil"></i>{{ 'Editar' | trans }}</a>#}
                                 <a title="{{ 'Eliminar' | trans }}" class="delete btn btn-danger btn-xs" href="{{ path('admin_user_delete', { 'id': user.id }) }}"><i class="fa fa-trash-o"></i>{{ 'Eliminar' | trans }}</a>
                             {% endif %}
                         </td>

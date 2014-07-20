@@ -66,6 +66,8 @@
                         <span>{{ 'No has realizado ningún pedido' | trans }}</span>
                     {% endif %}
                 </div>
+
+                {{ simple_paginator_render('user_orders', 'user_orders', {'container_class' : 'pagination', 'currentClass' : 'active'}, 'ItemBundle:Commons:paginator.html.twig') }}
             </div>
         </div>
     </div>

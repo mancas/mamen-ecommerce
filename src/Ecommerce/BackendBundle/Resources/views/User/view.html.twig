@@ -18,12 +18,74 @@
             </div>
             <div class="widget-content nopadding">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h2>{{ user.name }} {{ user.lastName }}</h2>
-                    </div>
+                    <div class="col-sm-6">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                            <span class="icon">
+                                <i class="fa fa-user"></i>
+                            </span>
+                                <h5>{{ 'Direcciones de' | trans }} {{ user.name }} {{ user.lastName }}</h5>
+                            </div>
 
-                    TODO
-                </div>
+                            <div class="widget-content nopadding">
+                                {% if user.addresses | length > 0 %}
+                                    {{ render(controller("UserBundle:User:adressList", {'user' : user, 'admin' : true})) }}
+                                {% else %}
+                                    <div class="alert alert-block alert-warning" style="margin-bottom: 0">
+                                        <p>{{ 'Este usuario no tiene ninguna dirección de envío' | trans }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div><!-- .widget-box -->
+                    </div><!-- .col-sm-6 -->
+                    <div class="col-sm-6">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                            <span class="icon">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </span>
+                                <h5>{{ "Actividad en Clop"|trans }}</h5>
+                            </div>
+
+                            <div class="widget-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="site-stats">
+                                            <li>
+                                                <div class="cc">
+                                                    <i class="fa fa-book"></i>
+                                                    <small>{{ 'El' | trans }}</small>
+                                                    <strong>{{ user.registeredDate | date('d-m-Y') }} </strong>
+                                                    <small>{{ 'se registró' | trans }}</small>
+                                                </div>
+                                            </li>
+
+                                            <li class="divider"></li>
+
+                                            <li>
+                                                <div class="cc">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                    <strong>{{ user.orders | length }} </strong>
+                                                    <small>{% if user.orders | length > 1 %}{{ 'pedidos realizados' | trans }}{% else %}{{ 'pedido realizado' | trans }}{% endif %}</small>
+                                                </div>
+                                            </li>
+
+                                            <li class="divider"></li>
+
+                                            <li>
+                                                <div class="cc">
+                                                    <i class="fa fa-euro"></i>
+                                                    <strong>{{ user.getTotalSpend }}</strong>
+                                                    <small>{{ 'euros gastados en total' | trans }}</small>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .widget-box -->
+                    </div><!-- .col-sm-6 -->
+                </div><!-- .row -->
             </div>
         </div>
 {% endblock %}

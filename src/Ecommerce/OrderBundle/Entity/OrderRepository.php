@@ -35,10 +35,15 @@ class OrderRepository extends CustomEntityRepository
             $qb->andWhere($qb->expr()->eq('o.status', '\''.$criteria['status'].'\''));
         }
 
+        if (isset($criteria['shipment'])) {
+            $qb->leftJoin('o.shipment', 's');
+            $qb->andWhere($qb->expr()->eq('s.id', '\''.$criteria['shipment']->getId().'\''));
+        }
+
         return $qb->getQuery()->getResult();
     }
 
-    public function findOrdersByUserEmail($userEmail, $limit = null)
+    public function findOrdersByUserEmailDQL($userEmail, $limit = null)
     {
         $qb = $this->createQueryBuilder('o');
         $qb->select('o');
@@ -56,7 +61,12 @@ class OrderRepository extends CustomEntityRepository
             $qb->setMaxResults($limit);
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery();
+    }
+
+    public function findOrdersByUserEmail($userEmail, $limit = null)
+    {
+        return $this->findOrdersByUserEmailDQL($userEmail, $limit)->getResult();
     }
 
     public function findOrdersResume($limit = null)

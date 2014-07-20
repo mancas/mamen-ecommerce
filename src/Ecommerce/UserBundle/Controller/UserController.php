@@ -42,13 +42,16 @@ class UserController extends CustomController
         if (!$user->getValidated()) {
             return $this->redirect($this->generateUrl('validate_user'));
         }
-        $orders = $em->getRepository('OrderBundle:Order')->findOrdersByUserEmail($user->getEmail());
+
+        $paginator = $this->get('ideup.simple_paginator');
+        $paginator->setItemsPerPage(15, 'user_orders');
+        $orders = $paginator->paginate($em->getRepository('OrderBundle:Order')->findOrdersByUserEmailDQL($user->getEmail()), 'user_orders')->getResult();
 
         if (!$user->isProfileComplete()) {
             $this->setTranslatedFlashMessage('Recuerda rellenar tus datos personales para poder realizar compras');
         }
 
-        return $this->render('UserBundle:User:orders.html.twig', array('user' => $user, 'orders' => $orders));
+        return $this->render('UserBundle:User:orders.html.twig', array('user' => $user, 'orders' => $orders, 'paginator' => $paginator));
     }
 
     /**
@@ -57,8 +60,20 @@ class UserController extends CustomController
     public function viewOrderAction(Order $order)
     {
         $user = $this->getCurrentUser();
+        $this->setStatusFlashMessage($order);
 
         return $this->render('UserBundle:User:view-order.html.twig', array('order' => $order, 'user'=> $user));
+    }
+
+    private function setStatusFlashMessage(Order $order)
+    {
+        if ($order->getStatus() == Order::STATUS_SEND) {
+            $this->setTranslatedFlashMessage('¡Ya hemos enviado tu pedido!');
+        } else {
+            if ($order->getStatus() == Order::STATUS_READY_TO_TAKE) {
+                $this->setTranslatedFlashMessage('Ya puedes recoger tu pedido en nuestra tienda');
+            }
+        }
     }
 
     public function editProfileAction(Request $request)
@@ -139,10 +154,10 @@ class UserController extends CustomController
      *
      * @return array
      */
-    public function adressListAction(User $user)
+    public function adressListAction(User $user, $admin = false)
     {
         $em = $this->getEntityManager();
         $addresses = $em->getRepository('LocationBundle:Address')->findAddressesByUser($user);
-        return array('addresses' => $addresses);
+        return array('addresses' => $addresses, 'admin' => $admin);
     }
 }

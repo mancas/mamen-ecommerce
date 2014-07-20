@@ -16,7 +16,7 @@ class CategoryController extends CustomController
         $em = $this->getEntityManager();
         $paginator = $this->get('ideup.simple_paginator');
         $paginator->setItemsPerPage(32, 'items');
-        $items = $paginator->paginate($em->getRepository('ItemBundle:Item')->findItemsBySubcategoryDQL($subcategory))->getResult();
+        $items = $paginator->paginate($em->getRepository('ItemBundle:Item')->findItemsBySubcategoryDQL($subcategory), 'items')->getResult();
 
         return $this->render('CategoryBundle:Subcategory:list.html.twig', array('items' => $items, 'paginator' => $paginator, 'subcategory' => $subcategory));
     }

@@ -158,4 +158,9 @@ class Shipment
         if ($this->orders->contains($order))
             $this->orders->removeElement($order);
     }
+
+    public function __toString()
+    {
+        return $this->getType();
+    }
 }

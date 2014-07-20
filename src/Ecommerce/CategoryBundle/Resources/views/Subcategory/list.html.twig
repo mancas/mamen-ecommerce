@@ -25,7 +25,7 @@
         {% endfor %}
     </div>
 
-    {{ simple_paginator_render('view_subcategory', null, { 'routeParams' : {'slug' : subcategory.slug}, 'container_class' : 'pagination', 'currentClass' : 'active' }, 'ItemBundle:Commons:paginator.html.twig') }}
+    {{ simple_paginator_render('view_subcategory', 'items', { 'routeParams' : {'slug' : subcategory.slug}, 'container_class' : 'pagination', 'currentClass' : 'active' }, 'ItemBundle:Commons:paginator.html.twig') }}
 {% endblock %}
 
 {% block javascripts %}

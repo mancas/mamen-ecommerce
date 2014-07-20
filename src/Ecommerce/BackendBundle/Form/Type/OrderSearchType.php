@@ -17,9 +17,20 @@ class OrderSearchType extends AbstractType
                 ->add('status', 'choice', array(
                 'choices' => array(Order::STATUS_READY => Order::STATUS_READY, Order::STATUS_IN_PROCESS => Order::STATUS_IN_PROCESS, Order::STATUS_OUT_OF_STOCK => Order::STATUS_OUT_OF_STOCK,
                                     Order::STATUS_READY_TO_TAKE => Order::STATUS_READY_TO_TAKE, Order::STATUS_SEND => Order::STATUS_SEND),
-                'empty_value' => 'Selecciona un estado',
+                'empty_value' => 'Estado',
                 'required' => false
-            ));
+                 ))
+                ->add('shipment', 'entity',
+                    array(
+                        'class' => 'ItemBundle:Shipment',
+                        'query_builder' => function (EntityRepository $er) {
+                                return $er->createQueryBuilder('s')->orderBy('s.cost', 'ASC');
+                            },
+                        'expanded' => false,
+                        'required' => false,
+                        'empty_value' => 'Método de envío'
+                    )
+                );
     }
 
     public function getName()

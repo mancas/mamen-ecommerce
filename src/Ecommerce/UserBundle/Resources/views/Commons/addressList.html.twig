@@ -1,13 +1,15 @@
 {% if addresses | length > 0 %}
     <div class="table-responsive">
-        <table class="table">
+        <table class="table{% if admin %} table-bordered table-striped table-hover{% endif %}">
             <thead>
                 <tr>
                     <th>{{ 'Nombre' | trans }}</th>
                     <th>{{ 'Dirección' | trans }}</th>
                     <th>{{ 'Código postal' | trans}} </th>
                     <th>{{ 'Ciudad' | trans }}</th>
+                    {% if not admin %}
                     <th>{{ 'Opciones' | trans }}</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -17,10 +19,12 @@
                     <td>{{ address }}</td>
                     <td>{{ address.postalCode }}</td>
                     <td>{{ address.city }}</td>
-                    <td>
-                        <a class="btn btn-warning btn-sm main-address" href="{{ path('change_main_address', {'slug' : address.slug}) }}" title="{{ 'Establecer como dirección principal' | trans }}"><i class="fa fa-star"></i></a>
-                        <a class="btn btn-danger btn-sm delete-address" href="{{ path('delete_address', {'slug': address.slug}) }}" title="{{ 'Eliminar dirección' | trans }}"><i class="fa fa-trash-o"></i></a>
-                    </td>
+                    {% if not admin %}
+                        <td>
+                            <a class="btn btn-warning btn-sm main-address" href="{{ path('change_main_address', {'slug' : address.slug}) }}" title="{{ 'Establecer como dirección principal' | trans }}"><i class="fa fa-star"></i></a>
+                            <a class="btn btn-danger btn-sm delete-address" href="{{ path('delete_address', {'slug': address.slug}) }}" title="{{ 'Eliminar dirección' | trans }}"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

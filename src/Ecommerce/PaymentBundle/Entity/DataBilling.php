@@ -44,7 +44,7 @@ class DataBilling
     protected $fax;
 
     /**
-     * @ORM\Column(type="string", length=250, unique=true)
+     * @ORM\Column(type="string", length=250)
      * @Assert\Email();
      */
     protected $email;

@@ -456,4 +456,14 @@ class User implements UserInterface, \Serializable, EquatableInterface
             return false;
         }
     }
+
+    public function getTotalSpend()
+    {
+        $total = 0.0;
+        foreach ($this->orders as $order) {
+            $total += $order->getTotalAmount();
+        }
+
+        return $total;
+    }
 }
