@@ -2,6 +2,8 @@
 
 namespace Ecommerce\FrontendBundle\Controller;
 
+use Ecommerce\CartBundle\Event\CartEvent;
+use Ecommerce\CartBundle\Event\CartEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -53,6 +55,21 @@ class CustomController extends Controller
     protected function getCartStorageManager()
     {
         return $this->get('cart.cart_storage_manager');
+    }
+
+    protected function setCurrentCartIfNeeded()
+    {
+        $cartStorageManager = $this->getCartStorageManager();
+        if (!$cartStorageManager->getCurrentCart())
+        {
+            $cart = new Cart();
+            $now = new \DateTime();
+            $now->modify('+ 1day');
+            $cart->setExpiredAt($now);
+            $cartEvent = new CartEvent($cart);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(CartEvents::NEW_CART, $cartEvent);
+        }
     }
 
     protected function renderLoginTemplate($template, Request $request)

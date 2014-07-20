@@ -64,6 +64,7 @@ class CartController extends CustomController
 
     public function cartTemplateAction()
     {
+        $this->setCurrentCartIfNeeded();
         $cartStorageManager = $this->getCartStorageManager();
         $cart = $cartStorageManager->getCurrentCart();
 
@@ -72,6 +73,7 @@ class CartController extends CustomController
 
     public function viewAction()
     {
+        $this->setCurrentCartIfNeeded();
         $cartStorageManager = $this->getCartStorageManager();
         $cart = $cartStorageManager->getCurrentCart();
 
@@ -114,6 +116,7 @@ class CartController extends CustomController
      */
     public function cartAction()
     {
+        $this->setCurrentCartIfNeeded();
         $cartStorageManager = $this->getCartStorageManager();
         $cart = $cartStorageManager->getCurrentCart();
 
@@ -128,6 +131,7 @@ class CartController extends CustomController
      */
     public function cartItemDetailsAction($id)
     {
+        $this->setCurrentCartIfNeeded();
         $em = $this->getEntityManager();
         $item = $em->getRepository('ItemBundle:Item')->findOneById($id);
 

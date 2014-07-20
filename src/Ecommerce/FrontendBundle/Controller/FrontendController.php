@@ -25,18 +25,7 @@ class FrontendController extends CustomController
             $indexCategories[$seoCategory->getName()] = $em->getRepository('ItemBundle:Item')->findCategorySEOItemsDQL($seoCategory, self::ITEMS_LIMIT_DQL);
         }
 
-        $cartStorageManager = $this->getCartStorageManager();
-        if (!$cartStorageManager->getCurrentCart())
-        {
-            ld('not cart');
-            $cart = new Cart();
-            $now = new \DateTime();
-            $now->modify('+ 1day');
-            $cart->setExpiredAt($now);
-            $cartEvent = new CartEvent($cart);
-            $dispatcher = $this->get('event_dispatcher');
-            $dispatcher->dispatch(CartEvents::NEW_CART, $cartEvent);
-        }
+        $this->setCurrentCartIfNeeded();
 
         return $this->render('FrontendBundle:Pages:home.html.twig', array('recentItems' => $recentItems, 'seoCategories' => $indexCategories));
     }
