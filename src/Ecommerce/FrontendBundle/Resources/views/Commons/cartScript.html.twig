@@ -4,7 +4,10 @@
             e.preventDefault();
             $.post($(this).attr('href'), function (response) {
                 console.info(response);
-                updateCart();
+                if (response.ok) {
+                    updateCart();
+                    openCartAlert(response);
+                }
             });
         });
 
@@ -30,7 +33,10 @@
 
             $.post($(this).attr('href'), {'quantity' : quantity}, function (response) {
                 console.info(response);
-                updateCart();
+                if (response.ok) {
+                    updateCart();
+                    openCartAlert(response);
+                }
             });
         });
 
@@ -40,5 +46,48 @@
                 $('.shopping-cart').html(response);
             });
         }
+
+        function openCartAlert(data)
+        {
+            var html_single = '{{ 'Se ha añadido' |trans }}' + ' <i>' + data.title + '</i>';
+            var html_plural = '{{ 'Se han añadido' | trans }} <b>' + data.quantity + 'x</b>'  + ' <i>' + data.title + '</i>';
+            var alert = $('#cart-alert');
+            var description = $('#item-desc');
+            var img = $('#item-img');
+
+            if (data.quantity > 1) {
+                description.html(html_plural);
+            } else {
+                description.html(html_single);
+            }
+
+            img.attr('src', data.image_thumb);
+
+            alert.fadeIn();
+        }
+
+        function addEventsToCartAlert()
+        {
+            var checkoutBtn = $('button#checkout');
+            var dismissBtn = $('button#dismiss-alert');
+            var closeBtn = $('.close');
+
+            checkoutBtn.on('click', function(event) {
+                event.preventDefault();
+
+                var path = '{{ path('new_order') }}';
+
+                window.location.href = path;
+            });
+
+            $('body').on('click', '.close, button#dismiss-alert', function(event) {
+                event.preventDefault();
+
+                var alert = $('#cart-alert');
+                alert.fadeOut();
+            })
+        }
+
+        addEventsToCartAlert();
     });
 </script>

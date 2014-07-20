@@ -1,0 +1,22 @@
+<div id="cart-alert" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'Cerrar' | trans }}</span></button>
+                <h4 class="modal-title">{{ 'Carrito actualizado' | trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="pull-left mr15">
+                    <img id="item-img" class="img-responsive" src="">
+                </div>
+                <div>
+                    <p id="item-desc" class="blue"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="dismiss-alert" type="button" class="btn btn-default">{{ 'Seguir comprando' | trans }}</button>
+                <button id="checkout" type="button" class="btn btn-success">{{ 'Pagar ahora' | trans }}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

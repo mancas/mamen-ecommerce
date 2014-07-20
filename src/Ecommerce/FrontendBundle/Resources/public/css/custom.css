@@ -531,3 +531,28 @@ span.error {
 
 #map {
   min-height: 300px; }
+
+/** Bootstrap **/
+.modal-dialog {
+  width: 400px; }
+
+.modal-header {
+  border-bottom: none; }
+
+.modal-title {
+  color: #4cb1ca;
+  border-bottom: solid 2px; }
+
+.modal-body {
+  overflow: hidden;
+  padding: 10px 20px; }
+
+.close {
+  color: #4cb1ca;
+  opacity: 0.4; }
+
+.close:hover, .close:focus {
+  color: #4099ad;
+  cursor: pointer;
+  opacity: 0.5;
+  text-decoration: none; }

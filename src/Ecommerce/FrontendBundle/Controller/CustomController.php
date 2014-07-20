@@ -4,6 +4,8 @@ namespace Ecommerce\FrontendBundle\Controller;
 
 use Ecommerce\CartBundle\Event\CartEvent;
 use Ecommerce\CartBundle\Event\CartEvents;
+use Ecommerce\CartBundle\Model\Cart;
+use Ecommerce\CartBundle\Storage\CartStorageManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;

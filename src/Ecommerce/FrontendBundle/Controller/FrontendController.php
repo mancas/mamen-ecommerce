@@ -2,10 +2,6 @@
 
 namespace Ecommerce\FrontendBundle\Controller;
 
-use Ecommerce\CartBundle\Event\CartEvent;
-use Ecommerce\CartBundle\Event\CartEvents;
-use Ecommerce\CartBundle\Model\Cart;
-use Ecommerce\CartBundle\Storage\CartStorageManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class FrontendController extends CustomController
