@@ -35,8 +35,10 @@ class BackendController extends CustomController
         $user = new AdminUser();
         $form = $this->createForm(new AdminUserType(), $user);
         $formHandler = $this->get('admin.admin_user_form_handler');
+        ld($form);
         if ($formHandler->handle($form, $request)) {
             $token = new UsernamePasswordToken($user, $user->getPassword(), 'admin_user', $user->getRoles());
+            ld($token);
             $this->container->get('security.context')->setToken($token);
             $this->container->get('session')->set("_security_private", serialize($token));
 
