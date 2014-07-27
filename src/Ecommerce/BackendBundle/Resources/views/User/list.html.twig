@@ -31,7 +31,7 @@
                 <tbody>
                 {% for user in users %}
                     <tr {% if user.deletedDate %} style="background-color: #A8A8A8 "{% endif %}>
-                        <td><a title="Modificar" href="{{ path('admin_user_edit', { 'id': user.id }) }}">{{ user.name }}</a></td>
+                        <td><a title="Modificar" href="{{ path('admin_user_view', { 'id': user.id }) }}">{{ user.name }}</a></td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.nif }}</td>
                         <td>{{ user.email }}</td>

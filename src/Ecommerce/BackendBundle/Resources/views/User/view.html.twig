@@ -66,7 +66,7 @@
                                                 <div class="cc">
                                                     <i class="fa fa-shopping-cart"></i>
                                                     <strong>{{ user.orders | length }} </strong>
-                                                    <small>{% if user.orders | length > 1 %}{{ 'pedidos realizados' | trans }}{% else %}{{ 'pedido realizado' | trans }}{% endif %}</small>
+                                                    <small>{% if user.orders | length == 1 %}{{ 'pedido realizado' | trans }}{% else %}{{ 'pedidos realizados' | trans }}{% endif %}</small>
                                                 </div>
                                             </li>
 
