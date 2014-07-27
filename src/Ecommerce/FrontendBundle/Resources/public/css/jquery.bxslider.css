@@ -37,7 +37,7 @@
 	left: 0px;
 	background: #fff;
     max-height: 500px;
-	
+
 	/*fix other elements on the page moving (on Chrome)*/
 	-webkit-transform: translatez(0);
 	-moz-transform: translatez(0);
@@ -254,4 +254,8 @@
 	display: block;
 	font-size: .85em;
 	padding: 10px;
+}
+
+.bxslider li {
+    left: 0;
 }
