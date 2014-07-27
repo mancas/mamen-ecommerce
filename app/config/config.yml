@@ -32,7 +32,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        url_for_image: http://www.clop.com
+        url_for_image: http://www.clopsevilla.es
 
 # Assetic Configuration
 assetic:
