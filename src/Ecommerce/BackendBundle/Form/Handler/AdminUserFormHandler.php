@@ -19,7 +19,6 @@ class AdminUserFormHandler
     {
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            ld($form->getErrorsAsString(), $request);
             if ($form->isValid()) {
                 $user = $form->getData();
                 $this->adminUserManager->save($user);

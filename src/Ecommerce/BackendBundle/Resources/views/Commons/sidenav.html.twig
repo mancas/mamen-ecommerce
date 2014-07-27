@@ -46,16 +46,16 @@
                 <li {% if action == 'admin_payment_index' %}class="active"{% endif %}>
                     <a href="{{ path('admin_payment_index') }}"><i class="fa fa-credit-card"></i><span>{{ "Pagos"|trans }}</span></a>
                 </li>
-                <li {% if action == 'admin_bill_index' %}class="active"{% endif %}>
+                {#<li {% if action == 'admin_bill_index' %}class="active"{% endif %}>
                     <a href=""><i class="fa fa-file-text-o"></i><span>{{ "Facturas"|trans }}</span></a>
-                </li>
+                </li>#}
             </ul>
         </li>
         <li class="{% if action == 'admin_shipment_index' or action == 'admin_shipment_create' or action == 'admin_shipment_edit' %}active open{% endif %}">
             <a href="{{ path('admin_shipment_index') }}"><i class="fa fa-truck"></i> <span>{{ "Opciones de envío"|trans }}</span></a>
         </li>
-        <li class="{% if action == 'admin_billing_settings_index' %}active open{% endif %}">
+        {#<li class="{% if action == 'admin_billing_settings_index' %}active open{% endif %}">
             <a href="{{ path('admin_billing_settings_index') }}"><i class="fa fa-cogs"></i> <span>{{ "Datos de facturación"|trans }}</span></a>
-        </li>
+        </li>#}
     </ul>
 </div>

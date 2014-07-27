@@ -55,7 +55,7 @@
                                         <td>{{ order.totalAmount }} <i class="fa fa-euro"></i></td>
                                         <td>
                                             <a class="btn btn-blue btn-sm" href="{{ path('view_order_details', {'id' : order.id}) }}" title="{{ 'Ver detalles' | trans }}"><i class="fa fa-eye"></i></a>
-                                            <a class="btn btn-yellow btn-sm" href="{{ path('view_order_details', {'id' : order.id}) }}" title="{{ 'Descargar factura' | trans }}"><i class="fa fa-file-pdf-o"></i></a>
+                                            {#<a class="btn btn-yellow btn-sm" href="{{ path('view_order_details', {'id' : order.id}) }}" title="{{ 'Descargar factura' | trans }}"><i class="fa fa-file-pdf-o"></i></a>#}
                                         </td>
                                     </tr>
                                 {% endfor %}
