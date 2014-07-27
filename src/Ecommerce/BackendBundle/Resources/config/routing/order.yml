@@ -21,3 +21,7 @@ admin_order_ready_to_take:
 admin_order_out_of_stock:
     pattern: /out-of-stock/{id}
     defaults: { _controller: BackendBundle:Order:markAsOutOfStock }
+
+admin_order_delete:
+    pattern: /delete-order/{id}
+    defaults: { _controller: BackendBundle:Order:delete }

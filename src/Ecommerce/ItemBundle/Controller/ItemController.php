@@ -31,6 +31,11 @@ class ItemController extends CustomController
         $em = $this->getEntityManager();
         $relatedItems = $em->getRepository('ItemBundle:Item')->findRelatedItems($item, self::RELATED_ITEMS_LIMIT);
 
+        if ($item->getDeleted()) {
+            $this->setTranslatedFlashMessage('Este producto ha sido eliminado');
+            return $this->redirect($this->generateUrl('frontend_homepage'));
+        }
+
         return $this->render('ItemBundle:Item:details.html.twig', array('item' => $item, 'relatedItems' => $relatedItems));
     }
 }

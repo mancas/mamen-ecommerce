@@ -107,4 +107,19 @@ class OrderController extends CustomController
 
         return $this->redirect($this->generateUrl('admin_order_index'));
     }
+
+    /**
+     * @ParamConverter("order", class="OrderBundle:Order")
+     */
+    public function deleteAction(Order $order)
+    {
+        $em = $this->getEntityManager();
+
+        $em->remove($order);
+        $em->flush();
+
+        $this->setTranslatedFlashMessage('El pedido ha sido eliminado');
+
+        return $this->redirect($this->generateUrl('admin_order_index'));
+    }
 }

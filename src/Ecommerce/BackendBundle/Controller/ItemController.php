@@ -59,7 +59,8 @@ class ItemController extends CustomController
     public function deleteAction(Item $item)
     {
         $em = $this->getEntityManager();
-        $em->remove($item);
+        $item->setDeleted(new \DateTime('now'));
+        $em->persist($item);
         $em->flush();
 
         $this->setTranslatedFlashMessage('Se ha eliminado el producto');

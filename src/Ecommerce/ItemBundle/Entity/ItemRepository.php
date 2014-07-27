@@ -17,6 +17,11 @@ class ItemRepository extends CustomEntityRepository
         $qb->andWhere($qb->expr()->like('i.name', $qb->expr()->literal('%'. $value . '%')));
     }
 
+    protected function addSpecialSearchCriteria(&$qb)
+    {
+        $qb->andWhere($qb->expr()->isNull('i.deleted'));
+    }
+
     public function findRecentItemsDQL($limit = null)
     {
         $qb = $this->createQueryBuilder('p');
@@ -24,6 +29,12 @@ class ItemRepository extends CustomEntityRepository
 
         $qb->leftJoin('p.images', 'i');
         $qb->addOrderBy('p.updated','DESC');
+
+        $and = $qb->expr()->andx();
+
+        $and->add($qb->expr()->isNull('p.deleted'));
+
+        $qb->where($and);
 
         if (isset($limit)) {
             $qb->setMaxResults($limit);
@@ -45,6 +56,7 @@ class ItemRepository extends CustomEntityRepository
         $and = $qb->expr()->andx();
 
         $and->add($qb->expr()->eq('c.slug', '\''. $category->getSlug() .'\''));
+        $and->add($qb->expr()->isNull('p.deleted'));
 
         $qb->where($and);
 
@@ -68,6 +80,7 @@ class ItemRepository extends CustomEntityRepository
 
         $and->add($qb->expr()->neq('p.slug', "'" . $item->getSlug() . "'"));
         $and->add($qb->expr()->eq('s.slug', "'" . $item->getSubcategory()->getSlug() . "'"));
+        $and->add($qb->expr()->isNull('p.deleted'));
 
         $qb->where($and);
 
@@ -90,6 +103,7 @@ class ItemRepository extends CustomEntityRepository
         $and = $qb->expr()->andx();
 
         $and->add($qb->expr()->eq('s.slug', "'" . $subcategory->getSlug() . "'"));
+        $and->add($qb->expr()->isNull('p.deleted'));
 
         $qb->where($and);
 
