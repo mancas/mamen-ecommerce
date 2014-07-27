@@ -83,10 +83,12 @@
         $(document).ready(function() {
             $('.bxslider').bxSlider({
             {% if item.images | length > 1 %}
-                imagesPager: [{% for thumb in item.images %} '{{ asset(thumb.ImageItemCarouselThumbnail.getWebFilePath) }}' {% if loop.last %}{% else %},{% endif %} {% endfor %}]
+                imagesPager: [{% for thumb in item.images %} '{{ asset(thumb.ImageItemCarouselThumbnail.getWebFilePath) }}' {% if loop.last %}{% else %},{% endif %}{% endfor %}],
             {% else %}
                 pager: false,
             {% endif %}
+                controls: false,
+                mode: 'fade'
             });
         });
     </script>
