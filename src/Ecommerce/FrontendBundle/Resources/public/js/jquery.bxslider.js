@@ -734,9 +734,10 @@
         var overNextNavBind = function(e){
             slider.settings.intervalNav = setInterval(function(){
                 var left = parseInt($('.bx-pager').css('left')),
+                    wrapWidthControl = parseInt($('.bx-controls').css('width')),
                     maxWidth = calculateMaxWidth();
-                console.info(maxWidth);
-                if (maxWidth > 0 && left > maxWidth) {
+
+                if (maxWidth > 0 && left < maxWidth && wrapWidthControl < maxWidth && maxWidth > (wrapWidthControl + Math.abs(parseInt(left)))) {
                     $('.bx-pager').css('left', (left - 5) + 'px');
                 }
             },50);
