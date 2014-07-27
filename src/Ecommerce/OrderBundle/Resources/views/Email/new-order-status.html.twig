@@ -26,7 +26,7 @@
 
                 {% if order.status == constant('Ecommerce\\OrderBundle\\Entity\\Order::STATUS_SEND') %}
                     <p style="color:#767676; font-weight: normal; margin: 0 0 10px 0; padding: 0; line-height: 20px; font-size: 12px;font-family: Helvetica, Arial, sans-serif; ">
-                        {{ 'Tu pedido llegará a la dirección especificada en los próximos días. Muchas gracias por confiar en' | trans }} <a style="text-decoration: none; color:#4cb1ca" title="{{ 'Visita Clop' | trans }}" href="http://www.clop.com">clop.com</a>
+                        {{ 'Tu pedido llegará a la dirección especificada en los próximos días. Muchas gracias por confiar en' | trans }} <a style="text-decoration: none; color:#4cb1ca" title="{{ 'Visita Clop' | trans }}" href="{{ web_url }}">clopsevilla.es</a>
                     </p>
                 {% endif %}
 
@@ -38,7 +38,7 @@
                     {% for orderItem in order.items %}
                         <tr>
                             <td style="width: 120px"><img src="{{ asset(orderItem.item.imageMain.imageItemCart.getWebFilePath) }}"></td>
-                            <td><a style="text-decoration: none;font-size: 14px; color:#4cb1ca" title="{{ 'Ver producto' | trans }}" href="{{ path('item_details', {'slug':orderItem.item.slug}) }}">{{ orderItem.item.name }}</a></td>
+                            <td><a style="text-decoration: none;font-size: 14px; color:#4cb1ca" title="{{ 'Ver producto' | trans }}" href="{{ web_url }}{{ path('item_details', {'slug':orderItem.item.slug}) }}">{{ orderItem.item.name }}</a></td>
                         </tr>
                     {% endfor %}
                 </table>
