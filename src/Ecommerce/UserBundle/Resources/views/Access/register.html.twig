@@ -60,7 +60,7 @@
                                 {{ form_widget(form.terms) }}
                                 <label class="help-block text-12">
                                     {{ "He leído y acepto las" | trans }}
-                                    <a href="" target="_blank"> {{ "condiciones de uso" | trans }}</a>
+                                    <a href="{{ path('use_terms_page') }}" target="_blank"> {{ "condiciones de uso" | trans }}</a>
                                 </label>
                             </div><!-- .checkbox -->
 
@@ -68,7 +68,7 @@
                                 {{ form_widget(form.policy) }}
                                 <label class="help-block text-12">
                                     {{ "He leído y acepto la" | trans }}
-                                    <a href="" target="_blank"> {{ "política de privacidad" | trans }}</a>
+                                    <a href="{{ path('policy_page') }}" target="_blank"> {{ "política de privacidad" | trans }}</a>
                                 </label>
                             </div><!-- .checkbox -->
                         </div><!-- .form-group -->

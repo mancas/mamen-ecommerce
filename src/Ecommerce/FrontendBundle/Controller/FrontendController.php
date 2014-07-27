@@ -38,4 +38,19 @@ class FrontendController extends CustomController
 
         return array('categories' => $categories);
     }
+
+    public function policyAction()
+    {
+        return $this->render('FrontendBundle:Pages:policy.html.twig');
+    }
+
+    public function useTermsAction()
+    {
+        return $this->render('FrontendBundle:Pages:use-terms.html.twig');
+    }
+
+    public function whoWeAreAction()
+    {
+        return $this->render('FrontendBundle:Pages:who-we-are.html.twig');
+    }
 }

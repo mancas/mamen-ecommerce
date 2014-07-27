@@ -1,3 +1,15 @@
 frontend_homepage:
     pattern:  /
     defaults: { _controller: FrontendBundle:Frontend:index }
+
+policy_page:
+  pattern: /politica-de-privacidad
+  defaults: { _controller: FrontendBundle:Frontend:policy }
+
+use_terms_page:
+  pattern: /condiciones-de-uso
+  defaults: { _controller: FrontendBundle:Frontend:useTerms }
+
+who_we_are_page:
+  pattern: /quienes-somos
+  defaults: { _controller: FrontendBundle:Frontend:whoWeAre }
