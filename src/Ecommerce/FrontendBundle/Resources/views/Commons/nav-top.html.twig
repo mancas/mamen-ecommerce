@@ -11,6 +11,11 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right main-nav">
+                <li>
+                    <a title="{{ 'Ofertas' | trans }}" href="{{ path('view_offers') }}">
+                        {{"Ofertas" | trans}}
+                    </a>
+                </li>
                 {% if is_granted('ROLE_USER') %}
                     <li class="profile">
                         <a href="{{ path('user_profile') }}">

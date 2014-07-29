@@ -526,6 +526,22 @@ span.error {
     }
   }
 
+  .item-price {
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    .line-throught {
+      text-decoration: line-through;
+      font-size: 16px;
+    }
+
+    .offer {
+      color: $pink;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+  }
+
   input {
     max-width: 50px;
     margin-right: 8px;
@@ -804,4 +820,51 @@ span.error {
   cursor: pointer;
   opacity: 0.5;
   text-decoration: none;
+}
+
+//RIBBON
+.ribbon-wrapper-offer {
+  width: 85px;
+  height: 88px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: 12px;
+  z-index: 999;
+}
+
+.ribbon-pink {
+  font: bold 15px Sans-Serif;
+  color: #333;
+  text-align: center;
+  -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -5px;
+  top: 15px;
+  width: 120px;
+  background-color: $pink;
+  color: $white;
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+}
+
+.ribbon-pink:before, .ribbon-pink:after {
+  content: "";
+  border-top:   3px solid $blue-hover;
+  border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  position:absolute;
+  bottom: -3px;
+}
+
+.ribbon-pink:before {
+  left: 0;
+}
+.ribbon-pink:after {
+  right: 0;
 }

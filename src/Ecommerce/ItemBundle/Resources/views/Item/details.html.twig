@@ -1,6 +1,6 @@
 {% extends "FrontendBundle:Layouts:1column.html.twig" %}
 
-{% block title %}{{ item.title }} | {{ "Clop Sevilla"|trans }}{% endblock %}
+{% block title %}{{ item }} | {{ "Clop Sevilla"|trans }}{% endblock %}
 {% block description %}{{"Una tienda que vende pulseras"|trans}}{% endblock %}
 {% block sectionclass %}home page{% endblock %}
 
@@ -21,6 +21,9 @@
     <div class="item-details">
         <div class="row">
             <div class="col-md-7">
+                {% if item.offer %}
+                    <div class="ribbon-wrapper-offer"><div class="ribbon-pink">{{ 'Oferta' | trans }}</div></div>
+                {% endif %}
                 <div class="carousel">
                     <ul class="bxslider">
                         {% for img in item.images %}
@@ -41,6 +44,14 @@
                             {{ drawStockBar(item.stockLevel) }}
                         </div>
                         <span>{% if item.stock == 0 %}{{ 'Sin stock' | trans }}{% else %}{{ 'En stock' | trans }}{% endif %}</span>
+                    </div>
+                    <div class="item-price">
+                        {% if item.offer %}
+                            <span class="line-throught">{{ item.price }}</span>
+                            <span class="offer">{{ item.offerPrice }} <i class="fa fa-euro"></i></span>
+                        {% else %}
+                            {{ item.price }} <i class="fa fa-euro"></i>
+                        {% endif %}
                     </div>
                     {% if item.stock > 0 %}
                     <span>{{ 'Cantidad' | trans }}:</span>

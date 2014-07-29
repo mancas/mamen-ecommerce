@@ -30,19 +30,24 @@ class CartController extends CustomController
             if (!$quantity)
                 $quantity = 1;
 
+            if ($item->isOffer())
+                $price = $item->getOfferPrice();
+            else
+                $price = $item->getPrice();
+
             $path = $item->getImageMain()->getImageItemCart()->getWebFilePath();
             $path = $this->container->get('templating.helper.assets')->getUrl($path);
 
             if (!$currentCartItem) {
                 if ($item->getStock() >= $quantity) {
-                    $cartItem = new CartItem($item->getId(), $quantity, $item->getPrice());
+                    $cartItem = new CartItem($item->getId(), $quantity, $price);
                     $currentCart->addCartItem($cartItem);
                     $jsonResponse = json_encode(array('ok' => true, 'title' => $item->getName(),
                         'image_thumb' => $path, 'quantity' => $quantity));
                 }
             } else {
                 if ($item->getStock() >= ($currentCartItem->getQuantity() + $quantity)) {
-                    $cartItem = new CartItem($item->getId(), $quantity, $item->getPrice());
+                    $cartItem = new CartItem($item->getId(), $quantity, $price);
                     $currentCart->addCartItem($cartItem);
                     $jsonResponse = json_encode(array('ok' => true, 'title' => $item->getName(),
                         'image_thumb' => $path, 'quantity' => $quantity));

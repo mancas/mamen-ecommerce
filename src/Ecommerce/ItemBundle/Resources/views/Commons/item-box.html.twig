@@ -2,6 +2,9 @@
 <div class="col-md-3">
     <div class="item-box">
         <div class="top">
+            {% if item.offer %}
+                <div class="ribbon-wrapper-offer"><div class="ribbon-pink">{{ 'Oferta' | trans }}</div></div>
+            {% endif %}
             {% set imagePath= item.imageMain.ImageItemBox.getWebFilePath ~ '?' ~ random() %}
             <img class="img-responsive" src="{{ asset(imagePath) }}">
         </div>
@@ -15,7 +18,7 @@
             <div class="item-options text-center">
                 <ul class="list-unstyled">
                     <li>
-                        <span class="item-price">{{ item.price }}</span>
+                        <span class="item-price">{% if item.offer %}{{ item.offerPrice }}{% else %}{{ item.price }}{% endif %}</span>
                         <i class="fa fa-euro"></i>
                     </li>
                     <li>

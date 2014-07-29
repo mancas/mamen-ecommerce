@@ -160,6 +160,14 @@
                     info_element.html((price + (price * tax)).toFixed(2) + '<i class="fa fa-euro"></i> ' + taxIncluded);
                 }
             });
+
+            $('body').on('change', 'input[name="item_offer"]', function(e) {
+                if ($(this).is(':checked')) {
+                    $('#offer').removeClass('hidden');
+                } else {
+                    $('#offer').addClass('hidden');
+                }
+            });
         });
     </script>
 {% endblock %}

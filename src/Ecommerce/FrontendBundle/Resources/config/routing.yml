@@ -13,3 +13,7 @@ use_terms_page:
 who_we_are_page:
   pattern: /quienes-somos
   defaults: { _controller: FrontendBundle:Frontend:whoWeAre }
+
+view_offers:
+  pattern: /ofertas
+  defaults: { _controller: FrontendBundle:Frontend:offers }
