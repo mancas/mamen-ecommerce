@@ -53,7 +53,7 @@
     </label>
     <div class="col-sm-2">
         <div class="input-group">
-            <input type="text" class="form-control"Ite name="item_offer_price" id="item_offer_price" value="{{ item.offerPrice }}">
+            <input type="text" class="form-control"Ite name="item_offer_price" id="item_offer_price" value="{% if edition is defined and item.isOffer %}{{ item.offerPrice }}{% endif %}">
             <span class="input-group-addon"><i class="fa fa-euro"></i></span>
         </div>
     </div>

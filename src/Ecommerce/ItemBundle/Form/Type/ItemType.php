@@ -22,7 +22,8 @@ class ItemType extends AbstractType
                             'class' => 'CategoryBundle:Subcategory',
                             'query_builder' => function (EntityRepository $er) {
                                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
-                                }, 'expanded' => false
+                                }, 'expanded' => false,
+                            'required' => true
                         )
                     )
                 ->add('manufacturers', 'entity',
