@@ -25,7 +25,9 @@
             {{ render(controller("ItemBundle:Item:itemBox", {'item': item})) }}
         {% endfor %}
         {% else %}
-            <p>{{ 'Ahora mismo no hay ofertas pero nuestros precios son inmejorables' | trans }}</p>
+            <div class="col-md-12">
+             <p>{{ 'Ahora mismo no hay ofertas pero nuestros precios son inmejorables' | trans }}</p>
+            </div>
         {% endif %}
     </div>
 
